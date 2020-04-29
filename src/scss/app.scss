@@ -1,0 +1,230 @@
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-vue/dist/bootstrap-vue.min.css";
+@import "~animate.css/animate.min.css";
+@import "~hamburgers/dist/hamburgers.min.css";
+@import "~@trevoreyre/autocomplete-vue/dist/style.css";
+@import "fonts.css";
+@import "./fontawesome-css/all.min.css";
+@import "components/header.component";
+
+@import "views/home.view";
+@import "views/register.view";
+
+@import "variables";
+@import "buttons";
+
+body {
+  font-family: "CeraRound", sans-serif;
+  min-height: 100% !important;
+  font-size: 18px;
+};
+
+button {
+  &:focus {
+    box-shadow: none!important;
+    outline: none!important;
+    color: inherit!important;
+  }
+}
+
+a, input {
+  &:focus {
+    box-shadow: none!important;
+    outline: none!important;
+  }
+}
+
+* {
+  &.border-bottom {
+    border-bottom: 2px solid #4CF4CD!important;
+  }
+  &.border-top {
+    border-top: 2px solid #4CF4CD!important;
+  }
+  &.border-left {
+    border-left: 2px solid #4CF4CD!important;
+  }
+  &.border-right {
+    border-right: 2px solid #4CF4CD!important;
+  }
+  &.border-radius-left {
+    border-top-left-radius: $border-radius!important;
+    border-bottom-left-radius: $border-radius!important;
+  }
+  &.border-radius-right {
+    border-top-right-radius: $border-radius!important;
+    border-bottom-right-radius: $border-radius!important;
+  }
+}
+
+.document-link {
+  display: block;
+  text-align: center;
+  text-decoration: #9E9E9E underline;
+  color: #9E9E9E;
+  font-weight: 200;
+  &:hover {
+    color: #495057;
+  }
+}
+
+.overlay-rounded {
+  border-radius: $border-radius;
+}
+
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: $value;
+  }
+}
+
+.form-control {
+  &:focus {
+    border-color: inherit;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+.brackets {
+  color: #9E9E9E;
+  &:before {
+    content: "[";
+    color: #9E9E9E;
+  }
+  &:after {
+    content: "]";
+    color: #9E9E9E;
+  }
+}
+
+.modal-content {
+  border: none;
+  border-radius: 0;
+  & .modal-header {
+    border-bottom: none!important;
+  }
+}
+
+#{$prefix}_form-input {
+  border-radius: $border-radius!important;
+  border: 2px solid #6E21E2;
+  height: 52px;
+  font-weight: 500;
+  &:focus {
+    border-color: inherit;
+    box-shadow: none;
+    outline: none;
+  }
+  &::placeholder {
+    font-weight: 500;
+    color: #9E9E9E;
+  }
+}
+
+#{$prefix}_title {
+  margin: 3rem auto 1.5rem auto;
+  text-align: center;
+  background: -webkit-linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#{$prefix}_subtitle {
+  margin: 1rem auto 1.5rem auto;
+  text-align: center;
+  color: #5DC6FF;
+  font-weight: 400;
+}
+
+#{$prefix}_tabs-container {
+  & .nav-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    border: none;
+    &.nav {
+      & .nav-item {
+        & .nav-link {
+          border-radius: 0;
+          background-color: #E0E0E0;
+          border-bottom: none;
+          color: #616161;
+          text-align: center;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        };
+        &:first-of-type {
+          & .nav-link{
+            &.active {
+              border-left: none;
+              background-color: #fff;
+              border-color: #6E21E2;
+              color: #7907E7;
+              text-align: center;
+            }
+          }
+        };
+        &:last-of-type {
+          & .nav-link{
+            &.active {
+              border-right: none;
+              background-color: #fff;
+              border-color: #6E21E2;
+              color: #7907E7;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  };
+}
+#{$prefix}_checkbox-input {
+  display: inline-block;
+  & .custom-control-label {
+    &::before {
+      border-radius: 0;
+      border-width: 2px;
+      border-color: map_get($colors, violet);
+      width: 1.5rem;
+      height: 1.5rem;
+      top: .3rem;
+    };
+    &::after {
+      top: .3rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.custom-checkbox {
+  & .custom-control-input{
+    &:checked ~ .custom-control-label::before {
+      border-color: map_get($colors, violet);
+      background: #fff;
+      outline: none!important;
+      box-shadow: none!important;
+    }
+    &:checked ~ .custom-control-label::after {
+      background-image: url('~@/assets/checkmark.svg');
+    }
+  }
+}
+.popover-header {
+  background-color: #fff;
+  border-bottom: none;
+}
+.autocomplete-result {
+  border-radius: 40px!important;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+div.text-danger {
+  height: 13px;
+  & small {
+    font-size: 60%;
+  }
+}

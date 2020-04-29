@@ -1,0 +1,186 @@
+@import "../variables";
+
+#{$prefix}_start {
+  margin-left: auto;
+  margin-right: auto;
+}
+#{$prefix}_persons-title {
+  font-weight: 600;
+  color: #6E21E2;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+#{$prefix}_persons {
+  display: grid;
+  grid-template-columns: repeat(5, 20%);
+  grid-template-rows: 1fr;
+  justify-items: center;
+  max-width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+  @media (max-width: 992px) {
+    max-width: 90%;
+  }
+}
+#{$prefix}_city-container {
+  position: relative;
+  & #{$prefix}_city {
+    position: absolute;
+    top: calc(52px / 2 - 12px);
+    color: #495057;
+    font-weight: 500;
+    @media (max-width: 992px) {
+      left: 20.5%;
+    }
+    @media (min-width: 1200px) {
+      left: 16%;
+    }
+    @media (min-width: 1920px) {
+      left: 11.5%;
+    }
+  }
+}
+#persons {
+  & * {
+    &:focus {
+      box-shadow: none!important;
+      outline: none!important;
+      color: #495057;
+      font-weight: 600;
+    }
+  }
+  & .custom-control {
+    padding-left: 0;
+    margin-right: 0;
+
+  }
+  & .custom-control-input {
+    width: 48px;
+    height: 48px;
+    @media (max-width: 992px) {
+      width: 40px;
+      height: 40px;
+    }
+    &:focus {
+      & ~ .custom-control-label {
+        color: #495057;
+        font-weight: 600;
+        &::before {
+          box-shadow:none !important;
+        }
+      }
+    }
+  }
+  & .custom-control-label {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    color: #9E9E9E;
+    &:hover {
+      cursor: pointer;
+    }
+    @media (max-width: 992px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  & .custom-control-label::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 2px solid #6E21E2;
+    pointer-events: none;
+    background-color: transparent;
+    @media (max-width: 992px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  .custom-control-label::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    @media (max-width: 992px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  & .custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+    background: transparent;
+  }
+}
+#home-tabs, #payments-tabs {
+  #{$prefix}_collapse-title {
+    display: inline-block;
+    float: left;
+    color: #000A79;
+  }
+  #{$prefix}_collapse-open-close {
+    display: inline-block;
+    float: right;
+    background: transparent;
+    border: none;
+    color: #7907E7;
+  }
+
+  button {
+    &#{$prefix}_collapse-open-close {
+      &.collapsed {
+        border: none;
+        background: transparent;
+        color: #7907E7;
+        & > .when-opened {
+          display: none;
+        }
+      }
+      &:not(.collapsed) {
+        border: none;
+        background: transparent;
+        & > .when-closed {
+          display: none;
+        }
+      }
+    }
+  }
+
+  & .card {
+    border-radius: 0!important;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: 2px solid #4CF4CD;
+    & header {
+      &.card-header {
+        padding: 1rem 0 1rem 0;
+        border-bottom: none;
+        background: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+#{$prefix}_gradient-text {
+  background: -webkit-linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  &.price {
+    font-size: 3.75rem;
+  }
+}
+.fa-gradient {
+  background: -webkit-linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

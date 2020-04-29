@@ -1,0 +1,36 @@
+@import "../variables";
+
+#{$prefix}_header {
+  display: block;
+  background: #6E21E2;
+  margin: 0;
+  padding: 0;
+  @media (max-width: 992px) {
+    max-height: 66px;
+    z-index: 2;
+    background: #fff;
+  }
+  & #{$prefix}_navbar {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    & #{$prefix}_navbar-nav {
+      margin-left: auto;
+      & * {
+        color: #fff!important;
+      }
+    }
+    & .navbar-brand {
+      @media (max-width: 992px) {
+        width: 100%;
+        margin: auto;
+        & img {
+          max-width: 40%;
+        }
+      }
+    }
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+  }
+}

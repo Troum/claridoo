@@ -1,0 +1,39 @@
+@import "~bootstrap/scss/variables";
+$colors: (
+  violet: #6E21E2,
+  navy: #000A79,
+  darkgray: #616161,
+  lightgreen: #3DBEB2
+);
+$prefix: ".claridoo";
+$border-radius: 100px;
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1920px
+);
+
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px,
+        xxl: 1860px
+);
+
+@for $i from 1 to 101 {
+  .w-#{$i} {
+    width: calc(1% * #{$i});
+  }
+}
+
+@each $breakpoint in $grid-breakpoints {
+  @for $i from 1 to 101 {
+    .w-#{$breakpoint}-#{$i} {
+      width: calc(1% * #{$i});
+    }
+  }
+}

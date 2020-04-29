@@ -1,0 +1,21 @@
+@import "variables";
+
+button {
+  &:focus {
+    outline: none!important;
+    box-shadow: none!important;
+  }
+  &:hover {
+    color: #000A79!important;
+  }
+}
+
+#{$prefix}_button {
+  font-weight: 600;
+  padding: 16px 27px;
+  background: linear-gradient(90deg, #86FFEA 6.5%, #4CF4CD 92.5%);
+  box-shadow: 0 4px 10px rgba(80, 11, 117, 0.25);
+  border: none;
+  border-radius: $border-radius;
+  color: #000A79!important;
+}

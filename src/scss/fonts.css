@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'CeraRound';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/cera-round-pro-light.eot'); /* IE9 Compat Modes */
+    src: local('CeraRound Light'), local('CeraRound-Light'),
+        url('./fonts/cera-round-pro-light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('./fonts/cera-round-pro-light.woff2') format('woff2'), /* Super Modern Browsers */
+        url('./fonts/cera-round-pro-light.woff') format('woff'), /* Modern Browsers */
+        url('./fonts/cera-round-pro-light.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+@font-face {
+    font-family: 'CeraRound';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./fonts/cera-round-pro-medium.eot'); /* IE9 Compat Modes */
+    src: local('CeraRound Medium'), local('CeraRound-Medium'),
+        url('./fonts/cera-round-pro-medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('./fonts/cera-round-pro-medium.woff2') format('woff2'), /* Super Modern Browsers */
+        url('./fonts/cera-round-pro-medium.woff') format('woff'), /* Modern Browsers */
+        url('./fonts/cera-round-pro-medium.ttf') format('truetype'); /* Safari, Android, iOS */
+}

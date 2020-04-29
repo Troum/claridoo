@@ -1,0 +1,254 @@
+@import "../variables";
+
+.bg-tariff {
+  background: #F2F2F2;
+}
+
+#{$prefix}_register {
+  padding: 0;
+}
+
+#{$prefix}_tariff-title {
+  font-size: 40px;
+  font-weight: 500;
+  background: linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#{$prefix}_tariff-subtitle {
+  font-size: 24px;
+  font-weight: 500;
+  color: #5DC6FF;
+}
+
+#sex {
+  & .custom-control-label {
+    width: 100% !important;
+    height: 52px;
+    &::before {
+      border: 2px solid map_get($colors, gray);
+      border-radius: 40px!important;
+      height: 52px;
+      width: 100% !important;
+      top:  0!important;
+      left: 0!important;
+    }
+    &::after {
+      border-radius: 40px!important;
+      height: 52px;
+      width: 100% !important;
+      top:  0!important;
+      left: 0!important;
+    }
+  }
+  & .frau {
+    & .custom-control-label {
+      font-weight: 500;
+      &::before {
+        display: flex;
+        padding: 10px 40% 15px 40%;
+        color: #E0E0E0;
+        content: "Frau" !important;
+      }
+    }
+  }
+  & .herr {
+    & .custom-control-label {
+      font-weight: 500;
+      &::before {
+        display: flex;
+        padding: 10px 40% 15px 40%;
+        color: #E0E0E0;
+        content: "Herr" !important;
+      }
+    }
+  }
+  & .custom-control-input:checked ~ .custom-control-label {
+    &::after {
+      background: transparent!important;
+      border: 2px solid map_get($colors, darkgray);
+      color: map_get($colors, darkgray);
+    }
+    &::before {
+      background: transparent!important;
+      border: 2px solid map_get($colors, darkgray);
+      box-shadow: none;
+      outline: none;
+      color: map_get($colors, darkgray);
+    }
+  }
+}
+#register {
+  .form-group {
+    margin-bottom: 0;
+  }
+  & .card {
+    border-radius: 0!important;
+    border: none;
+    background-color: #F2F2F2;
+    & header {
+      &.card-header {
+        padding: 1rem 0 1rem 0;
+        border-bottom: 2px solid #4CF4CD;
+        background: #F2F2F2;
+        font-weight: 600;
+      }
+    }
+    &.bg-white {
+      background-color: #fff;
+      & header {
+        &.card-header {
+          background: #fff;
+        }
+      }
+      &.filled {
+        & #{$prefix}_collapse-title {
+          background: #616161;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        & header {
+          &.card-header {
+            border-bottom: 2px solid #616161;
+          }
+        }
+        & svg {
+          color: #616161;
+        }
+      }
+    }
+    &.bg-tariff {
+      & #{$prefix}_collapse-title {
+        background: #9E9E9E;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      & header {
+        &.card-header {
+          border-bottom: 2px solid #9E9E9E;
+        }
+      }
+    }
+  }
+  button {
+    &.collapsed {
+      border: none;
+      background: transparent;
+      color: #7907E7;
+      & > .when-opened {
+        display: none;
+      }
+    }
+    &:not(.collapsed) {
+      border: none;
+      background: transparent;
+      & > .when-closed {
+        display: none;
+      }
+    }
+    &.claridoo_button {
+      background: linear-gradient(90deg, #86FFEA 6.5%, #4CF4CD 92.5%);
+    }
+  }
+  .collapsed > .when-opened,
+  :not(.collapsed) > .when-closed {
+    display: none;
+  }
+  div[role=group] > label, legend {
+    font-weight: 500;
+    color: #7907E7;
+  }
+  #{$prefix}_form-input {
+    border-color: #E0E0E0;
+  }
+  #{$prefix}_personal-data {
+    display: grid;
+    grid-template-columns: 41.666667% 41.666667%;
+    grid-auto-rows: 110px;
+    grid-column-gap: 2.5%;
+    & #{$prefix}_personal-data-item {
+      &:nth-of-type(odd) {
+        grid-column: 1;
+      }
+      &:nth-of-type(even) {
+        grid-column: 2;
+      }
+    }
+  }
+  #{$prefix}_collapse-title {
+    font-size: 1.938rem;
+    background: linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+#choose {
+  @media (max-width: 992px) {
+    & .bv-no-focus-ring[role="group"] {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  & .radio-container {
+    display: inline-block;
+    &:first-of-type {
+      margin-right: 2rem;
+    }
+  }
+  & .custom-control-label {
+    width: 107px;
+    height: 107px;
+    &::before {
+      border: 2px solid #E0E0E0;
+      border-radius: 10px!important;
+      width: 107px;
+      height: 107px;
+      top:  0!important;
+      left: 0!important;
+    }
+    &::after {
+      border-radius: 10px!important;
+      width: 107px;
+      height: 107px;
+      top:  0!important;
+      left: 0!important;
+    }
+  }
+  & .house {
+    & .custom-control-label {
+      &::before {
+        display: flex;
+        padding: calc((107px - 44px) / 2) calc((107px - 39px) / 2);
+        color: #E0E0E0;
+        content: url("~@/assets/house.svg");
+      }
+    }
+  }
+  & .apartment {
+    & .custom-control-label {
+      &::before {
+        display: flex;
+        padding: calc((107px - 69px) / 2)  calc((107px - 59px) / 2);
+        color: #E0E0E0;
+        content: url("~@/assets/apartment.svg");
+      }
+    }
+  }
+  & .custom-control-input:checked ~ .custom-control-label {
+    &::after {
+      background: transparent!important;
+      border: 2px solid #a9a9a9;
+      color: #a9a9a9;
+    }
+    &::before {
+      background: transparent!important;
+      border: 2px solid #a9a9a9;
+      box-shadow: none;
+      outline: none;
+      color: #a9a9a9;
+    }
+  }
+}
+
