@@ -57,10 +57,22 @@
                 let user = this.$store.getters.user;
                 let object = {
                     provideMeterData: 'email',
-                    emailconsentMeterData: this.form.emailconsentMeterData.toString()
+                    emailconsentMeterData: this.form.emailconsentMeterData.toString(),
+                    provideMeterDataEmail: this.form.email
                 };
                 object = Object.assign(object, user);
                 this.$root.$emit('save-step', object);
+                this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
+                    .then(response => {
+                        let user = this.$store.getters.user;
+                        user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                        user.step = '4';
+                        this.$root.$emit('save-step', object);
+                        this.$store.commit('progress', 20);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         }
     }

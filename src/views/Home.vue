@@ -7,45 +7,47 @@
                 b-form( @submit.prevent="passes(submit)" )
                     b-row.m-0.p-0
                         b-col.p-0.mx-xl-auto( cols="12" xl="11" )
-                            validation-provider( name="Postleitzahl" rules="required|min:5" v-slot="{ errors }")
-                                b-form-group.my-3.claridoo_city-container
+                            validation-provider( name="Postleitzahl" rules="required|min:5|notFound" v-slot="{ errors }")
+                                b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1.claridoo_city-container
                                     b-overlay( opacity="0" :show="overlay.postcode" rounded="sm")
                                         b-form-input.claridoo_form-input#postcode(
                                             @input="search"
                                             v-model="postcode"
+                                            @keypress="integer"
                                             type="text"
                                             autocomplete="off"
+                                            name="postcode"
                                             placeholder="Postleitzahl und Ort" )
                                         b-list-group.mt-2( v-if="city" )
                                             b-list-group-item.autocomplete-result.pl-5( v-for="item in city" :key="item" @click="handleCity(item)" ) {{ item }}
                                     span.claridoo_city( v-if="postcode.length >= 5" ) {{ selectedCity }}
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                        .text-danger.pl-3( v-if="errors[0]" )
+                                        .text-danger.pl-3.city
                                             small.font-weight-bold {{ errors[0] }}
-                            validation-provider( name="Jahresverbrauch" rules="required|min_value:500|max_value:10000" v-slot="{ errors }")
-                                b-form-group.my-3
-                                    b-form-input#kilowats.claridoo_form-input( placeholder="Jahresverbrauch kWh"
-                                        autocomplete="off"
-                                        v-model="kw")
-                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                        .text-danger.pl-3( v-if="errors[0]" )
-                                            small.font-weight-bold {{ errors[0] }}
-                            b-form-group
+                            b-form-group.mt-3.my-xl-3
                                 .claridoo_persons-title Wieviele personen wohnen im haushalt?
-                            validation-provider( name="Personen" rules="previous:postcode" v-slot="{ errors }")
+                            validation-provider( name="Personen" rules="required|previous:@Postleitzahl" v-slot="{ errors }")
                                 b-form-radio-group#persons.claridoo_persons(
                                     @input="choose"
                                     v-model="selected"
                                     :options="$store.getters.persons"
                                     name="persons-options")
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                    .text-danger.pl-3( v-if="errors[0]" )
+                                    .text-danger.pl-3
                                         small.font-weight-bold {{ errors[0] }}
-                            b-form-group.my-3.text-center
+                            validation-provider( name="Jahresverbrauch" rules="required|min_value:500|max_value:10000" v-slot="{ errors }")
+                                b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1
+                                    b-form-input#kilowats.claridoo_form-input( placeholder="Jahresverbrauch kWh"
+                                        autocomplete="off"
+                                        v-model="kw")
+                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                        .text-danger.pl-3
+                                            small.font-weight-bold {{ errors[0] }}
+                            b-form-group.mt-4.mb-2.mt-xl-3.mb-xl-3.text-center
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
                                     type="submit" @click="submit" ) Tarif Berechnen
-                            b-form-group.my-3.text-center( v-if="entries" )
+                            b-form-group#tarif-button.mt-2.mb-2.mt-xl-1.mb-xl-1.text-center( v-if="entries" )
                                 p.claridoo_gradient-text.price.font-weight-bold
                                     i.fas.fa-gradient.fa-euro-sign
                                     | &nbsp;{{ month }}&nbsp;
@@ -58,9 +60,9 @@
                                         b-row.m-0.pt-3.pb-3.pl-0.pr-0
                                             b-col.m-0.p-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="5" xl="6" )
+                                                    b-col.m-0.text-left.pl-0( cols="5" xl="4" )
                                                         p.text-violet.font-weight-bold Monatpreis
-                                                    b-col.m-0.text-right.pr-0( cols="7" xl="6" )
+                                                    b-col.m-0.text-right.pr-0( cols="7" xl="8" )
                                                         p.text-violet.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ month }}&nbsp;
@@ -153,9 +155,9 @@
                                         b-row.m-0.pt-3.pb-3.pl-0.pr-0
                                             b-col.m-0.p-0.border-bottom( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="5" xl="6")
+                                                    b-col.m-0.text-left.pl-0( cols="5" xl="4")
                                                         p.text-violet.font-weight-bold Monatpreis
-                                                    b-col.m-0.text-right.pr-0( cols="7" xl="6")
+                                                    b-col.m-0.text-right.pr-0( cols="7" xl="8")
                                                         p.text-darkgray.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ month }}&nbsp;
@@ -164,9 +166,9 @@
                                                                 | &nbsp;{{ year }} / Jahr
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="5" xl="6" )
+                                                    b-col.m-0.text-left.pl-0( cols="5" xl="4" )
                                                         p.text-navy.font-weight-bold Grundpreis
-                                                    b-col.m-0.text-right.pr-0( cols="7" xl="6" )
+                                                    b-col.m-0.text-right.pr-0( cols="7" xl="8" )
                                                         p.text-darkgray.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ basePrice }}&nbsp;
@@ -175,9 +177,9 @@
                                                                 | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="7" xl="6" )
+                                                    b-col.m-0.text-left.pl-0( cols="7" xl="3" )
                                                         p.text-navy.font-weight-bold Arbeitspreis
-                                                    b-col.m-0.text-right.pr-0( cols="5" xl="6" )
+                                                    b-col.m-0.text-right.pr-0( cols="5" xl="9" )
                                                         p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
                                                             span.brackets
                                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
@@ -212,11 +214,11 @@
                                                     span.text-lightgreen Förderung für Deinen Forschungsbeitrag!
                                                     | &nbsp;Ist bereits im Tarifpreis enthalten. Bei Nichtteilnahme wird dir nach Installation eine Kompensationszahlung in Höhe von € 60,00 in Rechnung gestellt.
                                                 p.mb-0.text-justify *** lorem ipsum sum sum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            b-form-group.my-3.text-center( v-if="entries" )
+                            b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1.text-center( v-if="entries" )
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
                                     type="button" @click="toRegister") Jetzt Wechseln
-                            b-form-group.my-1( v-if="entries" )
+                            b-form-group.my-2.my-xl-4( v-if="entries" )
                                 a.document-link( href="#" ) Allgemeine Gaschäftsbedingungen (149 KB)
                                 a.document-link( href="#" ) Stromzusammensetzung (522 KB)
 </template>
@@ -324,7 +326,10 @@
                             }
                         }
                     })
-                    .finally(() => this.overlay.main = false)
+                    .finally(() => {
+                        this.overlay.main = false;
+                        this.$scrollTo('#tarif-button');
+                    })
             },
             toRegister(){
                 this.overlay.main = true;
@@ -353,6 +358,15 @@
             handleCity(city) {
                 this.selectedCity = city;
                 this.city = [];
+            },
+            integer(event) {
+                event = (event) ? event : window.event;
+                let charCode = (event.which) ? event.which : event.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                    event.preventDefault();
+                } else {
+                    return true;
+                }
             }
         },
         computed: {

@@ -1,26 +1,45 @@
 <template lang="pug">
-    b-modal#type( hide-footer size="lg" centered )
-        template( v-slot:modal-header )
-            div.m-0.p-0.w-100
-                font-awesome-icon.close-modal( :icon="['fas', 'times']"
-                    @click="$bvModal.hide('type')" )
+    b-modal#type( hide-footer hide-header no-close-on-backdrop size="lg" centered )
         div.text-center
             p.type-title {{ $store.getters.user ? $store.getters.user.firstname : '@name' }}, kennst du deine zählernummer?
-        #types
+        #types( v-if="!fromWhere" )
             div.types-card-container( v-for="item in $store.getters.types"
                 :key="item.icon" )
                 div.types-card( @click="choose(item.type)" )
-                    img.img-fluid( @click="choose(item.type)" :src="`./images/${item.icon}`" )
+                    img.img-fluid( @click="choose(item.type)" :src="`${item.icon}`" )
                     p.h4.text-center( @click="choose(item.type)" ) {{ item.title }}
+        #fromWhere( v-else )
+            div.types-card-container( v-for="item in $store.getters.types"
+                :key="item.icon" )
+                div.types-card( @click="chooseEdited(item.type)" )
+                    img.img-fluid( @click="chooseEdited(item.type)" :src="`${item.icon}`" )
+                    p.h4.text-center( @click="chooseEdited(item.type)" ) {{ item.title }}
 
 </template>
 
 <script>
     export default {
         name: "TypeRegistrationModal",
+        data() {
+          return {
+              publicPath: process.env.BASE_URL,
+              fromWhere: false
+          }
+        },
+        mounted() {
+            this.$root.$on('from-where', (info = null) => {
+                if (info) {
+                    this.fromWhere = true;
+                    this.$bvModal.show('type')
+                }
+            })
+        },
         methods: {
             choose(type) {
                 this.$root.$emit('choose-type', type);
+            },
+            chooseEdited(type) {
+                this.$root.$emit('choose-edited-type', type);
             }
         }
     }
@@ -37,15 +56,7 @@
             font-size: 28px;
         }
     }
-    .close-modal {
-        color: #9E9E9E;
-        font-size: 28px;
-        font-weight: 200;
-        &:hover {
-            cursor: pointer;
-        }
-    }
-    #types {
+    #types, #fromWhere {
         display: grid;
         grid-template-columns: repeat(3, 260px);
         grid-template-rows: 1fr;

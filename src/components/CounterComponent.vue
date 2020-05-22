@@ -36,9 +36,12 @@
                                 )
                         b-form-input.claridoo_form-input#previousSupplier(
                             v-model="form.previousSupplier"
+                            @input="findPreviousSupplier"
                             type="text"
                             autocomplete="off"
                             placeholder="Bisheriger Lieferant" )
+                        b-list-group.mt-2( v-if="supplier" )
+                            b-list-group-item.autocomplete-result.pl-5( v-for="item in supplier" :key="item.bezeichnung" @click="handlePreviousSupplier(item.bezeichnung)" ) {{ item.bezeichnung }}
                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                             .text-danger.pl-3( v-if="errors[0]" )
                                 small.font-weight-bold {{ errors[0] }}
@@ -82,6 +85,12 @@
           isMobile: null,
           form: {}
         },
+        data() {
+            return {
+                supplier: [],
+                selectedSupplier: ''
+            }
+        },
         mounted() {
             this.$store.commit('progress', 20);
         },
@@ -101,6 +110,30 @@
                 };
                 object = Object.assign(object, user);
                 this.$root.$emit('save-step', object);
+                this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
+                    .then(response => {
+                        let user = this.$store.getters.user;
+                        user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                        user.step = '4';
+                        this.$root.$emit('save-step', object);
+                        this.$store.commit('progress', 20);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            findPreviousSupplier() {
+                this.$httpService.get(process.env.NODE_ENV === 'production' ? `/ep/prod/?filter=${this.form.previousSupplier}` : `api/supplier/${this.form.previousSupplier}`)
+                    .then(response => {
+                        this.supplier = process.env.NODE_ENV === 'production' ? response.data : response.data.supplier;
+                    })
+                    .catch(error => {
+                        console.log(error.response.data.error);
+                    })
+            },
+            handlePreviousSupplier(supplier) {
+                this.form.previousSupplier = supplier;
+                this.supplier = [];
             }
         }
     }

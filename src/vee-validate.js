@@ -25,12 +25,14 @@ extend('min', min);
 extend('min_value', min_value);
 extend('max_value', max_value);
 
-extend('previous', (value, id) => {
-    if (document.getElementById(id).value) {
-        return true;
-    }
-    return 'Bevor Sie die Menge oder die Anzahl der Personen eingeben können, müssen Sie die Postleitzahl eingeben';
+extend('previous', {
+    params: ['target'],
+    validate(value, {target}) {
+        return !!target;
+    },
+    message: 'Bevor Sie die Menge oder die Anzahl der Personen eingeben können, müssen Sie die Postleitzahl eingeben'
 });
+
 extend('germanyPhone', (value) => {
     return Vue.prototype.$httpService.get(process.env.NODE_ENV === 'production' ? `/mobile/prod/?mobile=${encodeURIComponent(value)}` : `api/validate-phone/${encodeURI(value)}`)
         .then(() => {
@@ -52,3 +54,13 @@ extend('iban', (value) => {
         })
 
 } );
+
+extend('notFound', (value => {
+return Vue.prototype.$httpService.get(process.env.NODE_ENV === 'production' ? `/plz/prod/?PLZ=${value}` : `api/city/${value}`)
+        .then(() => {
+            return true;
+        })
+        .catch(() => {
+            return 'Stadt mit dieser Postleitzahl wurde nicht gefunden';
+        })
+}))

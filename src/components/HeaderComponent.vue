@@ -1,12 +1,22 @@
 <template lang="pug">
-    b-col.claridoo_header( cols="12" :class="isMobile ? 'shadow-sm' : ''")
-        b-navbar.claridoo_navbar( toggleable="lg" )
+    b-col.claridoo_header( cols="12" :class="isMobile && $store.getters.progress > 0 ? 'shadow' : ''")
+        b-container( v-if="!isMobile" )
+            b-navbar.claridoo_navbar( toggleable="lg" :class="isMobile && $store.getters.progress > 0 ? 'shadow' : ''")
+                b-navbar-brand( @click="$routerService.routeTo('home')" )
+                    img.img-fluid( v-if="!isMobile" src="../assets/logo.svg" alt="Claridoo Logo")
+                    img.img-fluid( v-else src="../assets/mobile-logo.svg" alt="Claridoo Mobile Logo")
+                b-collapse#navCollapse( is-nav )
+                    b-navbar-nav.claridoo_navbar-nav
+                        b-nav-item.mr-4.font-weight-bold(
+                            v-for="item in $store.getters.menu"
+                            :key="item.title" ) {{ item.title }}
+        b-navbar.claridoo_navbar( v-if="isMobile" toggleable="lg" :class="isMobile ? 'shadow' : ''")
             b-navbar-brand( @click="$routerService.routeTo('home')" )
                 img.img-fluid( v-if="!isMobile" src="../assets/logo.svg" alt="Claridoo Logo")
                 img.img-fluid( v-else src="../assets/mobile-logo.svg" alt="Claridoo Mobile Logo")
             b-collapse#navCollapse( is-nav )
                 b-navbar-nav.claridoo_navbar-nav
-                    b-nav-item(
+                    b-nav-item.mr-4.font-weight-bold(
                         v-for="item in $store.getters.menu"
                         :key="item.title" ) {{ item.title }}
 </template>

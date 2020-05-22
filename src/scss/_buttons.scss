@@ -19,3 +19,12 @@ button {
   border-radius: $border-radius;
   color: #000A79!important;
 }
+
+#{$prefix}_finishing-editing {
+  background: none;
+  border: none;
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}

@@ -41,7 +41,7 @@
     export default {
         name: "End",
         props: {
-          isMobile: null
+            isMobile: null
         },
         data() {
             const phone = this.$store.getters.user.phone ? this.$store.getters.user.phone : null;
@@ -49,6 +49,11 @@
                 form: {
                     phone: phone,
                     agree: false
+                },
+                formatChars: {
+                    '0': '[0-9]',
+                    'a': '[A-Za-z]',
+                    '*': '[A-Za-z0-9]'
                 }
             }
         }

@@ -7,11 +7,10 @@
   padding: 0;
   @media (max-width: 992px) {
     max-height: 66px;
-    z-index: 2;
+    z-index: 3;
     background: #fff;
   }
   & #{$prefix}_navbar {
-    width: 75%;
     margin-left: auto;
     margin-right: auto;
     & #{$prefix}_navbar-nav {

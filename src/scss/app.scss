@@ -17,6 +17,13 @@ body {
   font-family: "CeraRound", sans-serif;
   min-height: 100% !important;
   font-size: 18px;
+  overflow-x: hidden!important;
+  & * {
+    &:focus, &:active {
+      box-shadow: none!important;
+      outline: none!important;
+    }
+  }
 };
 
 button {
@@ -37,15 +44,27 @@ a, input {
 * {
   &.border-bottom {
     border-bottom: 2px solid #4CF4CD!important;
+    &.border-darkgray {
+      border-color: map_get($colors, darkgray)!important;
+    }
   }
   &.border-top {
     border-top: 2px solid #4CF4CD!important;
+    &.border-darkgray {
+      border-color: map_get($colors, darkgray)!important;
+    }
   }
   &.border-left {
     border-left: 2px solid #4CF4CD!important;
+    &.border-darkgray {
+      border-color: map_get($colors, darkgray)!important;
+    }
   }
   &.border-right {
     border-right: 2px solid #4CF4CD!important;
+    &.border-darkgray {
+      border-color: map_get($colors, darkgray)!important;
+    }
   }
   &.border-radius-left {
     border-top-left-radius: $border-radius!important;
@@ -112,13 +131,13 @@ a, input {
   height: 52px;
   font-weight: 500;
   &:focus {
-    border-color: inherit;
+    border-color: #a1a1a1;
     box-shadow: none;
     outline: none;
   }
   &::placeholder {
     font-weight: 500;
-    color: #9E9E9E;
+    color: #a1a1a1;
   }
 }
 
@@ -217,14 +236,139 @@ a, input {
 }
 .autocomplete-result {
   border-radius: 40px!important;
+  z-index: 2;
   &:hover {
     cursor: pointer;
+    background-color: #fff;
   }
 }
 
 div.text-danger {
   height: 13px;
+  line-height: 13px;
+  margin-bottom: 1.2rem;
+  margin-top: .5rem;
   & small {
     font-size: 60%;
+  }
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+
+#{$prefix}_finishing-title {
+  color: #616161;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#houseHolderType, #finishingSex, #finishingReasons {
+  @media (max-width: 992px) {
+    & .bv-no-focus-ring[role="group"] {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+  & .custom-control-inline {
+    padding: 0;
+  }
+  & .custom-control-label {
+    width: auto;
+    font-weight: normal;
+    &::before {
+      display: none;
+    }
+    &::after {
+      display: none;
+    }
+  }
+  & .custom-control-input:checked ~ .custom-control-label {
+    font-weight: 600;
+    &::after {
+      background: transparent!important;
+      border: 2px solid #616161;
+      color: #616161;
+    }
+    &::before {
+      background: transparent!important;
+      border: 2px solid #616161;
+      box-shadow: none;
+      outline: none;
+      color: #616161;
+    }
+  }
+}
+#finishingReasons {
+  & button[aria-haspopup] {
+    color: #616161;
+    background: none!important;
+    border: none!important;
+  }
+}
+#payments {
+  &#{$prefix}_tabs-container {
+    & .nav-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      border: none;
+      &.nav {
+        & .nav-item {
+          & .nav-link {
+            border-radius: 0;
+            background-color: #E0E0E0;
+            border-bottom: none;
+            color: #616161;
+            text-align: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+          };
+          &:first-of-type {
+            & .nav-link{
+              &.active {
+                border-left: none;
+                background-color: #fff;
+                border-color: #616161;
+                color: #616161;
+                text-align: center;
+              }
+            }
+          };
+          &:last-of-type {
+            & .nav-link{
+              &.active {
+                border-right: none;
+                background-color: #fff;
+                border-color: #616161;
+                color: #616161;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+    };
+  }
+}
+#finishing {
+  & div.text-danger {
+    height: 13px;
+    line-height: 13px;
+    margin-bottom: 1.2rem;
+    margin-top: .5rem;
+    & small {
+      font-size: 60%;
+    }
+    @media (max-width: 992px) {
+      height: 10px;
+      line-height: 10px;
+      margin-bottom: .8rem;
+      margin-top: .5rem;
+      & small {
+        font-size: 50%;
+      }
+    }
   }
 }

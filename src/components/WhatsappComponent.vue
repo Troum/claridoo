@@ -5,12 +5,12 @@
                 validation-provider( rules="required" name="WhatsApp nummer" v-slot="{ errors }")
                     b-form-group.my-2( label="WhatsApp nummer*" )
                         b-input-group
-                            phone-mask-input.claridoo_form-input.w-90#whatsAppNummer(
-                                showFlag
-                                autocomplete="off"
-                                v-model="form.whatsapp"
-                                placeholder="WhatsApp nummer"
-                            )
+                            input-mask#whatsAppNummer.claridoo_form-input.w-90.pl-3(
+                                type="text" v-model="form.whatsapp"
+                                :format-chars="formatChars"
+                                maskChar=""
+                                mask="+4900000000000"
+                                placeholder="WhatsApp nummer" autocomplete="off")
                             b-input-group-append.ml-3
                                 img#whatsapp-info.img-fluid( src="../assets/info.svg" alt="Claridoo Telefonnummer Info")
                                 popover-component(
@@ -42,6 +42,15 @@
           isMobile: null,
           form: {}
         },
+        data() {
+          return {
+              formatChars: {
+                  '0': '[0-9]',
+                  'a': '[A-Za-z]',
+                  '*': '[A-Za-z0-9]'
+              }
+          }
+        },
         mounted() {
             this.$store.commit('progress', 20);
         },
@@ -59,6 +68,17 @@
                 };
                 object = Object.assign(object, user);
                 this.$root.$emit('save-step', object);
+                this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
+                    .then(response => {
+                        let user = this.$store.getters.user;
+                        user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                        user.step = '4';
+                        this.$root.$emit('save-step', object);
+                        this.$store.commit('progress', 20);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         }
     }

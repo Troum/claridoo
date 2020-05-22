@@ -1,11 +1,11 @@
 <template lang="pug">
     b-alert.shadow-sm.claridoo_alert-position( v-if="$store.getters.month" v-model="show" variant="secondary")
         b-row.m-0.h-100
-            b-col.p-2.mh-100( cols="7" )
+            b-col.p-2.mh-100( cols="6" )
                 p.font-weight-bold.mb-0 {{$store.getters.info.tarif}}&nbsp;
                 p.font-weight-light.mb-0
                     small bei {{ $store.getters.info.quantity }} kWh / Jahr
-            b-col.p-2.mh-100( cols="3" )
+            b-col.p-2.mh-100( cols="4" )
                 p.font-weight-bold.month-price.mb-0.text-right {{ $filtersService.currencyFormat($store.getters.month) }}&nbsp;
                     font-awesome-icon( :icon="['fas', 'euro-sign']" )
                     small.d-block &nbsp;/ Monat
@@ -40,8 +40,9 @@
     .claridoo_alert-position {
         width: 100%;
         position: relative;
-        margin: .35rem 0 auto 0;
+        margin: 0 0 auto 0;
         border-radius: 0;
+        border: none;
         z-index: 9999;
         height: 66px;
         background-color: #fff;

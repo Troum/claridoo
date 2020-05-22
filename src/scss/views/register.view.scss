@@ -48,7 +48,7 @@
       &::before {
         display: flex;
         padding: 10px 40% 15px 40%;
-        color: #E0E0E0;
+        color: #a1a1a1a1;
         content: "Frau" !important;
       }
     }
@@ -59,7 +59,7 @@
       &::before {
         display: flex;
         padding: 10px 40% 15px 40%;
-        color: #E0E0E0;
+        color: #a1a1a1a1;
         content: "Herr" !important;
       }
     }
@@ -160,7 +160,7 @@
     color: #7907E7;
   }
   #{$prefix}_form-input {
-    border-color: #E0E0E0;
+    border-color: #a1a1a1a1;
   }
   #{$prefix}_personal-data {
     display: grid;
@@ -201,7 +201,7 @@
     width: 107px;
     height: 107px;
     &::before {
-      border: 2px solid #E0E0E0;
+      border: 2px solid #7907E7;
       border-radius: 10px!important;
       width: 107px;
       height: 107px;
@@ -221,7 +221,7 @@
       &::before {
         display: flex;
         padding: calc((107px - 44px) / 2) calc((107px - 39px) / 2);
-        color: #E0E0E0;
+        color: #7907E7;
         content: url("~@/assets/house.svg");
       }
     }
@@ -231,7 +231,7 @@
       &::before {
         display: flex;
         padding: calc((107px - 69px) / 2)  calc((107px - 59px) / 2);
-        color: #E0E0E0;
+        color: #7907E7;
         content: url("~@/assets/apartment.svg");
       }
     }
@@ -239,15 +239,15 @@
   & .custom-control-input:checked ~ .custom-control-label {
     &::after {
       background: transparent!important;
-      border: 2px solid #a9a9a9;
-      color: #a9a9a9;
+      border: 2px solid #616161;
+      color: #616161;
     }
     &::before {
       background: transparent!important;
-      border: 2px solid #a9a9a9;
+      border: 2px solid #616161;
       box-shadow: none;
       outline: none;
-      color: #a9a9a9;
+      color: #616161;
     }
   }
 }

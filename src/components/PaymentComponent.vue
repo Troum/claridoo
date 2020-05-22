@@ -31,7 +31,7 @@
                                 b-form-group.text-center.text-xl-left
                                     b-button.claridoo_button(
                                         :class="!isMobile ? 'w-75' : 'w-100'"
-                                        :disabled="!checkForm(formSepa)"
+                                        :disabled="!formSepa.sepaConsent"
                                         @click="$root.$emit('register', paymentMethod)"
                                         type="button" ) Weiter
                     b-tab( title="Überweisung" @click="choosePayment" title-item-class="font-weight-bold")
@@ -55,7 +55,8 @@
         props: {
           isMobile: null,
           formSepa: {},
-          formTransfer:{}
+          formTransfer:{},
+          finishing: null
         },
         data() {
           return {

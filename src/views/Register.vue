@@ -26,7 +26,7 @@
                                     b-col.m-0.text-right.p-0.pt-3( cols="6" )
                                         p.text-darkgray.font-weight-bold
                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                            | &nbsp;{{ $store.getters.info.basePrice }}&nbsp;
+                                            | &nbsp;{{ $store.getters.user.basePrice }}&nbsp;
                                             span.brackets
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                 | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
@@ -186,7 +186,7 @@
                                         span.ml-3 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
                                 b-form-group.my-5.text-left
                                     b-button.claridoo_button.w-35(
-                                        :disabled="!checkForm(formCollapseOne)"
+                                        :disabled="!checkForm(formCollapseOne) || !checkPhone()"
                                         v-b-toggle.personal-one.personal-two
                                         @click="stepOne"
                                         type="button" ) Weiter
@@ -264,7 +264,7 @@
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3
                                                         small.font-weight-bold {{ errors[0] }}
-                                validation-provider( rules="required" name="Anrede" v-slot="{ errors }")
+                                validation-provider( rules="required" name="Hause typ" v-slot="{ errors }")
                                     b-form-group.my-2#choose( label="Du wohnst in" )
                                         div.radio-container
                                             b-form-radio.p-0.house( v-model="formCollapseTwo.choose" name="choose" value="House")
@@ -297,12 +297,12 @@
                                 div.reason-card-container( v-for="item in reasons"
                                     :key="item.icon" )
                                     div.reason-card( @click="choose($event, item.reason)" )
-                                        img.img-fluid( @click="choose($event, item.reason)" :src="`./images/${item.icon}`" )
+                                        img.img-fluid( @click="choose($event, item.reason)" :src="`${item.icon}`" )
                                         p.h2.text-center.text-violet( @click="choose($event, item.reason)" ) {{ item.title }}
                                         p.pr-3.pl-3.text-center( @click="choose($event, item.reason)" )
                                             small {{ item.description }}
                             validation-provider( rules="required" name="Datum" v-slot="{ errors }" )
-                                b-form-group.my-3( label="Datum" )
+                                b-form-group.my-3( label="Datum" v-if="reason !== 'switch'")
                                     b-form-datepicker.claridoo_form-input.w-35( :min="min" locale="de" :max="max"
                                         v-model="formCollapseThree.date"
                                         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
@@ -310,6 +310,10 @@
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
+                                b-form-group.my-2( v-else )
+                                    div.d-inline-flex.align-items-center.font-weight-light
+                                        b-form-checkbox.claridoo_checkbox-input( v-model="formCollapseThree.choose" @change="formCollapseThree.chose = !formCollapseThree.choose" )
+                                        span.ml-3.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
                             b-form-group.my-3.text-left
                                 b-button.claridoo_button.w-35.claridoo_form-input(
                                     v-b-toggle.personal-three
@@ -326,7 +330,7 @@
                             button.claridoo_collapse-open-close.float-right(
                                 v-b-toggle.personal-four
                                 type="button" )
-                                template( v-if="type === 'counter'" )
+                                template( v-if="type === 'direct'" )
                                     font-awesome-icon.when-closed( v-if="checkForm(formCollapseFour)" :icon="['fas', 'pencil-alt']" )
                                 template( v-if="type === 'whatsapp'" )
                                     font-awesome-icon.when-closed( v-if="checkForm(formCollapseFive)" :icon="['fas', 'pencil-alt']" )
@@ -337,7 +341,7 @@
                         accordion="personal-accordion"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
-                            counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'counter'" )
+                            counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'direct'" )
                             whatsapp-component( :isMobile="isMobile" :form="formCollapseFive" v-if="type === 'whatsapp'" )
                             email-component( :isMobile="isMobile" :form="formCollapseSix" v-if="type === 'email'" )
                 b-card( no-body :class="[(opened.five ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseSeven) && !opened.five  ? 'bg-white filled' : '')]")
@@ -356,6 +360,7 @@
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             payment-component( :isMobile="isMobile"
+                                :finishing="finishing"
                                 :formSepa="formCollapseSeven"
                                 :formTransfer="formCollapseEight")
             b-col#register.mx-auto.p-0( cols="12" v-else)
@@ -449,7 +454,7 @@
                                 validation-provider( rules="required|germanyPhone" name="Telefonnummer" v-slot="{ errors }")
                                     b-form-group.my-2( label="Telefonnummer*" )
                                         b-input-group
-                                            input-mask#phone.claridoo_form-input.pl-3.w-85(
+                                            input-mask#phone.claridoo_form-input.pl-3.w-90(
                                                 type="text" v-model="formCollapseOne.phone"
                                                 :format-chars="formatChars"
                                                 maskChar=""
@@ -473,7 +478,7 @@
                                 b-form-group.my-5.text-left
                                     b-button.claridoo_button.w-100(
                                         v-b-toggle.personal-one.personal-two
-                                        :disabled="!checkForm(formCollapseOne)"
+                                        :disabled="!checkForm(formCollapseOne) && checkPhone()"
                                         @click="stepOne"
                                         type="button" ) Weiter
                 b-card.pt-3.pl-3.pr-3( no-body :class="[(opened.two ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseTwo) && !opened.two  ? 'bg-white filled' : '')]" )
@@ -579,12 +584,12 @@
                                 div.reason-card-container( v-for="item in reasons"
                                     :key="item.icon" )
                                     div.reason-card( @click="choose($event, item.reason)" )
-                                        img.img-fluid( @click="choose($event, item.reason)" :src="`./images/${item.icon}`" )
+                                        img.img-fluid( @click="choose($event, item.reason)" :src="`${item.icon}`" )
                                         p.text-xl-center.text-violet( @click="choose($event, item.reason)" ) {{ item.title }}
                                         p.pr-xl-3.pl-xl-3.text-xl-center( @click="choose($event, item.reason)" )
                                             small {{ item.description }}
                             validation-provider( rules="required" name="Datum" v-slot="{ errors }")
-                                b-form-group.my-3( label="Datum" )
+                                b-form-group.my-3( label="Datum" v-if="reason !== 'switch'")
                                     b-form-datepicker.claridoo_form-input( :min="min" locale="de" :max="max"
                                         v-model="formCollapseThree.date"
                                         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
@@ -592,7 +597,11 @@
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
-                            b-form-group.my-3
+                                b-form-group.my-2( v-else )
+                                    div.d-inline-flex.align-items-center.font-weight-light
+                                        b-form-checkbox.claridoo_checkbox-input( v-model="formCollapseThree.choose" @change="formCollapseThree.chose = !formCollapseThree.choose" )
+                                        span.ml-3.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
+                                b-form-group.my-3
                                 b-button.claridoo_button.w-100.claridoo_form-input(
                                     :disabled="!checkForm(formCollapseThree)"
                                     v-b-toggle.personal-three
@@ -608,7 +617,7 @@
                             button.claridoo_collapse-open-close.float-right(
                                 v-b-toggle.personal-four
                                 type="button" )
-                                template( v-if="type === 'counter'" )
+                                template( v-if="type === 'direct'" )
                                     font-awesome-icon.when-closed( v-if="checkForm(formCollapseFour)" :icon="['fas', 'pencil-alt']" )
                                 template( v-if="type === 'whatsapp'" )
                                     font-awesome-icon.when-closed( v-if="checkForm(formCollapseFive)" :icon="['fas', 'pencil-alt']" )
@@ -619,7 +628,7 @@
                         :visible="visible"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
-                            counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'counter'" )
+                            counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'direct'" )
                             whatsapp-component( :isMobile="isMobile" :form="formCollapseFive" v-if="type === 'whatsapp'" )
                             email-component( :isMobile="isMobile" :form="formCollapseSix" v-if="type === 'email'" )
                 b-card.pt-3.pl-3.pr-3.mb-xl-4.mb-1( no-body :class="[(opened.five ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseSeven) && !opened.five  ? 'bg-white filled' : '')]" )
@@ -638,6 +647,7 @@
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             payment-component( :isMobile="isMobile"
+                                :finishing="finishing"
                                 :formSepa="formCollapseSeven"
                                 :formTransfer="formCollapseEight")
 
@@ -653,6 +663,8 @@
             const now = new Date();
             return {
                 alternate: false,
+                reason: 'switch',
+                finishing: false,
                 opened: {
                     one: false,
                     two: false,
@@ -684,7 +696,8 @@
                 },
                 formCollapseThree: {
                     choose: null,
-                    date: null
+                    date: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+                    reason: null
                 },
                 formCollapseFour: {
                     counterNumber: null,
@@ -723,9 +736,17 @@
             }
         },
         mounted() {
+            this.$scrollTo('#register');
             this.$store.commit('progress', 20);
             this.$root.$emit('show-alert');
             this.$root.$on('choose-type', (type) => {
+                let user = this.$store.getters.user;
+                let object = {
+                    date: this.formCollapseThree.date,
+                    reason: this.formCollapseThree.reason,
+                };
+                object = Object.assign(object, user);
+                this.$store.commit('user', object);
                 this.type = type;
                 this.visible = true;
                 this.$bvModal.hide('type');
@@ -752,50 +773,26 @@
             });
             this.$root.$on('register', (paymentMethod) => {
                 this.stepFour(paymentMethod);
-                this.$router.push({name: 'register.finishing'});
                 this.$store.commit('progress', 20);
+                this.$router.push({name: 'register.finishing'})
             });
             this.$root.$on('save-step', (data) => {
                 this.$store.commit('user', data);
             });
         },
         methods: {
-            choose(event, reason) {
-                document.querySelectorAll('.reason-card-container').forEach(item => {
-                    item.classList.contains('chosen') ?
-                        item.classList.remove('chosen') : null;
-                });
-                if (event.target.classList.contains('reason-card-container')) {
-                    event.target.classList.add('chosen');
-                } else {
-                    event.target.closest('.reason-card-container').classList.add('chosen')
-                }
-                this.formCollapseThree.choose = reason;
-                const now = new Date();
-                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const minDate = new Date(today);
-                const maxDate = new Date(today);
-                    switch (reason) {
-                        case 'switch':
-                            maxDate.setMonth(maxDate.getMonth() + 6);
-                            this.max = maxDate;
-                            this.min = minDate;
-                            return;
-                        case 'moving':
-                            minDate.setMonth(minDate.getMonth() - 6);
-                            maxDate.setMonth(maxDate.getMonth() + 6);
-                            this.max = maxDate;
-                            this.min = minDate;
-                            return;
-                        case 'new':
-                            maxDate.setMonth(maxDate.getMonth() + 6);
-                            this.max = maxDate;
-                            this.min = minDate;
-                            return;
-                    }
-            },
             showModal() {
                 this.$bvModal.show('type');
+            },
+            checkPhone() {
+              if (this.formCollapseOne.phone) {
+                  if (this.formCollapseOne.phone.length > 13) {
+                      return true;
+                  }
+              } else {
+                  return false;
+              }
+              return false;
             },
             checkForm(form) {
                 const values = Object.values(form);
@@ -814,9 +811,22 @@
                 };
                 object = Object.assign(user, object);
                 this.$root.$emit('save-step', object);
-                this.$store.commit('progress', 20);
+                this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
+                .then(response => {
+                    let user = this.$store.getters.user;
+                    user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                    user.step = '2';
+                    this.$root.$emit('save-step', object);
+                    this.$store.commit('progress', 20);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
             },
             stepTwo() {
+                this.formCollapseThree.choose = true;
+                this.formCollapseThree.reason = 'switch';
+                document.querySelectorAll('.reason-card-container')[0].classList.add('chosen');
                 let user = this.$store.getters.user;
                 let object = {
                     street: this.formCollapseTwo.street,
@@ -836,7 +846,51 @@
                 }
                 object = Object.assign(object, user);
                 this.$root.$emit('save-step', object);
-                this.$store.commit('progress', 20);
+                this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
+                    .then(response => {
+                        let user = this.$store.getters.user;
+                        user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                        user.step = '3';
+                        this.$root.$emit('save-step', object);
+                        this.$store.commit('progress', 20);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            choose(event, reason) {
+                this.reason = reason;
+                document.querySelectorAll('.reason-card-container').forEach(item => {
+                    item.classList.contains('chosen') ?
+                        item.classList.remove('chosen') : null;
+                });
+                if (event.target.classList.contains('reason-card-container')) {
+                    event.target.classList.add('chosen');
+                } else {
+                    event.target.closest('.reason-card-container').classList.add('chosen')
+                }
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const minDate = new Date(today);
+                const maxDate = new Date(today);
+                switch (reason) {
+                    case 'switch':
+                        this.reason = reason;
+                        return;
+                    case 'moving':
+                        this.reason = reason;
+                        minDate.setMonth(minDate.getMonth() - 6);
+                        maxDate.setMonth(maxDate.getMonth() + 6);
+                        this.max = maxDate;
+                        this.min = minDate;
+                        this.reason = reason;
+                        return;
+                    case 'new':
+                        maxDate.setMonth(maxDate.getMonth() + 6);
+                        this.max = maxDate;
+                        this.min = minDate;
+                        return;
+                }
             },
             stepFour(paymentMethod){
                 let user = this.$store.getters.user;
@@ -858,7 +912,17 @@
                 }
                 object = Object.assign(object, user);
                 this.$store.commit('user', object);
-                this.$store.commit('progress', 20);
+                this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
+                    .then(response => {
+                        let user = this.$store.getters.user;
+                        user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                        user.step = '5';
+                        this.$root.$emit('save-step', object);
+                        this.$store.commit('progress', 20);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         }
     }

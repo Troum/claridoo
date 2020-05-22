@@ -8,9 +8,16 @@
   font-weight: 600;
   color: #6E21E2;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-top: .5rem;
+  @media (max-width: 992px) {
+    margin-bottom: .5rem;
+  }
+  @media (min-width: 1200px) {
+    margin-top: 1rem;
+  }
 }
 #{$prefix}_persons {
+  z-index: 0;
   display: grid;
   grid-template-columns: repeat(5, 20%);
   grid-template-rows: 1fr;
@@ -18,20 +25,49 @@
   max-width: 75%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   @media (max-width: 992px) {
     max-width: 90%;
+    margin-bottom: 0;
   }
 }
 #{$prefix}_city-container {
   position: relative;
+  height: 52px;
   & #{$prefix}_city {
     position: absolute;
     top: calc(52px / 2 - 12px);
     color: #495057;
     font-weight: 500;
-    @media (max-width: 992px) {
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+      left: 22.5%;
+    }
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2){
+      left: 22.5%;
+    }
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 667px)
+    and (-webkit-min-device-pixel-ratio: 2) {
       left: 20.5%;
+    }
+    @media only screen
+    and (min-device-width: 414px)
+    and (max-device-width: 736px)
+    and (-webkit-min-device-pixel-ratio: 3) {
+      left: 20.5%;
+    }
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 812px)
+    and (-webkit-min-device-pixel-ratio: 3) {
+      left: 22%;
     }
     @media (min-width: 1200px) {
       left: 16%;

@@ -10,6 +10,7 @@ import {
     LayoutPlugin, ModalPlugin, FormRadioPlugin,
     InputGroupPlugin, ProgressPlugin, TooltipPlugin,
     OverlayPlugin, PopoverPlugin, FormDatepickerPlugin, ListGroupPlugin } from "bootstrap-vue";
+import VueScrollTo from "vue-scrollto";
 import "../vee-validate";
 import HttpService from "../services/http.service";
 import FormDataService from "../services/form-data.service";
@@ -17,6 +18,19 @@ import HandlerService from "../services/handler.service";
 import FiltersService from "../services/filters.service";
 import RouterService from "../services/router.service";
 
+Vue.use(VueScrollTo, {
+    container: "body",
+    duration: 500,
+    easing: "ease",
+    offset: 0,
+    force: true,
+    cancelable: true,
+    onStart: false,
+    onDone: false,
+    onCancel: false,
+    x: false,
+    y: true
+});
 Vue.use(HttpService);
 Vue.use(FormDataService);
 Vue.use(HandlerService);

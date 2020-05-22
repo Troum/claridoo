@@ -1,91 +1,504 @@
 <template lang="pug">
-    b-col.claridoo_start( cols="12" xl="4" )
-        p.h2.claridoo_title Fast geschafft!
-        p.text-violet.text-center Bitte überprüfe nochmal deine Angaben
-        p.h2.claridoo_title.border-bottom.my-5 5. Bisherige Zählernummer
+    b-col#finishing.claridoo_start.m-0.p-0( cols="12" )
+        b-row.m-0.p-0.bg-tariff
+            b-col.mx-auto.p-0( xl="8" v-if="!isMobile")
+                b-row.m-0.p-0
+                    b-col.m-0.p-0( xl="7" )
+                        b-row.m-0.pt-3.pb-3.pl-0.pr-0
+                            b-col.m-0.p-0( cols="12" )
+                                p.mb-0.claridoo_tariff-title Dein Tarif
+                                p.mb-5.claridoo_tariff-subtitle {{ $store.getters.info.tarif }}
+                            b-col.m-0.p-0.border-bottom( cols="12" )
+                                b-row.m-0
+                                    b-col.m-0.text-left.p-0( cols="6" )
+                                        p.text-violet.font-weight-bold Monatpreis
+                                    b-col.m-0.text-right.p-0( cols="6" )
+                                        p.text-darkgray.font-weight-bold
+                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                            | &nbsp;{{ $store.getters.month }}&nbsp;
+                                            span.brackets
+                                                font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                                | &nbsp;{{ $store.getters.year }} / Jahr
+                            b-col.m-0.p-0( cols="12" )
+                                b-row.m-0.p-0
+                                    b-col.m-0.text-left.p-0.pt-3( cols="6" )
+                                        p.text-navy.font-weight-bold Grundpreis
+                                    b-col.m-0.text-right.p-0.pt-3( cols="6" )
+                                        p.text-darkgray.font-weight-bold
+                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                            | &nbsp;{{ $store.getters.user.basePrice }}&nbsp;
+                                            span.brackets
+                                                font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                                | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
+                            b-col.m-0.p-0( cols="12" )
+                                b-row.m-0.p-0
+                                    b-col.m-0.text-left.p-0( cols="6" )
+                                        p.text-navy.font-weight-bold Arbeitspreis
+                                    b-col.m-0.text-right.p-0( cols="6" )
+                                        p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
+                                            span.brackets
+                                                font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                                | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.workPrice)) }} / Jahr
+                            b-col.m-0.p-0( cols="12" )
+                                b-row.m-0.p-0
+                                    b-col.m-0.text-left.p-0( cols="6" )
+                                        p.text-navy.font-weight-bold Neukundenbonus*
+                                    b-col.m-0.text-right.p-0( cols="6" )
+                                        p.text-darkgray.font-weight-bold
+                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                            | &nbsp;{{ $store.getters.info.neukundenbonus_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.neukundenbonus_brutto)) : '' }}
+                            b-col.m-0.p-0( cols="12" )
+                                b-row.m-0.p-0
+                                    b-col.m-0.text-left.p-0( cols="6" )
+                                        p.text-navy.font-weight-bold Einsparförderung**
+                                    b-col.m-0.text-right.p-0( cols="6" )
+                                        p.text-darkgray.font-weight-bold
+                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                            | &nbsp;60,00
+                            b-col.m-0.p-0( cols="12" )
+                                b-row.m-0.p-0
+                                    b-col.m-0.text-left.p-0( cols="6" )
+                                        p.text-navy.font-weight-bold Preisgarantie*** / Kündigungsfrist
+                                    b-col.m-0.text-right.p-0( cols="6" )
+                                        p.text-darkgray.font-weight-bold {{ $store.getters.info.pricegaranty }}
+                    b-col.d-flex.justify-content-center.align-items-center.m-0.p-0( xl="5" )
+                        img.img-fluid( src="../assets/tarif.svg" alt="Claridoo Tarif Logo" )
         b-row.m-0.p-0
-            b-col.m-0.p-0( cols="6" v-if="$store.getters.user.paymentMethod === 'sepa'" )
-                p.text-violet.text-uppercase.font-weight-bold SEPA - LSV
-            b-col.m-0.p-0( cols="6" v-if="$store.getters.user.paymentMethod === 'sepa'" )
-                font-awesome-icon.edit-info.float-right.text-violet(
-                    @click="openEdit"
-                    role="button"
-                    :icon="['fas', 'pencil-alt']" )
-            b-col.m-0.my-2.p-0( cols="12" )
-                div.d-inline-flex.font-weight-light
-                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.one = true" )
-                    span.ml-3 Ich akzeptiere die Allgemeinen Geschäftsbedingungen von claridoo by Alpiq Energie Deutschland GmbH.
-            b-col.m-0.my-2.p-0( cols="12" )
-                div.d-inline-flex.font-weight-light
-                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.two = true" )
-                    span.ml-3 Ich erteile claridoo by Alpiq Energie Deutschland GmbH die Vollmacht für mich einen Endkunden Messstellenvertrag auf Basis der
-                        a.open-link.d-inline &nbsp;Allgemeinen Geschäftsbedingungen der Discovergy GmbH
-                        | &nbsp;zu schließen. Im Rahmen des Messstellenbetriebs mithilfe des einzubauenden Smart Meters erteile ich auch die Einwilligung zur Datenerhebung und -speicherung durch die Discovergy GmbH und durch claridoo by Alpiq Energie Deutschland GmbH. Der Einbau des Smart Meters ist Voraussetzung für die Funktionalität von claridoo. Ich bin mir bewusst, dass von mir beauftragte, über den Standardeinbau hinausgehende Zusatzleistungen  separat in Rechnung gestellt werden. Über die anfallenden Kosten werde ich vorab informiert.
-            b-col.m-0.my-2.p-0( cols="12" )
-                div.d-inline-flex.font-weight-light
-                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.three = true" )
-                    span.ml-3 Ich erteile der Discovergy GmbH die anliegende Vollmacht zum Wechsel meines bisherigen Messstellenbetreibers und zur Kommunikation im Rahmen des Messstellenbetriebes.
-            b-col.m-0.my-2.p-0( cols="12" )
-                div.d-inline-flex.font-weight-light
-                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.four = true" )
-                    span.ml-3 Ja, um die Fördersumme von 60€ zu erhalten nehme ich zu Forschungszwecken am Förderprogramm Einsparzähler „Deutschland macht’s effizient” (Bundesministerium für Wirtschaft und Energie) teil und mache nachträglich Zusatzangaben. Die Fördersumme ist bereits im Tarifpreis enthalten.
-            b-col#finishing-tabs.m-0.my-2.p-0( cols="12" )
-                b-card.border-bottom.border-top( no-body )
-                    b-card-header(
-                        header-tag="header"
-                        role="tab" )
-                        div.d-flex.align-items-center
-                            span.claridoo_collapse-title.after-icon Preis inkl. Förderung
-                            img.ml-3.img-fluid( src="../assets/flag.svg" alt="Claridoo Flag" )
-                            button.claridoo_collapse-open-close(
-                                v-b-toggle.collapse-one
-                                type="button" )
-                                font-awesome-icon.when-opened( :icon="['fas', 'minus']" )
-                                font-awesome-icon.when-closed( :icon="['fas', 'plus']" )
-                    b-collapse#collapse-one.pt-2.pb-3(
-                        accordion="collapse-one-accordion"
-                        role="tabpanel")
-                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
-            b-col.m-0.p-0.my-4( cols="12" )
-                b-form-group.text-center
-                    b-button.claridoo_button(
-                        :disabled="!checkAcceptance"
-                        :class="!isMobile ? 'w-75' : 'w-100'"
-                        @click="postData"
-                        type="button" ) Jetzt Bestellen
-            b-col.m-0.p-0.my-4( cols="12" )
-                a.open-link.d-block(  ) Bonitätsauskunft
-                a.open-link.d-block(  ) Auftragserteilung und Vollmachten
-                a.open-link.d-block(  ) Datenschutzerklärung claridoo & der Discovergy GmbH
-                a.open-link.d-block(  ) Widerrufsrecht claridoo & Widerrufserklärung von Discovergy
+            b-col.m-0.mx-auto.p-0( cols="11" xl="8" )
+                p.h2.claridoo_title Fast geschafft!
+                p.text-violet.text-center Bitte überprüfe nochmal deine Angaben
+                validation-observer( ref="observer" v-slot="{ passes }")
+                    b-form( @submit.prevent="passes(submit)" )
+                        b-row.m-0.p-0
+                            b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
+                                div.w-100
+                                    span.claridoo_finishing-title 1. Persönliche Daten
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" @click="editable.personal = !editable.personal" )
+                                        font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
+                                div.my-2.pl-4.font-weight-bold.w-100
+                                    validation-provider( rules="required" name="Vornamen" v-slot="{ errors }" )
+                                        input#firstName.border-0.mr-2( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'border-bottom border-darkgray my-2 w-25' : ''"
+                                            v-model="info.firstname"
+                                            @keyup="resizeInput('firstName')")
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Nachnamen" v-slot="{ errors }" )
+                                        input#lastName.border-0( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'border-bottom border-darkgray my-2 w-25' : ''"
+                                            v-model="info.lastname"
+                                            @keyup="resizeInput('lastName')" )
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Email Adresse" v-slot="{ errors }" )
+                                        input#email.border-0.w-75.d-block( :disabled="!editable.personal" type="email"
+                                            :class="editable.personal ? 'border-bottom border-darkgray my-2' : ''"
+                                            v-model="info.email"
+                                            @keyup="resizeInput('email')" )
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Geburtsdatum" v-slot="{ errors }" )
+                                        input-mask#birthdate.border-0.w-75.d-block( :disabled="!editable.personal" type="text"
+                                            :format-chars="formatChars"
+                                            maskChar=""
+                                            mask="00.00.0000"
+                                            :class="editable.personal ? 'border-bottom border-darkgray my-2' : ''"
+                                            v-model="info.birthdate"
+                                            @keyup="resizeInput('birthdate')" )
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required|germanyPhone" name="Telefonnummer" v-slot="{ errors }" )
+                                        input-mask#phone.border-0.w-75.d-block( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'border-bottom border-darkgray my-2' : ''"
+                                            v-model="info.phone"
+                                            :format-chars="formatChars"
+                                            maskChar=""
+                                            mask="+4900000000000"
+                                            @keyup="resizeInput('phone')" )
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Andrede" v-slot="{ errors }" )
+                                        b-form-group#finishingSex( :disabled="!editable.personal" )
+                                            b-form-radio-group( v-model="info.sex" :options="sexOptions")
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                            b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
+                                div.w-100
+                                    span.claridoo_finishing-title 2. Lieferadresse
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" @click="editable.address = !editable.address" )
+                                        font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
+                                div.my-2.pl-4.font-weight-bold.w-100
+                                    validation-provider( rules="required" name="Strasse" v-slot="{ errors }" )
+                                        input#street.border-0.w-75.d-block( :disabled="!editable.address" type="text"
+                                            :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                            v-model="info.street"
+                                            @keyup="resizeInput('street')")
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Hausnummer" v-slot="{ errors }" )
+                                        input#house.border-0.w-75.d-block( :disabled="!editable.address" type="text"
+                                            :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                            v-model="info.house"
+                                            @keyup="resizeInput('house')" )
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Hause typ" v-slot="{ errors }" )
+                                        b-form-group#houseHolderType( :disabled="!editable.address" )
+                                            b-form-radio-group( v-model="info.householdType" :options="holdTypeOptions")
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" )
+                                    div.my-2.pl-4.font-weight-bold.w-100( v-if="editable.address && info.invoicing_separate_address" )
+                                        p.my-2 Alternate address
+                                        validation-provider( rules="required" name="Alternate Postleitzeil" v-slot="{ errors }" )
+                                            input#alternateZip.border-0.w-75.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.invoicing_zip"
+                                                @keyup="resizeInput('alternateZip')")
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                        validation-provider( rules="required" name="Alternate Strasse" v-slot="{ errors }" )
+                                            input#alternateStreet.border-0.w-75.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.invoicing_street"
+                                                @keyup="resizeInput('alternateStreet')")
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                        validation-provider( rules="required" name="Alternate Hausnummer" v-slot="{ errors }" )
+                                            input#alternateHouse.border-0.w-75.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.invoicing_house"
+                                                @keyup="resizeInput('alternateHouse')" )
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                            b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
+                                div.w-100
+                                    span.claridoo_finishing-title 3. Wechselgrund
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" @click="editable.switch = !editable.switch" )
+                                        font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
+                                div.my-2.pl-4.font-weight-bold.w-100( v-if="!editable.switch" )
+                                    template( v-if="info.reason === 'switch'" )
+                                        div
+                                            span.font-weight-light Wechsel zu CLARIDOO
+                                    template( v-if="info.reason === 'moving'" )
+                                        div
+                                            span.font-weight-light Umzug / Einzug
+                                    template( v-if="info.reason === 'new'" )
+                                        div
+                                            span.font-weight-light Neubau
+                                transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" )
+                                    div.my-2.pl-4.font-weight-bold.w-100( v-if="editable.switch" )
+                                            b-form-group#finishingReasons
+                                                b-form-radio-group( @change="setReason" v-model="info.reason" :options="reasonOptions")
+                                                b-form-datepicker(
+                                                    button-only
+                                                    @context="onContext"
+                                                    v-if="info.reason !== 'switch'" :min="min" locale="de" :max="max")
+                                                input.border-0.w-75.d-inline-block( v-if="info.reason !== 'switch'"
+                                                    type="text" :placeholder="placeholder"
+                                                    disabled v-model="info.date" )
+                            b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
+                                div.w-100
+                                    span.claridoo_finishing-title 4. Bisherige Stromlieferdaten
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" @click="editable.provided = !editable.provided" )
+                                        font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
+                                div.my-2.pl-4.font-weight-bold.w-100
+                                    template( v-if="info.provideMeterData === 'direct'" )
+                                        validation-provider( rules="required" name="Bisherige Zählernummer" v-slot="{ errors }" )
+                                            input#previousNumber.border-0.w-75.d-block(
+                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.meterNumber"
+                                                type="text"
+                                                autocomplete="off"
+                                                @keyup="resizeInput('previousNumber')"
+                                                placeholder="Bisherige Zählernummer" )
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                        validation-provider( rules="required" name="Bisheriger Lieferant" v-slot="{ errors }" )
+                                            input#previousSupplier.border-0.w-75(
+                                                :disabled="!editable.provided"
+                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.previousContractor"
+                                                @input="findPreviousSupplier"
+                                                type="text"
+                                                placeholder=""
+                                                autocomplete="off"
+                                                @keyup="resizeInput('previousSupplier')" )
+                                            b-list-group.mt-2( v-if="supplier" )
+                                                b-list-group-item.autocomplete-result.pl-5( v-for="item in supplier" :key="item.bezeichnung"
+                                                    @click="handlePreviousSupplier(item.bezeichnung)" ) {{ item.bezeichnung }}
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                        validation-provider( rules="required" name="Bisheriger Kundennummer" v-slot="{ errors }" )
+                                            input#previousContractNumber.border-0.w-75.d-block(
+                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.contractNumber"
+                                                type="text"
+                                                autocomplete="off"
+                                                @keyup="resizeInput('previousContractNumber')"
+                                                placeholder="Bisherige Kundennummer" )
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                    template( v-if="info.provideMeterData === 'email'" )
+                                        validation-provider( rules="required|email" name="Email Adresse" v-slot="{ errors }" )
+                                            input#providedEmail.border-0.w-75(
+                                                :disabled="!editable.provided"
+                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.provideMeterDataEmail"
+                                                type="email"
+                                                placeholder="Email Adresse"
+                                                autocomplete="off"
+                                                @keyup="resizeInput('providedEmail')")
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                    template( v-if="info.provideMeterData === 'whatsapp'" )
+                                        validation-provider( rules="required" name="WhatsApp Telefonnummer" v-slot="{ errors }" )
+                                            input-mask#providedWhatsapp.border-0.w-75(
+                                                :disabled="!editable.provided"
+                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                                :format-chars="formatChars"
+                                                maskChar=""
+                                                mask="+4900000000000"
+                                                v-model="info.whatsapp"
+                                                type="text"
+                                                placeholder="WhatsApp Telefonnummer"
+                                                autocomplete="off"
+                                                @keyup="resizeInput('providedWhatsapp')")
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" v-if="editable.provided" @click="$root.$emit('from-where', true)" ) Änderungsart
+
+                            b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
+                                div.w-100
+                                    span.claridoo_finishing-title 5. Bisherige Zählernummer
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" @click="editable.payment = !editable.payment; payment = false" )
+                                        font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
+                                div.my-2.pl-4.font-weight-bold.w-100
+                                    template( v-if="info.paymentMethod === 'sepa' && !payment" )
+                                        validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
+                                            input#sepaUser.border-0.w-75.d-block(
+                                                :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.sepaFullname"
+                                                type="text"
+                                                autocomplete="off"
+                                                @keyup="resizeInput('sepaUser')"
+                                                placeholder="Kontoinhaber/in" )
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                        validation-provider( rules="required|iban" name="IBAN" v-slot="{ errors }" )
+                                            input#sepaIBAN.border-0.w-75.d-block(
+                                                :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                                v-model="info.sepaIBAN"
+                                                type="text"
+                                                autocomplete="off"
+                                                @keyup="resizeInput('sepaIBAN')"
+                                                placeholder="IBAN" )
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
+                                    template( v-if="info.paymentMethod === 'transfer' && !payment" )
+                                        p.font-weight-light Wenn Du lieber jeden Monat selbst eine Überweisung tätigen möchtest
+                                    template( v-if="payment" )
+                                        b-tabs#payments.claridoo_tabs-container
+                                            b-tab( title="SEPA - LSV" title-item-class="font-weight-bold" @click="info.paymentMethod = 'sepa'")
+                                                validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
+                                                    input#sepaTabsUser.border-0.w-75.d-block(
+                                                        :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                                        v-model="info.sepaFullname"
+                                                        type="text"
+                                                        autocomplete="off"
+                                                        @keyup="resizeInput('sepaTabsUser')"
+                                                        placeholder="Kontoinhaber/in" )
+                                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                        .text-danger.pl-3
+                                                            small.font-weight-bold {{ errors[0] }}
+                                                validation-provider( rules="required|iban" name="IBAN" v-slot="{ errors }" )
+                                                    input#sepaTabsIBAN.border-0.w-75.d-block(
+                                                        :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                                        v-model="info.sepaIBAN"
+                                                        type="text"
+                                                        autocomplete="off"
+                                                        @keyup="resizeInput('sepaTabsIBAN')"
+                                                        placeholder="IBAN" )
+                                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                        .text-danger.pl-3
+                                                            small.font-weight-bold {{ errors[0] }}
+                                            b-tab( title="Überweisung" title-item-class="font-weight-bold" @click="info.paymentMethod = 'transfer'" )
+                                                div.d-inline-flex.font-weight-light.my-3
+                                                    validation-provider( rules="required" name="Überweisung" v-slot="{ errors }" )
+                                                        b-form-checkbox.claridoo_checkbox-input( v-model="info.transferConsent" @change="info.transferConsent = !info.transferConsent" )
+                                                        span.ml-3.my-2 Ich möchte lieber selbst jeden Monat per Überweisung zahlen.
+                                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                            .text-danger.pl-3
+                                                                small.font-weight-bold {{ errors[0] }}
+                                    button.claridoo_finishing-editing.float-right(
+                                        type="button" v-if="editable.payment" @click="payment = true" ) Änderungsart
+                        b-row.m-0.p-0
+                            b-col.m-0.my-2.p-0( cols="12" )
+                                div.d-inline-flex.font-weight-light
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.one = true" )
+                                    span.ml-3 Ich akzeptiere die Allgemeinen Geschäftsbedingungen von claridoo by Alpiq Energie Deutschland GmbH.
+                            b-col.m-0.my-2.p-0( cols="12" )
+                                div.d-inline-flex.font-weight-light
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.two = true" )
+                                    span.ml-3 Ich erteile claridoo by Alpiq Energie Deutschland GmbH die Vollmacht für mich einen Endkunden Messstellenvertrag auf Basis der
+                                        a.open-link.d-inline &nbsp;Allgemeinen Geschäftsbedingungen der Discovergy GmbH
+                                        | &nbsp;zu schließen. Im Rahmen des Messstellenbetriebs mithilfe des einzubauenden Smart Meters erteile ich auch die Einwilligung zur Datenerhebung und -speicherung durch die Discovergy GmbH und durch claridoo by Alpiq Energie Deutschland GmbH. Der Einbau des Smart Meters ist Voraussetzung für die Funktionalität von claridoo. Ich bin mir bewusst, dass von mir beauftragte, über den Standardeinbau hinausgehende Zusatzleistungen  separat in Rechnung gestellt werden. Über die anfallenden Kosten werde ich vorab informiert.
+                            b-col.m-0.my-2.p-0( cols="12" )
+                                div.d-inline-flex.font-weight-light
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.three = true" )
+                                    span.ml-3 Ich erteile der Discovergy GmbH die anliegende Vollmacht zum Wechsel meines bisherigen Messstellenbetreibers und zur Kommunikation im Rahmen des Messstellenbetriebes.
+                            b-col.m-0.my-2.p-0( cols="12" )
+                                div.d-inline-flex.font-weight-light
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.four = true" )
+                                    span.ml-3 Ja, um die Fördersumme von 60€ zu erhalten nehme ich zu Forschungszwecken am Förderprogramm Einsparzähler „Deutschland macht’s effizient” (Bundesministerium für Wirtschaft und Energie) teil und mache nachträglich Zusatzangaben. Die Fördersumme ist bereits im Tarifpreis enthalten.
+                            b-col#finishing-tabs.m-0.my-2.p-0( cols="12" )
+                                b-card.border-bottom.border-top( no-body )
+                                    b-card-header(
+                                        header-tag="header"
+                                        role="tab" )
+                                        div.d-flex.align-items-center
+                                            span.claridoo_collapse-title.after-icon Preis inkl. Förderung
+                                            img.ml-3.img-fluid( src="../assets/flag.svg" alt="Claridoo Flag" )
+                                            button.claridoo_collapse-open-close(
+                                                v-b-toggle.collapse-one
+                                                type="button" )
+                                                font-awesome-icon.when-opened( :icon="['fas', 'minus']" )
+                                                font-awesome-icon.when-closed( :icon="['fas', 'plus']" )
+                                    b-collapse#collapse-one.pt-2.pb-3(
+                                        accordion="collapse-one-accordion"
+                                        role="tabpanel")
+                                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
+                            b-col.m-0.p-0.my-4( cols="12" )
+                                b-form-group.text-center
+                                    b-button.claridoo_button(
+                                        :disabled="!checkAcceptance"
+                                        :class="!isMobile ? 'w-25' : 'w-100'"
+                                        @click="submit"
+                                        type="submit" ) Jetzt Bestellen
+                            b-col.m-0.p-0.my-4( cols="12" )
+                                a.open-link.d-block(  ) Bonitätsauskunft
+                                a.open-link.d-block(  ) Auftragserteilung und Vollmachten
+                                a.open-link.d-block(  ) Datenschutzerklärung claridoo & der Discovergy GmbH
+                                a.open-link.d-block(  ) Widerrufsrecht claridoo & Widerrufserklärung von Discovergy
 
 </template>
 
 <script>
     export default {
-        name: "Finishing",
+        name: "FinishingComponent",
         props: {
-          isMobile: null
+            isMobile: null
         },
         data() {
+            const now = new Date();
             return {
+                user: null,
+                formatChars: {
+                    '0': '[0-9]',
+                    'a': '[A-Za-z]',
+                    '*': '[A-Za-z0-9]'
+                },
+                info: {
+                    firstname: this.$store.getters.user.firstname,
+                    lastname: this.$store.getters.user.lastname,
+                    email: this.$store.getters.user.email,
+                    phone: this.$store.getters.user.phone,
+                    sex: this.$store.getters.user.sex,
+                    birthdate: this.$store.getters.user.birthdate,
+                    street: this.$store.getters.user.street,
+                    house: this.$store.getters.user.house,
+                    householdType: this.$store.getters.user.householdType,
+                    invoicing_separate_address: this.$store.getters.user.invoicing_separate_address,
+                    invoicing_zip: this.$store.getters.user.invoicing_zip,
+                    invoicing_street: this.$store.getters.user.invoicing_street,
+                    invoicing_house: this.$store.getters.user.invoicing_house,
+                    reason: this.$store.getters.user.reason,
+                    date: this.$store.getters.user.date,
+                    provideMeterData: this.$store.getters.user.provideMeterData,
+                    provideMeterDataEmail: this.$store.getters.user.provideMeterDataEmail,
+                    whatsapp: this.$store.getters.user.whatsapp,
+                    meterNumber: this.$store.getters.user.meterNumber,
+                    previousContractor: this.$store.getters.user.previousContractor,
+                    contractNumber: this.$store.getters.user.contractNumber,
+                    registerAuthorization: this.$store.getters.user.registerAuthorization,
+                    paymentMethod: this.$store.getters.user.paymentMethod,
+                    sepaFullname: this.$store.getters.user.sepaFullname,
+                    sepaIBAN: this.$store.getters.user.sepaIBAN,
+                    transferConsent: this.$store.getters.user.transferConsent,
+                    whatsappconsent: this.$store.getters.user.whatsappconsent,
+                    emailconsentMeterData: this.$store.getters.user.emailconsentMeterData,
+                    uuid: this.$store.getters.user.uuid,
+                    step: this.$store.getters.user.step,
+                },
                 acceptance: {
                     one: null,
                     two: null,
                     three: null,
                     four: null,
-                }
+                },
+                editable: {
+                    personal: false,
+                    address: false,
+                    switch: false,
+                    provided: false,
+                    payment: false
+                },
+                supplier: [],
+                reasonOptions: [
+                    { text: 'Wechsel zu CLARIDOO', value: 'switch' },
+                    { text: 'Umzug / Einzug', value: 'moving' },
+                    { text: 'Neubau', value: 'new' },
+                ],
+                min: null,
+                max: null,
+                placeholder: `${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}`,
+                payment: false
             }
         },
+        mounted() {
+            this.user = this.$store.getters.user;
+            this.resizeInput('firstName');
+            this.$root.$on('choose-edited-type', (type) => {
+                this.$bvModal.hide('type');
+                this.info.provideMeterData = type;
+            })
+        },
         methods: {
-            openEdit() {
-                this.$bvModal.show('edit-modal');
-            },
-            postData() {
+            submit() {
+                this.checkInfoObject();
+                let object = this.info;
+                object = Object.assign(this.user, object);
+                this.$store.commit('user', object);
                 this.$httpService.post(process.env.NODE_ENV === 'production' ? '/signup/prod/' : 'api/step-one', this.$store.getters.user)
                     .then(response => {
                         let user = this.$store.getters.user;
                         user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
+                        user.step = '6';
                         this.$store.commit('user', user);
                         this.$store.commit('progress', 20);
                         this.$router.push({name: 'register.end'});
@@ -103,6 +516,104 @@
                             }
                         }
                     })
+            },
+            resizeInput(id) {
+                const input = document.getElementById(id)
+                input.setAttribute('size', input.value.length);
+            },
+            setReason() {
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const minDate = new Date(today);
+                const maxDate = new Date(today);
+                switch (this.info.reason) {
+                    case 'switch':
+                        return;
+                    case 'moving':
+                        minDate.setMonth(minDate.getMonth() - 6);
+                        maxDate.setMonth(maxDate.getMonth() + 6);
+                        this.max = maxDate;
+                        this.min = minDate;
+                        return;
+                    case 'new':
+                        maxDate.setMonth(maxDate.getMonth() + 6);
+                        this.max = maxDate;
+                        this.min = minDate;
+                        return;
+                }
+            },
+            onContext(ctx) {
+                this.info.date = ctx.selectedYMD.split('-').reverse().join('.')
+            },
+            findPreviousSupplier() {
+                this.$httpService.get(process.env.NODE_ENV === 'production' ? `/ep/prod/?filter=${this.info.previousContractor}` : `api/supplier/${this.info.previousContractor}`)
+                    .then(response => {
+                        this.supplier = process.env.NODE_ENV === 'production' ? response.data : response.data.supplier;
+                    })
+                    .catch(error => {
+                        console.log(error.response.data.error);
+                    })
+            },
+            handlePreviousSupplier(supplier) {
+                this.info.previousContractor = supplier;
+                this.supplier = [];
+            },
+            checkInfoObject() {
+                switch (this.info.provideMeterData) {
+                    case 'email':
+                        delete this.info.whatsapp;
+                        delete this.info.previousContractor;
+                        delete this.info.contractNumber;
+                        delete this.info.meterNumber;
+                        delete this.info.registerAuthorization;
+                        delete this.info.whatsappconsent;
+                        delete this.user.whatsapp;
+                        delete this.user.previousContractor;
+                        delete this.user.contractNumber;
+                        delete this.user.meterNumber;
+                        delete this.user.registerAuthorization;
+                        delete this.user.whatsappconsent;
+                        break;
+                    case 'direct':
+                        delete this.info.whatsapp;
+                        delete this.info.provideMeterDataEmail;
+                        delete this.info.whatsappconsent;
+                        delete this.user.whatsapp;
+                        delete this.user.provideMeterDataEmail;
+                        delete this.user.whatsappconsent;
+                        break;
+                    case 'whatsapp':
+                        delete this.info.provideMeterDataEmail;
+                        delete this.info.previousContractor;
+                        delete this.info.contractNumber;
+                        delete this.info.meterNumber;
+                        delete this.info.registerAuthorization;
+                        delete this.info.emailconsentMeterData;
+                        delete this.user.provideMeterDataEmail;
+                        delete this.user.previousContractor;
+                        delete this.user.contractNumber;
+                        delete this.user.meterNumber;
+                        delete this.user.registerAuthorization;
+                        delete this.user.emailconsentMeterData;
+                        break;
+                }
+                switch (this.info.paymentMethod) {
+                    case 'sepa':
+                        delete this.info.transferConsent;
+                        delete this.user.transferConsent;
+                        break;
+                    case 'transfer':
+                        delete this.info.sepaFullname;
+                        delete this.info.sepaIBAN;
+                        delete this.user.sepaFullname;
+                        delete this.user.sepaIBAN;
+                        break;
+                }
+                for (const key in this.info) {
+                    if(!this.info[key]) {
+                        delete this.info[key]
+                    }
+                }
             }
         },
         computed: {
@@ -110,6 +621,18 @@
                 for(let o in this.acceptance)
                     if(!this.acceptance[o]) return false;
                 return true;
+            },
+            sexOptions() {
+                return [
+                    { text: this.editable.personal || this.info.sex === 'Female' ? 'Frau' : '', value: 'Female' },
+                    { text: this.editable.personal || this.info.sex === 'Male' ? 'Herr' : '', value: 'Male' },
+                ]
+            },
+            holdTypeOptions() {
+                return [
+                    { text: this.editable.address || this.info.householdType === 'House' ? 'einem Haus' : '', value: 'House' },
+                    { text: this.editable.address || this.info.householdType === 'Apartment' ? 'einer Wohnung' : '', value: 'Apartment' }
+                ]
             }
         }
     }

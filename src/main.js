@@ -5,6 +5,7 @@ import store from "./store"
 import "./bootstrap/plugins.bootstrap";
 import "./bootstrap/fontawesome.bootstrap";
 import "./bootstrap/components.bootstrap";
+import "./bootstrap/directives.bootstrap";
 import "./scss/app.scss";
 
 Vue.config.productionTip = false;
