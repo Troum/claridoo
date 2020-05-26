@@ -34,10 +34,10 @@
                             )
                 li.d-flex.justify-content-start.align-items-center
                     b-input-group.d-flex.justify-content-start.align-items-center
-                        b-input-group-prepend.mr-2
+                        b-input-group-prepend.w-5.mr-1
                             img.img-fluid( src="../assets/checkmark.svg" alt="Claridoo Email Info")
-                        small.mb-0 Beantwortung von 5 einfachen Fragen zu Deinem aktuellen Stromverbrauch
-                        b-input-group-append.ml-2
+                        small.w-85.mb-0 Beantwortung von 5 einfachen Fragen zu Deinem aktuellen Stromverbrauch
+                        b-input-group-append.ml-2.w-5
                             img#infoThree.img-fluid( src="../assets/info.svg" alt="Claridoo Email Info")
                             popover-component(
                                 :title="'Email'"
@@ -51,10 +51,10 @@
             span( v-if="isMobile" ) &nbsp;oder verbinde dich jetzt direkt:
         b-button.claridoo_button.mx-auto.w-100(
             v-if="isMobile"
-            @click="window.location.replace('https://wa.me/101709339513')"
+            @click="whatsApp"
             type="button" )
-            font-awesome-icon( :icon="['fab', 'whatsapp']" )
-            | &nbsp;Jetzt Whatsapp
+            font-awesome-icon( :icon="['fab', 'whatsapp']" size="2x")
+            span( style="font-size: 22px" ) &nbsp;&nbsp;Jetzt WhatsApp
 </template>
 
 <script>
@@ -75,6 +75,11 @@
                     'a': '[A-Za-z]',
                     '*': '[A-Za-z0-9]'
                 }
+            }
+        },
+        methods: {
+            whatsApp() {
+                window.location.replace('https://wa.me/4901709339513')
             }
         }
     }

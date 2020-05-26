@@ -351,7 +351,6 @@
                                 template( v-else )
                                     font-awesome-icon.when-closed( @click="showModal" v-if="notCounter" :icon="['fas', 'pencil-alt']" )
                     b-collapse.w-67.mx-auto#personal-four(
-                        :visible="visible"
                         accordion="personal-accordion"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
@@ -369,7 +368,6 @@
                                     :icon="['fas', 'pencil-alt']" )
                     b-collapse.w-67.mx-auto#personal-five(
                         accordion="personal-accordion"
-                        :visible="visibleFive"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             payment-component( :isMobile="isMobile"
@@ -597,7 +595,7 @@
                                         @click="stepTwo"
                                         v-b-toggle.personal-two.personal-three
                                         type="button" ) Weiter
-                b-card.pt-3.pl-3.pr-3.mb-xl-4.mb-1( no-body :class="[(opened.three ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseThree) && !opened.three  ? 'bg-white filled' : '')]" )
+                b-card.pt-3.pl-3.pr-3.mb-xl-4( no-body :class="[(opened.three ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseThree) && !opened.three  ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
                         role="tab" )
@@ -638,7 +636,7 @@
                                     v-b-toggle.personal-three
                                     @click="showModal"
                                     type="button" ) Weiter
-                b-card.pt-3.pl-3.pr-3.mb-xl-4.mb-1( no-body
+                b-card.pt-3.pl-3.pr-3.mb-xl-4( no-body
                 :class="[(opened.four ? 'bg-white' : 'bg-tariff'),((checkForm(formCollapseFour) && !opened.four) || (checkForm(formCollapseFive) && !opened.four) || (checkForm(formCollapseSix) && !opened.four) || (notCounter && !opened.four) ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
@@ -654,11 +652,10 @@
                                     font-awesome-icon.when-closed( @click="showModal" v-if="notCounter" :icon="['fas', 'pencil-alt']" )
                     b-collapse#personal-four(
                         accordion="personal-accordion"
-                        :visible="visible"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'direct'" )
-                b-card.pt-3.pl-3.pr-3.mb-xl-4.mb-1( no-body :class="[(opened.five ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseSeven) && !opened.five  ? 'bg-white filled' : '')]" )
+                b-card.pt-3.pl-3.pr-3.mb-xl-4( no-body :class="[(opened.five ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseSeven) && !opened.five  ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
                         role="tab" )
@@ -671,7 +668,6 @@
                                     :icon="['fas', 'pencil-alt']" )
                     b-collapse#personal-five(
                         accordion="personal-accordion"
-                        :visible="visibleFive"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             payment-component( :isMobile="isMobile"
@@ -757,8 +753,6 @@
                 max: null,
                 placeholder: `${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}`,
                 type: null,
-                visible: false,
-                visibleFive: false,
                 paymentMethod: null,
                 formatChars: {
                     '0': '[0-9]',
@@ -771,26 +765,26 @@
             this.$store.commit('progress', 20);
             this.$root.$emit('show-alert');
             this.$root.$on('choose-type', (type) => {
+                this.type = type;
+                switch (type) {
+                    case 'email':
+                        this.notCounter = true;
+                        break;
+                    case 'whatsapp':
+                        this.notCounter = true;
+                        break;
+                    case 'direct':
+                        this.notCounter = false;
+                        break;
+                }
                 let user = this.$store.getters.user;
                 let object = {
                     date: this.formCollapseThree.date,
                     reason: this.formCollapseThree.reason,
+                    provideMeterData: this.type
                 };
                 object = Object.assign(object, user);
                 this.$store.commit('user', object);
-                this.type = type;
-                this.visible = true;
-                switch (type) {
-                    case 'email':
-                    case 'whatsapp':
-                        this.notCounter = true;
-                        this.visibleFive = true;
-                        break;
-                    case 'direct':
-                        this.notCounter = false;
-                        this.visibleFive = true;
-                        break;
-                }
             });
             this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
                 switch (collapseId) {
@@ -805,7 +799,6 @@
                         break;
                     case 'personal-four':
                         this.opened.four = isJustShown;
-                        this.visible = isJustShown;
                         break;
                     case 'personal-five':
                         this.opened.five = isJustShown;

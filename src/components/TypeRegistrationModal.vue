@@ -4,7 +4,7 @@
             p.type-title {{ $store.getters.user ? $store.getters.user.firstname : '@name' }}, kennst du deine zählernummer?
         #types( v-if="!fromWhere" )
             div.types-card-container
-                div.types-card( @click="choose($store.getters.types[0].type)")
+                div.types-card( @click="choose($store.getters.types[0].type)" v-b-toggle.personal-four)
                     img.img-fluid( :src="`${$store.getters.types[0].icon}`" )
                     p.h4.text-center {{ $store.getters.types[0].title }}
             div.types-card-container

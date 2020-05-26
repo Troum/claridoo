@@ -13,7 +13,7 @@
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3( v-if="errors[0]" )
                                                 small.font-weight-bold {{ errors[0] }}
-                                validation-provider( name="IBAN" rules="required|min:16|iban" v-slot="{ errors }")
+                                validation-provider( name="IBAN" rules="required|min:5|iban" v-slot="{ errors }")
                                     b-form-group.my-4( label="IBAN*" )
                                         b-form-input.claridoo_form-input( type="text" v-model="formSepa.sepaIban"
                                             autocomplete="off"

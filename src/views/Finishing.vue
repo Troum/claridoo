@@ -79,7 +79,7 @@
                                 div.my-2.pl-4.font-weight-bold.w-100
                                     validation-provider( rules="required" name="Andrede" v-slot="{ errors }" )
                                         b-form-group#finishingSex( v-if="editable.personal" :disabled="!editable.personal" )
-                                            b-row.m-0.p-0.w-50
+                                            b-row.m-0.p-0( :class="isMobile ? 'w-100' : 'w-50'" )
                                                 b-col.p-0( cols="6" )
                                                     b-form-radio.p-0.pr-1.frau( v-model="info.sex" name="sex" value="Female")
                                                 b-col.p-0( cols="6" )
@@ -91,10 +91,9 @@
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Vornamen" v-slot="{ errors }" )
                                         label.d-block.text-violet( for="firstName" v-if="editable.personal") Vornamen
-                                        input#firstName.mr-2( :disabled="!editable.personal" type="text"
-                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.firstname"
-                                            @keyup="resizeInput('firstName')")
+                                        input#firstName( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'" autocomplete="off"
+                                            v-model="info.firstname" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -102,8 +101,7 @@
                                         label.d-block.text-violet( for="lastName" v-if="editable.personal") Nachnamen
                                         input#lastName( :disabled="!editable.personal" type="text"
                                             :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.lastname"
-                                            @keyup="resizeInput('lastName')" )
+                                            v-model="info.lastname" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -111,8 +109,7 @@
                                         label.d-block.text-violet( for="email" v-if="editable.personal") Email Adresse
                                         input#email.d-block( :disabled="!editable.personal" type="email"
                                             :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.email"
-                                            @keyup="resizeInput('email')" )
+                                            v-model="info.email" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -123,8 +120,7 @@
                                             maskChar=""
                                             mask="00.00.0000"
                                             :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.birthdate"
-                                            @keyup="resizeInput('birthdate')" )
+                                            v-model="info.birthdate" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -135,8 +131,7 @@
                                             v-model="info.phone"
                                             :format-chars="formatChars"
                                             maskChar=""
-                                            mask="+4900000000000"
-                                            @keyup="resizeInput('phone')" )
+                                            mask="+4900000000000" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -151,8 +146,7 @@
                                         label.d-block.text-violet( for="zip" v-if="editable.address") Postleitzeil
                                         input#zip.d-inline-block( :disabled="!editable.address" type="text"
                                             :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.zip"
-                                            @keyup="resizeInput('zip')")
+                                            v-model="info.zip" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -160,8 +154,7 @@
                                         label.d-block.text-violet( for="city" v-if="editable.address") Stadt
                                         input#city.d-inline-block( :disabled="!editable.address" type="text"
                                             :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.city"
-                                            @keyup="resizeInput('city')")
+                                            v-model="info.city" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -169,8 +162,7 @@
                                         label.d-block.text-violet( for="street" v-if="editable.address") Strasse
                                         input#street.d-inline-block( :disabled="!editable.address" type="text"
                                             :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.street"
-                                            @keyup="resizeInput('street')")
+                                            v-model="info.street" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -178,8 +170,7 @@
                                         label.d-block.text-violet( for="house" v-if="editable.address") Hausnummer
                                         input#house.d-inline-block( :disabled="!editable.address" type="text"
                                             :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                            v-model="info.house"
-                                            @keyup="resizeInput('house')" )
+                                            v-model="info.house" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -198,8 +189,7 @@
                                             label.d-block.text-violet( for="alternateZip" v-if="editable.address") Alternate Postleitzeil
                                             input#alternateZip.d-block( :disabled="!editable.address" type="text"
                                                 :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                                v-model="info.invoicing_zip"
-                                                @keyup="resizeInput('alternateZip')")
+                                                v-model="info.invoicing_zip" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
@@ -207,8 +197,7 @@
                                             label.d-block.text-violet( for="alternateStreet" v-if="editable.address") Alternate Strasse
                                             input#alternateStreet.d-block( :disabled="!editable.address" type="text"
                                                 :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                                v-model="info.invoicing_street"
-                                                @keyup="resizeInput('alternateStreet')")
+                                                v-model="info.invoicing_street" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
@@ -216,8 +205,7 @@
                                             label.d-block.text-violet( for="alternateHouse" v-if="editable.address") Alternate Hausnummer
                                             input#alternateHouse.d-block( :disabled="!editable.address" type="text"
                                                 :class="editable.address ? 'claridoo_form-input' : 'border-0'"
-                                                v-model="info.invoicing_house"
-                                                @keyup="resizeInput('alternateHouse')" )
+                                                v-model="info.invoicing_house" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
@@ -263,7 +251,6 @@
                                                 v-model="info.meterNumber"
                                                 type="text"
                                                 autocomplete="off"
-                                                @keyup="resizeInput('previousNumber')"
                                                 placeholder="Bisherige Zählernummer" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
@@ -276,9 +263,8 @@
                                                 v-model="info.previousContractor"
                                                 @input="findPreviousSupplier"
                                                 type="text"
-                                                placeholder=""
-                                                autocomplete="off"
-                                                @keyup="resizeInput('previousSupplier')" )
+                                                placeholder="Bisheriger Lieferant"
+                                                autocomplete="off" )
                                             b-list-group.mt-2( v-if="supplier" )
                                                 b-list-group-item.autocomplete-result.pl-5( v-for="item in supplier" :key="item.bezeichnung"
                                                     @click="handlePreviousSupplier(item.bezeichnung)" ) {{ item.bezeichnung }}
@@ -292,7 +278,6 @@
                                                 v-model="info.contractNumber"
                                                 type="text"
                                                 autocomplete="off"
-                                                @keyup="resizeInput('previousContractNumber')"
                                                 placeholder="Bisherige Kundennummer" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
@@ -311,7 +296,7 @@
                                         type="button" @click="editable.payment = !editable.payment; payment = false" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-2.pl-4.font-weight-bold.w-100
-                                    template( v-if="info.paymentMethod === 'sepa' && !payment" )
+                                    template( v-if="info.paymentMethod === 'sepa'")
                                         validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
                                             label.d-block.text-violet( for="sepaUser" v-if="editable.payment") Kontoinhaber/in
                                             input#sepaUser.d-block(
@@ -319,7 +304,6 @@
                                                 v-model="info.sepaFullname"
                                                 type="text"
                                                 autocomplete="off"
-                                                @keyup="resizeInput('sepaUser')"
                                                 placeholder="Kontoinhaber/in" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
@@ -331,12 +315,11 @@
                                                 v-model="info.sepaIBAN"
                                                 type="text"
                                                 autocomplete="off"
-                                                @keyup="resizeInput('sepaIBAN')"
                                                 placeholder="IBAN" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                    template( v-if="info.paymentMethod === 'transfer' && !payment" )
+                                    template( v-if="info.paymentMethod === 'transfer'" )
                                         p.font-weight-light Wenn Du lieber jeden Monat selbst eine Überweisung tätigen möchtest
                                     template( v-if="payment" )
                                         b-tabs#payments.claridoo_tabs-container
@@ -347,7 +330,6 @@
                                                         v-model="info.sepaFullname"
                                                         type="text"
                                                         autocomplete="off"
-                                                        @keyup="resizeInput('sepaTabsUser')"
                                                         placeholder="Kontoinhaber/in" )
                                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                         .text-danger.pl-3
@@ -358,7 +340,6 @@
                                                         v-model="info.sepaIBAN"
                                                         type="text"
                                                         autocomplete="off"
-                                                        @keyup="resizeInput('sepaTabsIBAN')"
                                                         placeholder="IBAN" )
                                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                         .text-danger.pl-3
@@ -681,8 +662,7 @@
     }
 
     .claridoo_form-input {
-        width: auto;
-        min-width: 25%;
+        width: 100%;
         border-radius: 100px!important;
         border: 2px solid #a1a1a1;
         height: 52px;
