@@ -3,11 +3,18 @@
         div.text-center
             p.type-title {{ $store.getters.user ? $store.getters.user.firstname : '@name' }}, kennst du deine zählernummer?
         #types( v-if="!fromWhere" )
-            div.types-card-container( v-for="item in $store.getters.types"
-                :key="item.icon" )
-                div.types-card( @click="choose(item.type)" )
-                    img.img-fluid( @click="choose(item.type)" :src="`${item.icon}`" )
-                    p.h4.text-center( @click="choose(item.type)" ) {{ item.title }}
+            div.types-card-container
+                div.types-card( @click="choose($store.getters.types[0].type)")
+                    img.img-fluid( :src="`${$store.getters.types[0].icon}`" )
+                    p.h4.text-center {{ $store.getters.types[0].title }}
+            div.types-card-container
+                div.types-card( @click="choose($store.getters.types[1].type)" v-b-toggle.personal-five)
+                    img.img-fluid( :src="`${$store.getters.types[1].icon}`" )
+                    p.h4.text-center {{ $store.getters.types[1].title }}
+            div.types-card-container
+                div.types-card( @click="choose($store.getters.types[2].type)" v-b-toggle.personal-five)
+                    img.img-fluid( :src="`${$store.getters.types[2].icon}`" )
+                    p.h4.text-center {{ $store.getters.types[2].title }}
         #fromWhere( v-else )
             div.types-card-container( v-for="item in $store.getters.types"
                 :key="item.icon" )
@@ -21,10 +28,10 @@
     export default {
         name: "TypeRegistrationModal",
         data() {
-          return {
-              publicPath: process.env.BASE_URL,
-              fromWhere: false
-          }
+            return {
+                publicPath: process.env.BASE_URL,
+                fromWhere: false
+            }
         },
         mounted() {
             this.$root.$on('from-where', (info = null) => {
@@ -37,6 +44,7 @@
         methods: {
             choose(type) {
                 this.$root.$emit('choose-type', type);
+                this.$bvModal.hide('type');
             },
             chooseEdited(type) {
                 this.$root.$emit('choose-edited-type', type);

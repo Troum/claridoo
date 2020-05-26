@@ -135,10 +135,10 @@
                                                             .text-danger.pl-3
                                                                 small.font-weight-bold {{ errors[0] }}
                                                 b-col.pl-1.pr-1( cols="4" )
-                                                    validation-provider( rules="required|integer|between:1900,2020" name="YY" v-slot="{ errors }")
+                                                    validation-provider( rules="required|integer|between:1900,2020" name="YYYY" v-slot="{ errors }")
                                                         b-form-input.claridoo_form-input.w-100.text-center#year( type="text" autocomplete="off"
                                                             v-model="formCollapseOne.year"
-                                                            placeholder="YY")
+                                                            placeholder="YYYY")
                                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                             .text-danger.pl-3
                                                                 small.font-weight-bold {{ errors[0] }}
@@ -148,11 +148,11 @@
                                             b-form-group( label="Email*" )
                                                 b-input-group
                                                     b-form-input.claridoo_form-input.border-radius-right( type="email" placeholder="Email Adresse" v-model="formCollapseOne.email" autocomplete="off" )
-                                                    b-input-group-append.ml-3
+                                                    b-input-group-append.ml-2
                                                         img#email-info.img-fluid( src="../assets/info.svg" alt="Claridoo Email Info")
                                                         popover-component(
                                                             :title="'Email'"
-                                                            :content="'Lorem ipsum dolorem sit amet'"
+                                                            :content="'Wir nutzen Deine E-Mail Adresse um dir wichtige Dokumente zu deiner Claridoo Smart Strom Bestellung zu senden, z.B. die Vertragsunterlagen.'"
                                                             :target="'email-info'"
                                                             :placement="'bottomright'"
                                                         )
@@ -169,11 +169,11 @@
                                                         maskChar=""
                                                         mask="+4900000000000"
                                                         placeholder="Telefonnummer" autocomplete="off")
-                                                    b-input-group-append.ml-3
+                                                    b-input-group-append.ml-2
                                                         img#telefonnummer-info.img-fluid( src="../assets/info.svg" alt="Claridoo Telefonnummer Info")
                                                         popover-component(
                                                             :title="'Telefonnummer'"
-                                                            :content="'Lorem ipsum dolorem sit amet'"
+                                                            :content="'Wir nutzen Deine Handynummer nur um deine claridoo Smart Strom Bestellung abzuwickeln, z.B. um mit dir den Termin für die Installation des intelligenten Zählers zu vereinbaren.'"
                                                             :target="'telefonnummer-info'"
                                                             :placement="'bottomright'"
                                                         )
@@ -183,9 +183,9 @@
                                 b-form-group.my-2
                                     div.d-inline-flex.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( @change="formCollapseOne.emailconsent = !formCollapseOne.emailconsent" )
-                                        span.ml-3 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
+                                        span.ml-2 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
                                 b-form-group.my-5.text-left
-                                    b-button.claridoo_button.w-35(
+                                    b-button.claridoo_button.mb-3.w-35(
                                         :disabled="!checkForm(formCollapseOne) || !checkPhone()"
                                         v-b-toggle.personal-one.personal-two
                                         @click="stepOne"
@@ -207,6 +207,14 @@
                             b-form.my-3
                                 b-row.m-0.p-0
                                     b-col.pl-0( xl="5" )
+                                        validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
+                                            b-form-group.my-2( label-for="postcode" label="Postleitzahl*" )
+                                                b-form-input.claridoo_form-input#postcode( type="text" autocomplete="off"
+                                                    v-model="formCollapseTwo.postcode"
+                                                    disabled)
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Strasse" v-slot="{ errors }")
                                             b-form-group.my-2( label-for="street" label="Strasse*" )
                                                 b-form-input.claridoo_form-input#street( type="text" autocomplete="off"
@@ -215,15 +223,15 @@
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                        validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }")
-                                            b-form-group.my-2( label-for="postcode" label="Postleitzeil" )
+                                    b-col( xl="5" )
+                                        validation-provider( rules="required" name="Stadt" v-slot="{ errors }")
+                                            b-form-group.my-2( label-for="postcode" label="Stadt*" )
                                                 b-form-input.claridoo_form-input#postcode( type="text" autocomplete="off"
-                                                    v-model="formCollapseTwo.postcode"
+                                                    v-model="formCollapseTwo.city"
                                                     disabled)
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                    b-col( xl="5" )
                                         validation-provider( rules="required" name="Hausnummer" v-slot="{ errors }")
                                             b-form-group.my-2( label-for="building" label="Hausnummer*" )
                                                 b-form-input.claridoo_form-input#building( type="text" autocomplete="off"
@@ -235,10 +243,18 @@
                                 b-form-group.my-2
                                     div.d-inline-flex.align-items-center.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( @change="alternate = !alternate" )
-                                        span.ml-3.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
+                                        span.ml-2.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                     b-row.m-0.p-0( v-if="alternate" )
                                         b-col.pl-0( xl="5" )
+                                            validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
+                                                b-form-group.my-2( label-for="name" label="Postleitzahl" )
+                                                    b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
+                                                        v-model="formCollapseTwoAlternate.altPostcode"
+                                                        placeholder="Postleitzahl")
+                                                transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                    .text-danger.pl-3
+                                                        small.font-weight-bold {{ errors[0] }}
                                             validation-provider( rules="required" name="Strasse" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altStreet" label="Strasse*" )
                                                     b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"
@@ -247,15 +263,15 @@
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3
                                                         small.font-weight-bold {{ errors[0] }}
-                                            validation-provider( rules="required" name="Anrede" v-slot="{ errors }")
-                                                b-form-group.my-2( label-for="name" label="Postleitzeil" )
-                                                    b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
-                                                        v-model="formCollapseTwoAlternate.altPostcode"
-                                                        placeholder="Postleitzeil")
+                                        b-col( xl="5" )
+                                            validation-provider( rules="required" name="Stadt" v-slot="{ errors }")
+                                                b-form-group.my-2( label-for="altStreet" label="Stadt*" )
+                                                    b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"
+                                                        v-model="formCollapseTwoAlternate.altCity"
+                                                        placeholder="Stadt" )
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3
                                                         small.font-weight-bold {{ errors[0] }}
-                                        b-col( xl="5" )
                                             validation-provider( rules="required" name="Hausnummer" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altBuilding" label="Hausnummer*" )
                                                     b-form-input.claridoo_form-input#altBuilding( type="text" autocomplete="off"
@@ -273,7 +289,7 @@
                                             b-form-radio.p-0.apartment( v-model="formCollapseTwo.choose" name="choose" value="Apartment")
                                             p.mt-2.text-center einer Wohnung
                                 b-form-group.my-3.text-left
-                                    b-button.claridoo_button.w-35(
+                                    b-button.claridoo_button.mb-3.w-35(
                                         :disabled="!checkForm(formCollapseTwo)"
                                         v-b-toggle.personal-two.personal-three
                                         @click="stepTwo"
@@ -313,15 +329,15 @@
                                 b-form-group.my-2( v-else )
                                     div.d-inline-flex.align-items-center.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( v-model="formCollapseThree.choose" @change="formCollapseThree.chose = !formCollapseThree.choose" )
-                                        span.ml-3.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
+                                        span.ml-2.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
                             b-form-group.my-3.text-left
-                                b-button.claridoo_button.w-35.claridoo_form-input(
+                                b-button.claridoo_button.mb-3.w-35.claridoo_form-input(
                                     v-b-toggle.personal-three
                                     :disabled="!checkForm(formCollapseThree)"
                                     @click="showModal"
                                     type="button" ) Weiter
                 b-card( no-body
-                :class="[(opened.four ? 'bg-white' : 'bg-tariff'),((checkForm(formCollapseFour) && !opened.four) || (checkForm(formCollapseFive) && !opened.four) || (checkForm(formCollapseSix) && !opened.four)  ? 'bg-white filled' : '')]" )
+                :class="[(opened.four ? 'bg-white' : 'bg-tariff'),((checkForm(formCollapseFour) && !opened.four) || (checkForm(formCollapseFive) && !opened.four) || (checkForm(formCollapseSix) && !opened.four) || (notCounter && !opened.four)  ? 'bg-white filled' : '')]" )
                     b-card-header.w-67.mx-auto(
                         header-tag="header"
                         role="tab" )
@@ -332,18 +348,14 @@
                                 type="button" )
                                 template( v-if="type === 'direct'" )
                                     font-awesome-icon.when-closed( v-if="checkForm(formCollapseFour)" :icon="['fas', 'pencil-alt']" )
-                                template( v-if="type === 'whatsapp'" )
-                                    font-awesome-icon.when-closed( v-if="checkForm(formCollapseFive)" :icon="['fas', 'pencil-alt']" )
-                                template( v-if="type === 'email'" )
-                                    font-awesome-icon.when-closed( v-if="checkForm(formCollapseSix)" :icon="['fas', 'pencil-alt']" )
+                                template( v-else )
+                                    font-awesome-icon.when-closed( @click="showModal" v-if="notCounter" :icon="['fas', 'pencil-alt']" )
                     b-collapse.w-67.mx-auto#personal-four(
                         :visible="visible"
                         accordion="personal-accordion"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'direct'" )
-                            whatsapp-component( :isMobile="isMobile" :form="formCollapseFive" v-if="type === 'whatsapp'" )
-                            email-component( :isMobile="isMobile" :form="formCollapseSix" v-if="type === 'email'" )
                 b-card( no-body :class="[(opened.five ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseSeven) && !opened.five  ? 'bg-white filled' : '')]")
                     b-card-header.w-67.mx-auto(
                         header-tag="header"
@@ -357,6 +369,7 @@
                                     :icon="['fas', 'pencil-alt']" )
                     b-collapse.w-67.mx-auto#personal-five(
                         accordion="personal-accordion"
+                        :visible="visibleFive"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             payment-component( :isMobile="isMobile"
@@ -428,10 +441,10 @@
                                                     .text-danger.pl-3.month
                                                         small.font-weight-bold {{ errors[0] }}
                                         b-col.m-0.p-0( cols="3" )
-                                            validation-provider( rules="required|integer|between:1900,2020" name="YY" v-slot="{ errors }")
+                                            validation-provider( rules="required|integer|between:1900,2020" name="YYYY" v-slot="{ errors }")
                                                 b-form-input.claridoo_form-input.w-100.text-center#year( type="text" autocomplete="off"
                                                     v-model="formCollapseOne.year"
-                                                    placeholder="YY")
+                                                    placeholder="YYYY")
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3.year
                                                         small.font-weight-bold {{ errors[0] }}
@@ -439,12 +452,13 @@
                                     b-form-group.my-2( label="Email*" )
                                         b-input-group
                                             b-form-input.claridoo_form-input.border-radius-right( type="email"
+                                                placeholder="Email Adresse"
                                                 v-model="formCollapseOne.email" autocomplete="off" )
-                                            b-input-group-append.ml-3
+                                            b-input-group-append.ml-2
                                                 img#email-info.img-fluid( src="../assets/info.svg" alt="Claridoo Email Info")
                                                 popover-component(
                                                     :title="'Email'"
-                                                    :content="'Lorem ipsum dolorem sit amet'"
+                                                    :content="'Wir nutzen Deine E-Mail Adresse um dir wichtige Dokumente zu deiner Claridoo Smart Strom Bestellung zu senden, z.B. die Vertragsunterlagen.'"
                                                     :target="'email-info'"
                                                     :placement="'bottomright'"
                                                 )
@@ -460,11 +474,11 @@
                                                 maskChar=""
                                                 mask="+4900000000000"
                                                 placeholder="Telefonnummer" autocomplete="off")
-                                            b-input-group-append.ml-3
+                                            b-input-group-append.ml-2
                                                 img#telefonnummer-info.img-fluid( src="../assets/info.svg" alt="Claridoo Telefonnummer Info")
                                                 popover-component(
                                                     :title="'Telefonnummer'"
-                                                    :content="'Lorem ipsum dolorem sit amet'"
+                                                    :content="'Wir nutzen Deine Handynummer nur um deine claridoo Smart Strom Bestellung abzuwickeln, z.B. um mit dir den Termin für die Installation des intelligenten Zählers zu vereinbaren.'"
                                                     :target="'telefonnummer-info'"
                                                     :placement="'bottomright'"
                                                 )
@@ -474,9 +488,9 @@
                                 b-form-group.my-2
                                     div.d-inline-flex.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input
-                                        span.ml-3 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet.
+                                        span.ml-2 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
                                 b-form-group.my-5.text-left
-                                    b-button.claridoo_button.w-100(
+                                    b-button.claridoo_button.mb-3.w-100(
                                         v-b-toggle.personal-one.personal-two
                                         :disabled="!checkForm(formCollapseOne) && checkPhone()"
                                         @click="stepOne"
@@ -496,19 +510,28 @@
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             b-form.my-3
+                                validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
+                                    b-form-group.my-2( label-for="postcode" label="Postleitzahl" )
+                                        b-form-input.claridoo_form-input#postcode( type="text" autocomplete="off"
+                                            v-model="formCollapseTwo.postcode"
+                                            disabled)
+                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                        .text-danger.pl-3
+                                            small.font-weight-bold {{ errors[0] }}
+                                validation-provider( rules="required" name="Stadt*" v-slot="{ errors }")
+                                    b-form-group.my-2( label-for="stadt" label="Stadt*" )
+                                        b-form-input.claridoo_form-input#stadt( type="text" autocomplete="off"
+                                            v-model="formCollapseTwo.city"
+                                            placeholder="Stadt"
+                                            disabled)
+                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                        .text-danger.pl-3
+                                            small.font-weight-bold {{ errors[0] }}
                                 validation-provider( rules="required" name="Strasse" v-slot="{ errors }")
                                     b-form-group.my-2( label-for="street" label="Strasse*" )
                                         b-form-input.claridoo_form-input#street( type="text" autocomplete="off"
                                             v-model="formCollapseTwo.street"
                                             placeholder="Strasse")
-                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                        .text-danger.pl-3
-                                            small.font-weight-bold {{ errors[0] }}
-                                validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }")
-                                    b-form-group.my-2( label-for="postcode" label="Postleitzeil" )
-                                        b-form-input.claridoo_form-input#postcode( type="text" autocomplete="off"
-                                            v-model="formCollapseTwo.postcode"
-                                            disabled)
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
@@ -523,10 +546,27 @@
                                 b-form-group.my-2
                                     div.d-inline-flex.align-items-center.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( @change="alternate = !alternate" )
-                                        span.ml-3.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
+                                        span.ml-2.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                     b-row.m-0.p-0( v-if="alternate" )
                                         b-col.pl-0( xl="5" )
+                                            validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
+                                                b-form-group.my-2( label-for="name" label="Postleitzahl" )
+                                                    b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
+                                                        v-model="formCollapseTwoAlternate.altPostcode"
+                                                        placeholder="Postleitzahl")
+                                                transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                    .text-danger.pl-3
+                                                        small.font-weight-bold {{ errors[0] }}
+                                            validation-provider( rules="required" name="Stadt" v-slot="{ errors }")
+                                                b-form-group.my-2( label-for="altStreet" label="Stadt*" )
+                                                    b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"
+                                                        v-model="formCollapseTwoAlternate.altCity"
+                                                        placeholder="Stadt" )
+                                                transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                    .text-danger.pl-3
+                                                        small.font-weight-bold {{ errors[0] }}
+                                        b-col( xl="5" )
                                             validation-provider( rules="required" name="Strasse" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altStreet" label="Strasse*" )
                                                     b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"
@@ -535,15 +575,6 @@
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3
                                                         small.font-weight-bold {{ errors[0] }}
-                                            validation-provider( rules="required" name="Anrede" v-slot="{ errors }")
-                                                b-form-group.my-2( label-for="name" label="Postleitzeil" )
-                                                    b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
-                                                        v-model="formCollapseTwoAlternate.altPostcode"
-                                                        placeholder="Postleitzeil")
-                                                transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                                    .text-danger.pl-3
-                                                        small.font-weight-bold {{ errors[0] }}
-                                        b-col( xl="5" )
                                             validation-provider( rules="required" name="Hausnummer" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altBuilding" label="Hausnummer*" )
                                                     b-form-input.claridoo_form-input#altBuilding( type="text" autocomplete="off"
@@ -561,7 +592,7 @@
                                             b-form-radio.p-0.apartment( v-model="formCollapseTwo.choose" name="choose" value="Apartment")
                                             p.mt-2.text-center einer Wohnung
                                 b-form-group.my-3.text-center
-                                    b-button.claridoo_button.w-100(
+                                    b-button.claridoo_button.mb-3.w-100(
                                         :disabled="!checkForm(formCollapseTwo)"
                                         @click="stepTwo"
                                         v-b-toggle.personal-two.personal-three
@@ -600,15 +631,15 @@
                                 b-form-group.my-2( v-else )
                                     div.d-inline-flex.align-items-center.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( v-model="formCollapseThree.choose" @change="formCollapseThree.chose = !formCollapseThree.choose" )
-                                        span.ml-3.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
+                                        span.ml-2.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
                                 b-form-group.my-3
-                                b-button.claridoo_button.w-100.claridoo_form-input(
+                                b-button.claridoo_button.mb-3.w-100.claridoo_form-input(
                                     :disabled="!checkForm(formCollapseThree)"
                                     v-b-toggle.personal-three
                                     @click="showModal"
                                     type="button" ) Weiter
                 b-card.pt-3.pl-3.pr-3.mb-xl-4.mb-1( no-body
-                :class="[(opened.four ? 'bg-white' : 'bg-tariff'),((checkForm(formCollapseFour) && !opened.four) || (checkForm(formCollapseFive) && !opened.four) || (checkForm(formCollapseSix) && !opened.four)  ? 'bg-white filled' : '')]" )
+                :class="[(opened.four ? 'bg-white' : 'bg-tariff'),((checkForm(formCollapseFour) && !opened.four) || (checkForm(formCollapseFive) && !opened.four) || (checkForm(formCollapseSix) && !opened.four) || (notCounter && !opened.four) ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
                         role="tab" )
@@ -619,18 +650,14 @@
                                 type="button" )
                                 template( v-if="type === 'direct'" )
                                     font-awesome-icon.when-closed( v-if="checkForm(formCollapseFour)" :icon="['fas', 'pencil-alt']" )
-                                template( v-if="type === 'whatsapp'" )
-                                    font-awesome-icon.when-closed( v-if="checkForm(formCollapseFive)" :icon="['fas', 'pencil-alt']" )
-                                template( v-if="type === 'email'" )
-                                    font-awesome-icon.when-closed( v-if="checkForm(formCollapseSix)" :icon="['fas', 'pencil-alt']" )
+                                template( v-else )
+                                    font-awesome-icon.when-closed( @click="showModal" v-if="notCounter" :icon="['fas', 'pencil-alt']" )
                     b-collapse#personal-four(
                         accordion="personal-accordion"
                         :visible="visible"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             counter-component( :isMobile="isMobile" :form="formCollapseFour" v-if="type === 'direct'" )
-                            whatsapp-component( :isMobile="isMobile" :form="formCollapseFive" v-if="type === 'whatsapp'" )
-                            email-component( :isMobile="isMobile" :form="formCollapseSix" v-if="type === 'email'" )
                 b-card.pt-3.pl-3.pr-3.mb-xl-4.mb-1( no-body :class="[(opened.five ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseSeven) && !opened.five  ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
@@ -644,6 +671,7 @@
                                     :icon="['fas', 'pencil-alt']" )
                     b-collapse#personal-five(
                         accordion="personal-accordion"
+                        :visible="visibleFive"
                         role="tabpanel")
                         validation-observer( ref="observer" v-slot="{ passes }" )
                             payment-component( :isMobile="isMobile"
@@ -662,6 +690,7 @@
         data() {
             const now = new Date();
             return {
+                notCounter: false,
                 alternate: false,
                 reason: 'switch',
                 finishing: false,
@@ -684,12 +713,14 @@
                     emailconsent: false
                 },
                 formCollapseTwo: {
+                    city: this.$store.getters.user.city,
                     street: null,
                     building: null,
                     postcode: this.$store.getters.postcode,
                     choose: null
                 },
                 formCollapseTwoAlternate: {
+                    altCity: null,
                     altStreet: null,
                     altBuilding: null,
                     altPostcode: null,
@@ -727,6 +758,7 @@
                 placeholder: `${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}`,
                 type: null,
                 visible: false,
+                visibleFive: false,
                 paymentMethod: null,
                 formatChars: {
                     '0': '[0-9]',
@@ -736,7 +768,6 @@
             }
         },
         mounted() {
-            this.$scrollTo('#register');
             this.$store.commit('progress', 20);
             this.$root.$emit('show-alert');
             this.$root.$on('choose-type', (type) => {
@@ -749,7 +780,17 @@
                 this.$store.commit('user', object);
                 this.type = type;
                 this.visible = true;
-                this.$bvModal.hide('type');
+                switch (type) {
+                    case 'email':
+                    case 'whatsapp':
+                        this.notCounter = true;
+                        this.visibleFive = true;
+                        break;
+                    case 'direct':
+                        this.notCounter = false;
+                        this.visibleFive = true;
+                        break;
+                }
             });
             this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
                 switch (collapseId) {
@@ -786,7 +827,7 @@
             },
             checkPhone() {
               if (this.formCollapseOne.phone) {
-                  if (this.formCollapseOne.phone.length > 13) {
+                  if (this.formCollapseOne.phone.length > 12) {
                       return true;
                   }
               } else {
@@ -799,6 +840,9 @@
                 return !values.includes(null);
             },
             stepOne() {
+                if (this.isMobile) {
+                    this.scrollTo('personal-two');
+                }
                 let user = this.$store.getters.user;
                 let object = {
                     firstname: this.formCollapseOne.name,
@@ -824,11 +868,15 @@
                 })
             },
             stepTwo() {
+                if (this.isMobile) {
+                    this.scrollTo('personal-three');
+                }
                 this.formCollapseThree.choose = true;
                 this.formCollapseThree.reason = 'switch';
                 document.querySelectorAll('.reason-card-container')[0].classList.add('chosen');
                 let user = this.$store.getters.user;
                 let object = {
+                    city: this.formCollapseTwo.city,
                     street: this.formCollapseTwo.street,
                     house: this.formCollapseTwo.building,
                     householdType: this.formCollapseTwo.choose
@@ -837,7 +885,7 @@
                     let alternate = {
                         invoicing_separate_address: true,
                         invoicing_zip: this.formCollapseTwoAlternate.altPostcode,
-                        invoicing_city: user.city,
+                        invoicing_city: this.formCollapseTwoAlternate.altCity,
                         invoicing_phone: user.phone,
                         invoicing_street: this.formCollapseTwoAlternate.altStreet,
                         invoicing_house: this.formCollapseTwoAlternate.altBuilding
@@ -893,6 +941,9 @@
                 }
             },
             stepFour(paymentMethod){
+                if (this.isMobile) {
+                    this.scrollTo('personal-five');
+                }
                 let user = this.$store.getters.user;
                 let object = {};
                 switch (paymentMethod) {
@@ -923,6 +974,9 @@
                     .catch(error => {
                         console.log(error)
                     })
+            },
+            scrollTo(id) {
+                this.$scrollTo(`#${id}`)
             }
         }
     }

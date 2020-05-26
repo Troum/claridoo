@@ -66,7 +66,7 @@
         b-row.m-0.p-0
             b-col.m-0.mx-auto.p-0( cols="11" xl="8" )
                 p.h2.claridoo_title Fast geschafft!
-                p.text-violet.text-center Bitte überprüfe nochmal deine Angaben
+                p.text-violet.text-center.border-bottom Bitte überprüfe nochmal deine Angaben
                 validation-observer( ref="observer" v-slot="{ passes }")
                     b-form( @submit.prevent="passes(submit)" )
                         b-row.m-0.p-0
@@ -77,55 +77,66 @@
                                         type="button" @click="editable.personal = !editable.personal" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-2.pl-4.font-weight-bold.w-100
+                                    validation-provider( rules="required" name="Andrede" v-slot="{ errors }" )
+                                        b-form-group#finishingSex( v-if="editable.personal" :disabled="!editable.personal" )
+                                            b-row.m-0.p-0.w-50
+                                                b-col.p-0( cols="6" )
+                                                    b-form-radio.p-0.pr-1.frau( v-model="info.sex" name="sex" value="Female")
+                                                b-col.p-0( cols="6" )
+                                                    b-form-radio.p-0.pl-1.herr( v-model="info.sex" name="sex" value="Male")
+                                        b-form-group( v-else )
+                                            p.mb-0.font-weight-light {{ info.sex | sex }}
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Vornamen" v-slot="{ errors }" )
-                                        input#firstName.border-0.mr-2( :disabled="!editable.personal" type="text"
-                                            :class="editable.personal ? 'border-bottom border-darkgray my-2 w-25' : ''"
+                                        label.d-block.text-violet( for="firstName" v-if="editable.personal") Vornamen
+                                        input#firstName.mr-2( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.firstname"
                                             @keyup="resizeInput('firstName')")
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Nachnamen" v-slot="{ errors }" )
-                                        input#lastName.border-0( :disabled="!editable.personal" type="text"
-                                            :class="editable.personal ? 'border-bottom border-darkgray my-2 w-25' : ''"
+                                        label.d-block.text-violet( for="lastName" v-if="editable.personal") Nachnamen
+                                        input#lastName( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.lastname"
                                             @keyup="resizeInput('lastName')" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Email Adresse" v-slot="{ errors }" )
-                                        input#email.border-0.w-75.d-block( :disabled="!editable.personal" type="email"
-                                            :class="editable.personal ? 'border-bottom border-darkgray my-2' : ''"
+                                        label.d-block.text-violet( for="email" v-if="editable.personal") Email Adresse
+                                        input#email.d-block( :disabled="!editable.personal" type="email"
+                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.email"
                                             @keyup="resizeInput('email')" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Geburtsdatum" v-slot="{ errors }" )
-                                        input-mask#birthdate.border-0.w-75.d-block( :disabled="!editable.personal" type="text"
+                                        label.d-block.text-violet( for="birthdate" v-if="editable.personal") Geburtsdatum
+                                        input-mask#birthdate.d-block( :disabled="!editable.personal" type="text"
                                             :format-chars="formatChars"
                                             maskChar=""
                                             mask="00.00.0000"
-                                            :class="editable.personal ? 'border-bottom border-darkgray my-2' : ''"
+                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.birthdate"
                                             @keyup="resizeInput('birthdate')" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required|germanyPhone" name="Telefonnummer" v-slot="{ errors }" )
-                                        input-mask#phone.border-0.w-75.d-block( :disabled="!editable.personal" type="text"
-                                            :class="editable.personal ? 'border-bottom border-darkgray my-2' : ''"
+                                        label.d-block.text-violet( for="phone" v-if="editable.personal") Telefonnummer
+                                        input-mask#phone.d-block( :disabled="!editable.personal" type="text"
+                                            :class="editable.personal ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.phone"
                                             :format-chars="formatChars"
                                             maskChar=""
                                             mask="+4900000000000"
                                             @keyup="resizeInput('phone')" )
-                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                            .text-danger.pl-3
-                                                small.font-weight-bold {{ errors[0] }}
-                                    validation-provider( rules="required" name="Andrede" v-slot="{ errors }" )
-                                        b-form-group#finishingSex( :disabled="!editable.personal" )
-                                            b-form-radio-group( v-model="info.sex" :options="sexOptions")
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -136,25 +147,47 @@
                                         type="button" @click="editable.address = !editable.address" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-2.pl-4.font-weight-bold.w-100
+                                    validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }" )
+                                        label.d-block.text-violet( for="zip" v-if="editable.address") Postleitzeil
+                                        input#zip.d-inline-block( :disabled="!editable.address" type="text"
+                                            :class="editable.address ? 'claridoo_form-input' : 'border-0'"
+                                            v-model="info.zip"
+                                            @keyup="resizeInput('zip')")
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
+                                    validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }" )
+                                        label.d-block.text-violet( for="city" v-if="editable.address") Stadt
+                                        input#city.d-inline-block( :disabled="!editable.address" type="text"
+                                            :class="editable.address ? 'claridoo_form-input' : 'border-0'"
+                                            v-model="info.city"
+                                            @keyup="resizeInput('city')")
+                                        transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            .text-danger.pl-3
+                                                small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Strasse" v-slot="{ errors }" )
-                                        input#street.border-0.w-75.d-block( :disabled="!editable.address" type="text"
-                                            :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                        label.d-block.text-violet( for="street" v-if="editable.address") Strasse
+                                        input#street.d-inline-block( :disabled="!editable.address" type="text"
+                                            :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.street"
                                             @keyup="resizeInput('street')")
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Hausnummer" v-slot="{ errors }" )
-                                        input#house.border-0.w-75.d-block( :disabled="!editable.address" type="text"
-                                            :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                        label.d-block.text-violet( for="house" v-if="editable.address") Hausnummer
+                                        input#house.d-inline-block( :disabled="!editable.address" type="text"
+                                            :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.house"
                                             @keyup="resizeInput('house')" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Hause typ" v-slot="{ errors }" )
-                                        b-form-group#houseHolderType( :disabled="!editable.address" )
+                                        b-form-group#houseHolderType( v-if="editable.address" :disabled="!editable.address" )
                                             b-form-radio-group( v-model="info.householdType" :options="holdTypeOptions")
+                                        b-form-group#houseHolderType( v-else )
+                                            p.font-weight-light.mb-0 {{ info.householdType | house }}
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
@@ -162,24 +195,27 @@
                                     div.my-2.pl-4.font-weight-bold.w-100( v-if="editable.address && info.invoicing_separate_address" )
                                         p.my-2 Alternate address
                                         validation-provider( rules="required" name="Alternate Postleitzeil" v-slot="{ errors }" )
-                                            input#alternateZip.border-0.w-75.d-block( :disabled="!editable.address" type="text"
-                                                :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                            label.d-block.text-violet( for="alternateZip" v-if="editable.address") Alternate Postleitzeil
+                                            input#alternateZip.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.invoicing_zip"
                                                 @keyup="resizeInput('alternateZip')")
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Alternate Strasse" v-slot="{ errors }" )
-                                            input#alternateStreet.border-0.w-75.d-block( :disabled="!editable.address" type="text"
-                                                :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                            label.d-block.text-violet( for="alternateStreet" v-if="editable.address") Alternate Strasse
+                                            input#alternateStreet.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.invoicing_street"
                                                 @keyup="resizeInput('alternateStreet')")
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Alternate Hausnummer" v-slot="{ errors }" )
-                                            input#alternateHouse.border-0.w-75.d-block( :disabled="!editable.address" type="text"
-                                                :class="editable.address ? 'border-bottom border-darkgray my-2' : ''"
+                                            label.d-block.text-violet( for="alternateHouse" v-if="editable.address") Alternate Hausnummer
+                                            input#alternateHouse.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.invoicing_house"
                                                 @keyup="resizeInput('alternateHouse')" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
@@ -203,15 +239,15 @@
                                             span.font-weight-light Neubau
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" )
                                     div.my-2.pl-4.font-weight-bold.w-100( v-if="editable.switch" )
-                                            b-form-group#finishingReasons
-                                                b-form-radio-group( @change="setReason" v-model="info.reason" :options="reasonOptions")
-                                                b-form-datepicker(
-                                                    button-only
-                                                    @context="onContext"
-                                                    v-if="info.reason !== 'switch'" :min="min" locale="de" :max="max")
-                                                input.border-0.w-75.d-inline-block( v-if="info.reason !== 'switch'"
-                                                    type="text" :placeholder="placeholder"
-                                                    disabled v-model="info.date" )
+                                        b-form-group#finishingReasons
+                                            b-form-radio-group( @change="setReason" v-model="info.reason" :options="reasonOptions")
+                                            b-form-datepicker(
+                                                button-only
+                                                @context="onContext"
+                                                v-if="info.reason !== 'switch'" :min="min" locale="de" :max="max")
+                                            input.d-inline-block( v-if="info.reason !== 'switch'"
+                                                type="text" :placeholder="placeholder"
+                                                disabled v-model="info.date" )
                             b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
                                 div.w-100
                                     span.claridoo_finishing-title 4. Bisherige Stromlieferdaten
@@ -221,8 +257,9 @@
                                 div.my-2.pl-4.font-weight-bold.w-100
                                     template( v-if="info.provideMeterData === 'direct'" )
                                         validation-provider( rules="required" name="Bisherige Zählernummer" v-slot="{ errors }" )
-                                            input#previousNumber.border-0.w-75.d-block(
-                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                            label.d-block.text-violet( for="previousNumber" v-if="editable.provided") Bisherige Zählernummer
+                                            input#previousNumber.d-block(
+                                                :class="editable.provided ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.meterNumber"
                                                 type="text"
                                                 autocomplete="off"
@@ -232,9 +269,10 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Bisheriger Lieferant" v-slot="{ errors }" )
-                                            input#previousSupplier.border-0.w-75(
+                                            label.d-block.text-violet( for="previousSupplier" v-if="editable.provided") Bisheriger Lieferant
+                                            input#previousSupplier(
                                                 :disabled="!editable.provided"
-                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                                :class="editable.provided ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.previousContractor"
                                                 @input="findPreviousSupplier"
                                                 type="text"
@@ -248,8 +286,9 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Bisheriger Kundennummer" v-slot="{ errors }" )
-                                            input#previousContractNumber.border-0.w-75.d-block(
-                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
+                                            label.d-block.text-violet( for="previousContractNumber" v-if="editable.provided") Bisheriger Kundennummer
+                                            input#previousContractNumber.d-block(
+                                                :class="editable.provided ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.contractNumber"
                                                 type="text"
                                                 autocomplete="off"
@@ -259,48 +298,24 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                     template( v-if="info.provideMeterData === 'email'" )
-                                        validation-provider( rules="required|email" name="Email Adresse" v-slot="{ errors }" )
-                                            input#providedEmail.border-0.w-75(
-                                                :disabled="!editable.provided"
-                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
-                                                v-model="info.provideMeterDataEmail"
-                                                type="email"
-                                                placeholder="Email Adresse"
-                                                autocomplete="off"
-                                                @keyup="resizeInput('providedEmail')")
-                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                                .text-danger.pl-3
-                                                    small.font-weight-bold {{ errors[0] }}
+                                        p.font-weight-light.mb-0 Nein, reiche ich später per E-Mail nach
                                     template( v-if="info.provideMeterData === 'whatsapp'" )
-                                        validation-provider( rules="required" name="WhatsApp Telefonnummer" v-slot="{ errors }" )
-                                            input-mask#providedWhatsapp.border-0.w-75(
-                                                :disabled="!editable.provided"
-                                                :class="editable.provided ? 'border-bottom border-darkgray my-2' : ''"
-                                                :format-chars="formatChars"
-                                                maskChar=""
-                                                mask="+4900000000000"
-                                                v-model="info.whatsapp"
-                                                type="text"
-                                                placeholder="WhatsApp Telefonnummer"
-                                                autocomplete="off"
-                                                @keyup="resizeInput('providedWhatsapp')")
-                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                                .text-danger.pl-3
-                                                    small.font-weight-bold {{ errors[0] }}
+                                        p.font-weight-light.mb-0 Nein, reiche ich später per WhatsApp nach
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" v-if="editable.provided" @click="$root.$emit('from-where', true)" ) Änderungsart
 
                             b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
                                 div.w-100
-                                    span.claridoo_finishing-title 5. Bisherige Zählernummer
+                                    span.claridoo_finishing-title 5. Zahlungsinfos
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" @click="editable.payment = !editable.payment; payment = false" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-2.pl-4.font-weight-bold.w-100
                                     template( v-if="info.paymentMethod === 'sepa' && !payment" )
                                         validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
-                                            input#sepaUser.border-0.w-75.d-block(
-                                                :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                            label.d-block.text-violet( for="sepaUser" v-if="editable.payment") Kontoinhaber/in
+                                            input#sepaUser.d-block(
+                                                :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.sepaFullname"
                                                 type="text"
                                                 autocomplete="off"
@@ -310,8 +325,9 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required|iban" name="IBAN" v-slot="{ errors }" )
-                                            input#sepaIBAN.border-0.w-75.d-block(
-                                                :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                        label.d-block.text-violet( for="sepaIBAN" v-if="editable.payment") IBAN
+                                            input#sepaIBAN.d-block(
+                                                :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.sepaIBAN"
                                                 type="text"
                                                 autocomplete="off"
@@ -326,8 +342,8 @@
                                         b-tabs#payments.claridoo_tabs-container
                                             b-tab( title="SEPA - LSV" title-item-class="font-weight-bold" @click="info.paymentMethod = 'sepa'")
                                                 validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
-                                                    input#sepaTabsUser.border-0.w-75.d-block(
-                                                        :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                                    input#sepaTabsUser.d-block(
+                                                        :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                         v-model="info.sepaFullname"
                                                         type="text"
                                                         autocomplete="off"
@@ -337,8 +353,8 @@
                                                         .text-danger.pl-3
                                                             small.font-weight-bold {{ errors[0] }}
                                                 validation-provider( rules="required|iban" name="IBAN" v-slot="{ errors }" )
-                                                    input#sepaTabsIBAN.border-0.w-75.d-block(
-                                                        :class="editable.payment ? 'border-bottom border-darkgray my-2' : ''"
+                                                    input#sepaTabsIBAN.d-block(
+                                                        :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                         v-model="info.sepaIBAN"
                                                         type="text"
                                                         autocomplete="off"
@@ -392,7 +408,8 @@
                                     b-collapse#collapse-one.pt-2.pb-3(
                                         accordion="collapse-one-accordion"
                                         role="tabpanel")
-                                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
+                                        | Das Förderprogramm Einsparzähler „Deutschland macht’s effizient” ist eine Initiative des Bundesministeriums für Wirtschaft und Energie, um durch die Digitalisierung Energieeinsparungen bzw. Effizienzsteigerungen zu unterstützen. Die Fördersumme an dich beträgt 60€ und ist bereits im Tarif enthalten. Für deine Teilnahme fragen wir nachträglich folgende Daten über deinen Haushalt ab: Anzahl Personen, Anzahl Zimmer, Wohnfläche in m², Warmwasserart (Boiler mit Strom oder Gas, kein Boiler) und brauchen eine Kopie bzw. ein Foto deiner letzten Stromrechnung. Diese Daten übermitteln wir für Forschungszwecke über unseren Kooperationspartner (Discovergy GmbH) anonymisiert an das Bundesministerium für Wirtschaft und Energie.
+                                        | Falls du nicht teilnehmen willst, ist dies vollkommen ok. Wir stellen dir dann eine Kompensationszahlung von 60€ nach Installtion des intelligenten Zählers in Rechnung.
                             b-col.m-0.p-0.my-4( cols="12" )
                                 b-form-group.text-center
                                     b-button.claridoo_button(
@@ -414,6 +431,24 @@
         props: {
             isMobile: null
         },
+        filters: {
+            sex(value) {
+                switch (value) {
+                    case 'Male':
+                        return 'Herr';
+                    case 'Female':
+                        return 'Frau';
+                }
+            },
+            house(value) {
+                switch (value) {
+                    case 'House':
+                        return 'Haus';
+                    case 'Apartment':
+                        return 'Wohnung';
+                }
+            }
+        },
         data() {
             const now = new Date();
             return {
@@ -423,7 +458,17 @@
                     'a': '[A-Za-z]',
                     '*': '[A-Za-z0-9]'
                 },
+                holdTypeOptions: [
+                    {text: 'Haus', value: 'House'},
+                    {text: 'Wohnung', value: 'Apartment'}
+                ],
+                sexOptions: [
+                    {text: 'Frau', value: 'Female'},
+                    {text: 'Herr', value: 'Male'},
+                ],
                 info: {
+                    zip: this.$store.getters.postcode,
+                    city: this.$store.getters.user.city,
                     firstname: this.$store.getters.user.firstname,
                     lastname: this.$store.getters.user.lastname,
                     email: this.$store.getters.user.email,
@@ -470,9 +515,9 @@
                 },
                 supplier: [],
                 reasonOptions: [
-                    { text: 'Wechsel zu CLARIDOO', value: 'switch' },
-                    { text: 'Umzug / Einzug', value: 'moving' },
-                    { text: 'Neubau', value: 'new' },
+                    {text: 'Wechsel zu CLARIDOO', value: 'switch'},
+                    {text: 'Umzug / Einzug', value: 'moving'},
+                    {text: 'Neubau', value: 'new'},
                 ],
                 min: null,
                 max: null,
@@ -610,7 +655,7 @@
                         break;
                 }
                 for (const key in this.info) {
-                    if(!this.info[key]) {
+                    if (!this.info[key]) {
                         delete this.info[key]
                     }
                 }
@@ -618,27 +663,43 @@
         },
         computed: {
             checkAcceptance() {
-                for(let o in this.acceptance)
-                    if(!this.acceptance[o]) return false;
+                for (let o in this.acceptance)
+                    if (!this.acceptance[o]) return false;
                 return true;
-            },
-            sexOptions() {
-                return [
-                    { text: this.editable.personal || this.info.sex === 'Female' ? 'Frau' : '', value: 'Female' },
-                    { text: this.editable.personal || this.info.sex === 'Male' ? 'Herr' : '', value: 'Male' },
-                ]
-            },
-            holdTypeOptions() {
-                return [
-                    { text: this.editable.address || this.info.householdType === 'House' ? 'einem Haus' : '', value: 'House' },
-                    { text: this.editable.address || this.info.householdType === 'Apartment' ? 'einer Wohnung' : '', value: 'Apartment' }
-                ]
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
+    label {
+        margin-top: .5rem;
+        margin-bottom: .1rem;
+        &.text-violet {
+            color: #7907E7;
+        }
+    }
+
+    .claridoo_form-input {
+        width: auto;
+        min-width: 25%;
+        border-radius: 100px!important;
+        border: 2px solid #a1a1a1;
+        height: 52px;
+        font-weight: 500;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        &:focus {
+            border-color: #a1a1a1;
+            box-shadow: none;
+            outline: none;
+        }
+        &::placeholder {
+            font-weight: 500;
+            color: #a1a1a1;
+        }
+
+    }
     .open-link {
         text-decoration: #9E9E9E underline;
         &:hover {

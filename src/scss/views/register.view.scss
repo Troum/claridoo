@@ -67,12 +67,12 @@
   & .custom-control-input:checked ~ .custom-control-label {
     &::after {
       background: transparent!important;
-      border: 2px solid map_get($colors, darkgray);
+      border: 2px solid #7907e7;
       color: map_get($colors, darkgray);
     }
     &::before {
       background: transparent!important;
-      border: 2px solid map_get($colors, darkgray);
+      border: 2px solid #7907e7;
       box-shadow: none;
       outline: none;
       color: map_get($colors, darkgray);
@@ -181,6 +181,9 @@
     background: linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    @media (max-width: 1199px) {
+      font-size: 1.4rem;
+    }
   }
 }
 #choose {
@@ -201,7 +204,7 @@
     width: 107px;
     height: 107px;
     &::before {
-      border: 2px solid #7907E7;
+      border: 2px solid #a1a1a1a1;
       border-radius: 10px!important;
       width: 107px;
       height: 107px;
@@ -221,7 +224,7 @@
       &::before {
         display: flex;
         padding: calc((107px - 44px) / 2) calc((107px - 39px) / 2);
-        color: #7907E7;
+        color: #a1a1a1a1;
         content: url("~@/assets/house.svg");
       }
     }
@@ -231,7 +234,7 @@
       &::before {
         display: flex;
         padding: calc((107px - 69px) / 2)  calc((107px - 59px) / 2);
-        color: #7907E7;
+        color: #a1a1a1a1;
         content: url("~@/assets/apartment.svg");
       }
     }
@@ -239,12 +242,12 @@
   & .custom-control-input:checked ~ .custom-control-label {
     &::after {
       background: transparent!important;
-      border: 2px solid #616161;
+      border: 2px solid #7907e7;
       color: #616161;
     }
     &::before {
       background: transparent!important;
-      border: 2px solid #616161;
+      border: 2px solid #7907e7;
       box-shadow: none;
       outline: none;
       color: #616161;

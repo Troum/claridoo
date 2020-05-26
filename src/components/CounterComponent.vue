@@ -10,7 +10,7 @@
                                 img#counter-info.img-fluid.ml-2( src="../assets/info.svg" alt="Claridoo Email Info")
                                 popover-component(
                                     :title="'Bisherige Zählernummer'"
-                                    :content="'Lorem ipsum dolorem sit amet'"
+                                    :content="'Wir brauchen deine bisherige Zählernummer um deine Messstelle eindeutig zuordnen zu können.'"
                                     :target="'counter-info'"
                                     :placement="'right'"
                                 )
@@ -30,7 +30,7 @@
                                 img#previous-supplier-info.img-fluid.ml-2( src="../assets/info.svg" alt="Claridoo Email Info")
                                 popover-component(
                                     :title="'Bisheriger Lieferant*'"
-                                    :content="'Lorem ipsum dolorem sit amet'"
+                                    :content="'Um dich mit claridoo Smart Strom beliefern zu können, müssen wir wissen von wem du bisher deinen Strom beziehst.'"
                                     :target="'previous-supplier-info'"
                                     :placement="'right'"
                                 )
@@ -53,7 +53,7 @@
                                 img#previous-customer-number.img-fluid.ml-2( src="../assets/info.svg" alt="Claridoo Email Info")
                                 popover-component(
                                     :title="'Bisherige Kundennummer'"
-                                    :content="'Lorem ipsum dolorem sit amet'"
+                                    :content="'Um dich mit claridoo Smart Strom beliefern zu können, müssen wir dich bei deinem vorherigen Lieferanten eindeutig zuordnen können.'"
                                     :target="'previous-customer-number'"
                                     :placement="'right'"
                                 )

@@ -10,7 +10,7 @@
                     font-awesome-icon( :icon="['fas', 'euro-sign']" )
                     small.d-block &nbsp;/ Monat
             b-col.mh-100.d-flex.justify-content-center.align-items-center( cols="2" )
-                button.claridoo_dismiss-alert( type="button" @click="dismissAlert" )
+                button.claridoo_dismiss-alert( type="button" @click="dismissAlert" style="font-size: .8rem")
                     font-awesome-icon( :icon="['fas', 'times']" )
 
 </template>

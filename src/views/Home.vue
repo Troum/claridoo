@@ -150,7 +150,8 @@
                                                     b-collapse#collapse-five(
                                                         accordion="collapse-one-accordion"
                                                         role="tabpanel")
-                                                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
+                                                        | Das Förderprogramm Einsparzähler „Deutschland macht’s effizient” ist eine Initiative des Bundesministeriums für Wirtschaft und Energie, um durch die Digitalisierung Energieeinsparungen bzw. Effizienzsteigerungen zu unterstützen. Die Fördersumme an dich beträgt 60€ und ist bereits im Tarif enthalten. Für deine Teilnahme fragen wir nachträglich folgende Daten über deinen Haushalt ab: Anzahl Personen, Anzahl Zimmer, Wohnfläche in m², Warmwasserart (Boiler mit Strom oder Gas, kein Boiler) und brauchen eine Kopie bzw. ein Foto deiner letzten Stromrechnung. Diese Daten übermitteln wir für Forschungszwecke über unseren Kooperationspartner (Discovergy GmbH) anonymisiert an das Bundesministerium für Wirtschaft und Energie.
+                                                        | Falls du nicht teilnehmen willst, ist dies vollkommen ok. Wir stellen dir dann eine Kompensationszahlung von 60€ nach Installtion des intelligenten Zählers in Rechnung.
                                     b-tab( title="Tarifdetails" title-item-class="font-weight-bold")
                                         b-row.m-0.pt-3.pb-3.pl-0.pr-0
                                             b-col.m-0.p-0.border-bottom( cols="12" )
@@ -177,9 +178,9 @@
                                                                 | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="7" xl="3" )
+                                                    b-col.m-0.text-left.pl-0( cols="6" xl="3" )
                                                         p.text-navy.font-weight-bold Arbeitspreis
-                                                    b-col.m-0.text-right.pr-0( cols="5" xl="9" )
+                                                    b-col.m-0.text-right.pr-0( cols="6" xl="9" )
                                                         p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
                                                             span.brackets
                                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
@@ -213,7 +214,7 @@
                                                 p.mb-0.text-justify **&nbsp;
                                                     span.text-lightgreen Förderung für Deinen Forschungsbeitrag!
                                                     | &nbsp;Ist bereits im Tarifpreis enthalten. Bei Nichtteilnahme wird dir nach Installation eine Kompensationszahlung in Höhe von € 60,00 in Rechnung gestellt.
-                                                p.mb-0.text-justify *** lorem ipsum sum sum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                                p.mb-0.text-justify *** Lege heute deinen Preis für die nächsten 24 Monate fest. Aufgrund der stark schwankenden Strompreise ist dies empfehlenswert. Dadurch ist die Laufzeit für deinen claridoo Vertrag 24 Monate. Deine Kündigungsfrist beträgt 3 Monate zum Vertragsende.
                             b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1.text-center( v-if="entries" )
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
@@ -328,7 +329,7 @@
                     })
                     .finally(() => {
                         this.overlay.main = false;
-                        this.$scrollTo('#tarif-button');
+                        document.getElementById('tarif-button').scrollIntoView({block: 'start', behavior: 'smooth'})
                     })
             },
             toRegister(){

@@ -4,7 +4,7 @@
         :target="`${target}`" :placement="placement"
         fallback-placement="clockwise" triggers="hover")
         template( v-slot:title )
-            p.text-danger.font-weight-bold.mb-0.text-center.bg-white {{ title }}
+            p.text-violet.font-weight-bold.mb-0.text-center.bg-white {{ title }}
 </template>
 
 <script>
