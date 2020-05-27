@@ -60,7 +60,7 @@
         },
         data() {
           return {
-              paymentMethod: null
+              paymentMethod: 'sepa'
           }
         },
         methods: {

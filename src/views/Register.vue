@@ -547,7 +547,7 @@
                                         span.ml-2.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                     b-row.m-0.p-0( v-if="alternate" )
-                                        b-col.pl-0( xl="5" )
+                                        b-col.pl-0( cols="12" xl="5" )
                                             validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="name" label="Postleitzahl*" )
                                                     b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
@@ -564,7 +564,7 @@
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3
                                                         small.font-weight-bold {{ errors[0] }}
-                                        b-col( xl="5" )
+                                        b-col( cols="12" xl="5" )
                                             validation-provider( rules="required" name="Strasse" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altStreet" label="Strasse*" )
                                                     b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"

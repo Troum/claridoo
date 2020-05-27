@@ -305,7 +305,7 @@
                                         type="button" @click="editable.payment = !editable.payment; payment = false" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-4.pl-4.font-weight-bold.w-100
-                                    template( v-if="info.paymentMethod === 'sepa' && !payment")
+                                    template( v-if="info.paymentMethod === 'sepa'")
                                         validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
                                             label.d-block.text-violet( for="sepaUser" v-if="editable.payment") Kontoinhaber/in
                                             input#sepaUser.d-block(
@@ -328,7 +328,7 @@
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                    template( v-if="info.paymentMethod === 'transfer' && !payment" )
+                                    template( v-if="info.paymentMethod === 'transfer'" )
                                         p.font-weight-light per Überweisung
                                     template( v-if="payment" )
                                         b-tabs#payments.claridoo_tabs-container
@@ -795,12 +795,14 @@
         }
     }
     input[type="text"][disabled="disabled"] {
+        width: 100% !important;
         color: #000!important;
         -webkit-text-fill-color: #000!important;
         opacity: 1!important;
     }
 
     input[type="email"][disabled="disabled"] {
+        width: 100% !important;
         color: #000!important;
         -webkit-text-fill-color: #000!important;
         opacity: 1!important;
