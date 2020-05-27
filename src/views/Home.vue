@@ -43,11 +43,11 @@
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
-                            b-form-group.mt-4.mb-2.mt-xl-3.mb-xl-3.text-center
+                            b-form-group.mt-4.mb-2.mt-xl-4.mb-xl-4.text-center
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
                                     type="submit" @click="submit" ) Tarif Berechnen
-                            b-form-group#tarif-button.mt-2.mb-2.mt-xl-1.mb-xl-1.text-center( v-if="entries" )
+                            b-form-group#tarif-button.mt-4.mb-4.mt-xl-2.mb-xl-2.text-center( v-if="entries" )
                                 p.claridoo_gradient-text.price.font-weight-bold
                                     i.fas.fa-gradient.fa-euro-sign
                                     | &nbsp;{{ month }}&nbsp;
@@ -60,9 +60,9 @@
                                         b-row.m-0.pt-3.pb-3.pl-0.pr-0
                                             b-col.m-0.p-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="5" xl="4" )
+                                                    b-col.m-0.text-left.pl-0( cols="4" xl="4" )
                                                         p.text-violet.font-weight-bold Monatpreis
-                                                    b-col.m-0.text-right.pr-0( cols="7" xl="8" )
+                                                    b-col.m-0.text-right.pr-0( cols="8" xl="8" )
                                                         p.text-violet.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ month }}&nbsp;
@@ -72,19 +72,9 @@
                                             b-col.m-0.p-0( cols="12" )
                                                 b-card( no-body )
                                                     b-card-header(
-                                                        header-tag="header"
-                                                        role="tab" )
+                                                        header-tag="header" )
                                                         div
                                                             span.claridoo_collapse-title 100% Ökostrom aus Wasserkraft
-                                                            button.claridoo_collapse-open-close(
-                                                                v-b-toggle.collapse-one
-                                                                type="button" )
-                                                                font-awesome-icon.when-opened( :icon="['fas', 'minus']" )
-                                                                font-awesome-icon.when-closed( :icon="['fas', 'plus']" )
-                                                    b-collapse#collapse-one(
-                                                        accordion="collapse-one-accordion"
-                                                        role="tabpanel")
-                                                        p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
                                             b-col.m-0.p-0( cols="12" )
                                                 b-card( no-body )
                                                     b-card-header(
@@ -92,15 +82,6 @@
                                                         role="tab" )
                                                         div
                                                             span.claridoo_collapse-title 24 Monate Preisgarantie
-                                                            button.claridoo_collapse-open-close(
-                                                                v-b-toggle.collapse-two
-                                                                type="button" )
-                                                                font-awesome-icon.when-opened( :icon="['fas', 'minus']" )
-                                                                font-awesome-icon.when-closed( :icon="['fas', 'plus']" )
-                                                    b-collapse#collapse-two(
-                                                        accordion="collapse-one-accordion"
-                                                        role="tabpanel")
-                                                        p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
                                             b-col.m-0.p-0( cols="12" )
                                                 b-card( no-body )
                                                     b-card-header(
@@ -108,15 +89,6 @@
                                                         role="tab" )
                                                         div
                                                             span.claridoo_collapse-title Rundum Kundenservice
-                                                            button.claridoo_collapse-open-close(
-                                                                v-b-toggle.collapse-three
-                                                                type="button" )
-                                                                font-awesome-icon.when-opened( :icon="['fas', 'minus']" )
-                                                                font-awesome-icon.when-closed( :icon="['fas', 'plus']" )
-                                                    b-collapse#collapse-three(
-                                                        accordion="collapse-one-accordion"
-                                                        role="tabpanel")
-                                                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
                                             b-col.m-0.p-0( cols="12" )
                                                 b-card( no-body )
                                                     b-card-header(
@@ -124,17 +96,6 @@
                                                         role="tab" )
                                                         div
                                                             span.claridoo_collapse-title Intelligenter Stromzähler
-                                                                br
-                                                                | Inkl. Installation
-                                                            button.claridoo_collapse-open-close(
-                                                                v-b-toggle.collapse-four
-                                                                type="button" )
-                                                                font-awesome-icon.when-opened( :icon="['fas', 'minus']" )
-                                                                font-awesome-icon.when-closed( :icon="['fas', 'plus']" )
-                                                    b-collapse#collapse-four(
-                                                        accordion="collapse-one-accordion"
-                                                        role="tabpanel")
-                                                        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor doloribus ducimus eaque esse eveniet ex exercitationem facilis nisi saepe! Consequatur culpa doloribus earum iusto obcaecati odit repudiandae sapiente ullam?
                                             b-col.m-0.p-0( cols="12" )
                                                 b-card.border-bottom( no-body )
                                                     b-card-header(
@@ -156,9 +117,9 @@
                                         b-row.m-0.pt-3.pb-3.pl-0.pr-0
                                             b-col.m-0.p-0.border-bottom( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="5" xl="4")
+                                                    b-col.m-0.text-left.pl-0( cols="4" xl="4")
                                                         p.text-violet.font-weight-bold Monatpreis
-                                                    b-col.m-0.text-right.pr-0( cols="7" xl="8")
+                                                    b-col.m-0.text-right.pr-0( cols="8" xl="8")
                                                         p.text-darkgray.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ month }}&nbsp;
@@ -167,9 +128,9 @@
                                                                 | &nbsp;{{ year }} / Jahr
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="5" xl="4" )
+                                                    b-col.m-0.text-left.pl-0( cols="4" xl="4" )
                                                         p.text-navy.font-weight-bold Grundpreis
-                                                    b-col.m-0.text-right.pr-0( cols="7" xl="8" )
+                                                    b-col.m-0.text-right.pr-0( cols="8" xl="8" )
                                                         p.text-darkgray.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ basePrice }}&nbsp;
@@ -178,9 +139,9 @@
                                                                 | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
                                                 b-row.m-0.p-0
-                                                    b-col.m-0.text-left.pl-0( cols="6" xl="3" )
+                                                    b-col.m-0.text-left.pl-0( cols="4" xl="3" )
                                                         p.text-navy.font-weight-bold Arbeitspreis
-                                                    b-col.m-0.text-right.pr-0( cols="6" xl="9" )
+                                                    b-col.m-0.text-right.pr-0( cols="8" xl="9" )
                                                         p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
                                                             span.brackets
                                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )

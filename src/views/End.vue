@@ -34,16 +34,16 @@
                             )
                 li.d-flex.justify-content-start.align-items-center
                     b-input-group.d-flex.justify-content-start.align-items-center
-                        b-input-group-prepend.w-5.mr-1
+                        b-input-group-prepend.mr-1( :class="isMobile ? 'w-5' : ''" )
                             img.img-fluid( src="../assets/checkmark.svg" alt="Claridoo Email Info")
-                        small.w-85.mb-0 Beantwortung von 5 einfachen Fragen zu Deinem aktuellen Stromverbrauch
-                        b-input-group-append.ml-2.w-5
+                        small.mb-0( :class="isMobile ? 'w-75' : ''"  ) Beantwortung von 5 einfachen Fragen zu Deinem aktuellen Stromverbrauch
+                        b-input-group-append.ml-xl-2( :class="isMobile ? 'w-10' : ''"  )
                             img#infoThree.img-fluid( src="../assets/info.svg" alt="Claridoo Email Info")
                             popover-component(
-                                :title="'Email'"
+                                :title="''"
                                 :content="'Wir brauchen die Antworten auf die 5 einfachen Fragen, damit du an der Einsparförderung “Deutschland macht’s effizient” teilnehmen kannst. Falls du nicht teilnehmen willst, musst du uns die Fragen natürlich nicht beantworten. Das Förderprogramm Einsparzähler „Deutschland macht’s effizient” ist eine Initiative des Bundesministeriums für Wirtschaft und Energie, um durch die Digitalisierung Energieeinsparungen bzw. Effizienzsteigerungen zu unterstützen. Die potenzielle Fördersumme an dich beträgt 60€ und ist bereits in deinem Tarif enthalten. Für deine Teilnahme fragen wir folgende Daten über deinen Haushalt ab: Anzahl Zimmer, Wohnfläche in m², Anzahl Personen, Warmwasserart (Boiler mit Strom oder Gas, kein Boiler) und brauchen eine Kopie bzw. ein Foto deiner letzten Stromrechnung. Diese Daten übermitteln wir für Forschungszwecke über unseren Kooperationspartner (Discovergy GmbH) anonymisiert an das Bundesministerium für Wirtschaft und Energie.'"
                                 :target="'infoThree'"
-                                :placement="'bottomright'"
+                                :placement="'bottom'"
                             )
         p.text-violet.font-weight-bold.border-bottom.h2.mt-5 Per WhatsApp nachreichen
         p.text-navy.font-weight-bold Du kannst mit uns auch für alles Weitere auf WhatsApp schreiben und deine Fotos dort senden.

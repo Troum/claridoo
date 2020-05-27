@@ -1,9 +1,9 @@
 <template lang="pug">
     b-col.claridoo_register.min-vh-100.bg-tariff( cols="12" )
         b-row.m-0.p-0.bg-tariff( v-if="!isMobile" )
-            b-col.mx-auto.p-0( xl="8" )
+            b-col.mx-auto.p-0( lg="8" xl="8" )
                 b-row.m-0.p-0
-                    b-col.m-0.p-0( xl="7" )
+                    b-col.m-0.p-0( lg="7" xl="7" )
                         b-row.m-0.pt-3.pb-3.pl-0.pr-0
                             b-col.m-0.p-0( cols="12" )
                                 p.mb-0.claridoo_tariff-title Dein Tarif
@@ -14,8 +14,8 @@
                                         p.text-violet.font-weight-bold Monatpreis
                                     b-col.m-0.text-right.p-0( cols="6" )
                                         p.text-darkgray.font-weight-bold
-                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                            | &nbsp;{{ $store.getters.month }}&nbsp;
+                                            font-awesome-icon( :icon="['fas', 'euro-sign']" class="text-violet")
+                                            span.text-violet &nbsp;{{ $store.getters.month }}&nbsp;
                                             span.brackets
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                 | &nbsp;{{ $store.getters.year }} / Jahr
@@ -32,9 +32,9 @@
                                                 | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
                             b-col.m-0.p-0( cols="12" )
                                 b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
+                                    b-col.m-0.text-left.p-0( cols="4" )
                                         p.text-navy.font-weight-bold Arbeitspreis
-                                    b-col.m-0.text-right.p-0( cols="6" )
+                                    b-col.m-0.text-right.p-0( cols="8" )
                                         p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
                                             span.brackets
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
@@ -42,7 +42,7 @@
                             b-col.m-0.p-0( cols="12" )
                                 b-row.m-0.p-0
                                     b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Neukundenbonus*
+                                        p.text-navy.font-weight-bold Neukundenbonus
                                     b-col.m-0.text-right.p-0( cols="6" )
                                         p.text-darkgray.font-weight-bold
                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
@@ -50,18 +50,18 @@
                             b-col.m-0.p-0( cols="12" )
                                 b-row.m-0.p-0
                                     b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Einsparförderung**
+                                        p.text-navy.font-weight-bold Einsparförderung
                                     b-col.m-0.text-right.p-0( cols="6" )
                                         p.text-darkgray.font-weight-bold
                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                             | &nbsp;60,00
                             b-col.m-0.p-0( cols="12" )
                                 b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Preisgarantie*** / Kündigungsfrist
-                                    b-col.m-0.text-right.p-0( cols="6" )
+                                    b-col.m-0.text-left.p-0( cols="8" )
+                                        p.text-navy.font-weight-bold Preisgarantie / Kündigungsfrist
+                                    b-col.m-0.text-right.p-0( cols="4" )
                                         p.text-darkgray.font-weight-bold {{ $store.getters.info.pricegaranty }}
-                    b-col.d-flex.justify-content-center.align-items-center.m-0.p-0( xl="5" )
+                    b-col.d-flex.justify-content-center.align-items-center.m-0.p-0( lg="5" xl="5" )
                         img.img-fluid( src="../assets/tarif.svg" alt="Claridoo Tarif Logo" )
         b-row.m-0.p-0.bg-tariff
             b-col#register.mx-auto.p-0( cols="12" v-if="!isMobile")
@@ -88,7 +88,7 @@
                                                 b-form-input.claridoo_form-input#name( type="text" autocomplete="off"
                                                     v-model="formCollapseOne.name"
                                                     placeholder="Erika" )
-                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                            transition(  enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                     .claridoo_personal-data-item
@@ -180,7 +180,7 @@
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                b-form-group.my-2
+                                b-form-group.my-4
                                     div.d-inline-flex.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( @change="formCollapseOne.emailconsent = !formCollapseOne.emailconsent" )
                                         span.ml-2 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
@@ -240,7 +240,7 @@
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                b-form-group.my-2
+                                b-form-group.my-4
                                     div.d-inline-flex.align-items-center.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( @change="alternate = !alternate" )
                                         span.ml-2.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
@@ -248,7 +248,7 @@
                                     b-row.m-0.p-0( v-if="alternate" )
                                         b-col.pl-0( xl="5" )
                                             validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
-                                                b-form-group.my-2( label-for="name" label="Postleitzahl" )
+                                                b-form-group.my-2( label-for="name" label="Postleitzahl*" )
                                                     b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
                                                         v-model="formCollapseTwoAlternate.altPostcode"
                                                         placeholder="Postleitzahl")
@@ -315,7 +315,7 @@
                                     div.reason-card( @click="choose($event, item.reason)" )
                                         img.img-fluid( @click="choose($event, item.reason)" :src="`${item.icon}`" )
                                         p.h2.text-center.text-violet( @click="choose($event, item.reason)" ) {{ item.title }}
-                                        p.pr-3.pl-3.text-center( @click="choose($event, item.reason)" )
+                                        p.pr-3.pl-3.text-center( style="line-height: 1" @click="choose($event, item.reason)" )
                                             small {{ item.description }}
                             validation-provider( rules="required" name="Datum" v-slot="{ errors }" )
                                 b-form-group.my-3( label="Datum" v-if="reason !== 'switch'")
@@ -327,7 +327,7 @@
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
                                 b-form-group.my-2( v-else )
-                                    div.d-inline-flex.align-items-center.font-weight-light
+                                    div.d-inline-flex.align-items-start.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( v-model="formCollapseThree.choose" @change="formCollapseThree.chose = !formCollapseThree.choose" )
                                         span.ml-2.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
                             b-form-group.my-3.text-left
@@ -483,7 +483,7 @@
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
-                                b-form-group.my-2
+                                b-form-group.my-4
                                     div.d-inline-flex.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input
                                         span.ml-2 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
@@ -541,7 +541,7 @@
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
-                                b-form-group.my-2
+                                b-form-group.my-4
                                     div.d-inline-flex.align-items-center.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( @change="alternate = !alternate" )
                                         span.ml-2.pt-2.text-violet.font-weight-bold Alternative Rechnungsadresse
@@ -549,7 +549,7 @@
                                     b-row.m-0.p-0( v-if="alternate" )
                                         b-col.pl-0( xl="5" )
                                             validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
-                                                b-form-group.my-2( label-for="name" label="Postleitzahl" )
+                                                b-form-group.my-2( label-for="name" label="Postleitzahl*" )
                                                     b-form-input.claridoo_form-input#altPostcode( type="text" autocomplete="off"
                                                         v-model="formCollapseTwoAlternate.altPostcode"
                                                         placeholder="Postleitzahl")
@@ -615,7 +615,7 @@
                                     div.reason-card( @click="choose($event, item.reason)" )
                                         img.img-fluid( @click="choose($event, item.reason)" :src="`${item.icon}`" )
                                         p.text-xl-center.text-violet( @click="choose($event, item.reason)" ) {{ item.title }}
-                                        p.pr-xl-3.pl-xl-3.text-xl-center( @click="choose($event, item.reason)" )
+                                        p.pr-xl-3.pl-xl-3.text-xl-center( style="line-height: 1"  @click="choose($event, item.reason)" )
                                             small {{ item.description }}
                             validation-provider( rules="required" name="Datum" v-slot="{ errors }")
                                 b-form-group.my-3( label="Datum" v-if="reason !== 'switch'")
@@ -627,7 +627,7 @@
                                         .text-danger.pl-3
                                             small.font-weight-bold {{ errors[0] }}
                                 b-form-group.my-2( v-else )
-                                    div.d-inline-flex.align-items-center.font-weight-light
+                                    div.d-inline-flex.align-items-start.font-weight-light
                                         b-form-checkbox.claridoo_checkbox-input( v-model="formCollapseThree.choose" @change="formCollapseThree.chose = !formCollapseThree.choose" )
                                         span.ml-2.pt-2.text-gray Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH mich zum nächstmöglichen Zeitpunkt zu claridoo zu wechseln und zur Kündigung meines bestehenden Stromlieferungsvertrags für meine im Weiteren genannte Lieferstelle. Bei Nichtzustimmung werde ich selbstständig meinen vorherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
                                 b-form-group.my-3

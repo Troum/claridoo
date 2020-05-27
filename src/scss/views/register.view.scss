@@ -165,9 +165,10 @@
   #{$prefix}_personal-data {
     display: grid;
     grid-template-columns: 41.666667% 41.666667%;
-    grid-auto-rows: 110px;
+    grid-auto-rows: 120px;
     grid-column-gap: 2.5%;
     & #{$prefix}_personal-data-item {
+      margin-top: 15px;
       &:nth-of-type(odd) {
         grid-column: 1;
       }
@@ -239,7 +240,7 @@
       }
     }
   }
-  & .custom-control-input:checked ~ .custom-control-label {
+  & .apartment .custom-control-input:checked + .custom-control-label {
     &::after {
       background: transparent!important;
       border: 2px solid #7907e7;
@@ -247,6 +248,22 @@
     }
     &::before {
       background: transparent!important;
+      content: url("~@/assets/apartment-chosen.svg");
+      border: 2px solid #7907e7;
+      box-shadow: none;
+      outline: none;
+      color: #616161;
+    }
+  }
+  & .house .custom-control-input:checked + .custom-control-label {
+    &::after {
+      background: transparent!important;
+      border: 2px solid #7907e7;
+      color: #616161;
+    }
+    &::before {
+      background: transparent!important;
+      content: url("~@/assets/house-chosen.svg");
       border: 2px solid #7907e7;
       box-shadow: none;
       outline: none;

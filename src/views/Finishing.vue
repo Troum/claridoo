@@ -1,68 +1,69 @@
 <template lang="pug">
     b-col#finishing.claridoo_start.m-0.p-0( cols="12" )
         b-row.m-0.p-0.bg-tariff
-            b-col.mx-auto.p-0( xl="8" v-if="!isMobile")
-                b-row.m-0.p-0
-                    b-col.m-0.p-0( xl="7" )
-                        b-row.m-0.pt-3.pb-3.pl-0.pr-0
-                            b-col.m-0.p-0( cols="12" )
-                                p.mb-0.claridoo_tariff-title Dein Tarif
-                                p.mb-5.claridoo_tariff-subtitle {{ $store.getters.info.tarif }}
-                            b-col.m-0.p-0.border-bottom( cols="12" )
-                                b-row.m-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-violet.font-weight-bold Monatpreis
-                                    b-col.m-0.text-right.p-0( cols="6" )
-                                        p.text-darkgray.font-weight-bold
-                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                            | &nbsp;{{ $store.getters.month }}&nbsp;
-                                            span.brackets
+            b-row.m-0.p-0.bg-tariff( v-if="!isMobile" )
+                b-col.mx-auto.p-0( lg="8" xl="8" )
+                    b-row.m-0.p-0
+                        b-col.m-0.p-0( lg="7" xl="7" )
+                            b-row.m-0.pt-3.pb-3.pl-0.pr-0
+                                b-col.m-0.p-0( cols="12" )
+                                    p.mb-0.claridoo_tariff-title Dein Tarif
+                                    p.mb-5.claridoo_tariff-subtitle {{ $store.getters.info.tarif }}
+                                b-col.m-0.p-0.border-bottom( cols="12" )
+                                    b-row.m-0
+                                        b-col.m-0.text-left.p-0( cols="6" )
+                                            p.text-violet.font-weight-bold Monatpreis
+                                        b-col.m-0.text-right.p-0( cols="6" )
+                                            p.text-darkgray.font-weight-bold
+                                                font-awesome-icon( :icon="['fas', 'euro-sign']" class="text-violet")
+                                                span.text-violet &nbsp;{{ $store.getters.month }}&nbsp;
+                                                span.brackets
+                                                    font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                                    | &nbsp;{{ $store.getters.year }} / Jahr
+                                b-col.m-0.p-0( cols="12" )
+                                    b-row.m-0.p-0
+                                        b-col.m-0.text-left.p-0.pt-3( cols="6" )
+                                            p.text-navy.font-weight-bold Grundpreis
+                                        b-col.m-0.text-right.p-0.pt-3( cols="6" )
+                                            p.text-darkgray.font-weight-bold
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                                | &nbsp;{{ $store.getters.year }} / Jahr
-                            b-col.m-0.p-0( cols="12" )
-                                b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0.pt-3( cols="6" )
-                                        p.text-navy.font-weight-bold Grundpreis
-                                    b-col.m-0.text-right.p-0.pt-3( cols="6" )
-                                        p.text-darkgray.font-weight-bold
-                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                            | &nbsp;{{ $store.getters.user.basePrice }}&nbsp;
-                                            span.brackets
+                                                | &nbsp;{{ $store.getters.user.basePrice }}&nbsp;
+                                                span.brackets
+                                                    font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                                    | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
+                                b-col.m-0.p-0( cols="12" )
+                                    b-row.m-0.p-0
+                                        b-col.m-0.text-left.p-0( cols="4" )
+                                            p.text-navy.font-weight-bold Arbeitspreis
+                                        b-col.m-0.text-right.p-0( cols="8" )
+                                            p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
+                                                span.brackets
+                                                    font-awesome-icon( :icon="['fas', 'euro-sign']" )
+                                                    | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.workPrice)) }} / Jahr
+                                b-col.m-0.p-0( cols="12" )
+                                    b-row.m-0.p-0
+                                        b-col.m-0.text-left.p-0( cols="6" )
+                                            p.text-navy.font-weight-bold Neukundenbonus
+                                        b-col.m-0.text-right.p-0( cols="6" )
+                                            p.text-darkgray.font-weight-bold
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                                | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.gp_brutto)) }} / Jahr
-                            b-col.m-0.p-0( cols="12" )
-                                b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Arbeitspreis
-                                    b-col.m-0.text-right.p-0( cols="6" )
-                                        p.text-darkgray.font-weight-bold {{ $store.getters.info.ap_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.ap_brutto)) : '' }} cent/kWh&nbsp;
-                                            span.brackets
+                                                | &nbsp;{{ $store.getters.info.neukundenbonus_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.neukundenbonus_brutto)) : '' }}
+                                b-col.m-0.p-0( cols="12" )
+                                    b-row.m-0.p-0
+                                        b-col.m-0.text-left.p-0( cols="6" )
+                                            p.text-navy.font-weight-bold Einsparförderung
+                                        b-col.m-0.text-right.p-0( cols="6" )
+                                            p.text-darkgray.font-weight-bold
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                                | &nbsp;{{ $filtersService.currencyFormat($filtersService.roundNumber($store.getters.workPrice)) }} / Jahr
-                            b-col.m-0.p-0( cols="12" )
-                                b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Neukundenbonus*
-                                    b-col.m-0.text-right.p-0( cols="6" )
-                                        p.text-darkgray.font-weight-bold
-                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                            | &nbsp;{{ $store.getters.info.neukundenbonus_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.neukundenbonus_brutto)) : '' }}
-                            b-col.m-0.p-0( cols="12" )
-                                b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Einsparförderung**
-                                    b-col.m-0.text-right.p-0( cols="6" )
-                                        p.text-darkgray.font-weight-bold
-                                            font-awesome-icon( :icon="['fas', 'euro-sign']" )
-                                            | &nbsp;60,00
-                            b-col.m-0.p-0( cols="12" )
-                                b-row.m-0.p-0
-                                    b-col.m-0.text-left.p-0( cols="6" )
-                                        p.text-navy.font-weight-bold Preisgarantie*** / Kündigungsfrist
-                                    b-col.m-0.text-right.p-0( cols="6" )
-                                        p.text-darkgray.font-weight-bold {{ $store.getters.info.pricegaranty }}
-                    b-col.d-flex.justify-content-center.align-items-center.m-0.p-0( xl="5" )
-                        img.img-fluid( src="../assets/tarif.svg" alt="Claridoo Tarif Logo" )
+                                                | &nbsp;60,00
+                                b-col.m-0.p-0( cols="12" )
+                                    b-row.m-0.p-0
+                                        b-col.m-0.text-left.p-0( cols="8" )
+                                            p.text-navy.font-weight-bold Preisgarantie / Kündigungsfrist
+                                        b-col.m-0.text-right.p-0( cols="4" )
+                                            p.text-darkgray.font-weight-bold {{ $store.getters.info.pricegaranty }}
+                        b-col.d-flex.justify-content-center.align-items-center.m-0.p-0( lg="5" xl="5" )
+                            img.img-fluid( src="../assets/tarif.svg" alt="Claridoo Tarif Logo" )
         b-row.m-0.p-0
             b-col.m-0.mx-auto.p-0( cols="11" xl="8" )
                 p.h2.claridoo_title Fast geschafft!
@@ -76,7 +77,7 @@
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" @click="editable.personal = !editable.personal" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
-                                div.my-2.pl-4.font-weight-bold.w-100
+                                div.my-4.pl-4.font-weight-bold.w-100
                                     validation-provider( rules="required" name="Andrede" v-slot="{ errors }" )
                                         b-form-group#finishingSex( v-if="editable.personal" :disabled="!editable.personal" )
                                             b-row.m-0.p-0( :class="isMobile ? 'w-100' : 'w-50'" )
@@ -141,7 +142,7 @@
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" @click="editable.address = !editable.address" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
-                                div.my-2.pl-4.font-weight-bold.w-100
+                                div.my-4.pl-4.font-weight-bold.w-100
                                     validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }" )
                                         label.d-block.text-violet( for="zip" v-if="editable.address") Postleitzeil
                                         input#zip.d-inline-block( :disabled="!editable.address" type="text"
@@ -175,15 +176,19 @@
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                     validation-provider( rules="required" name="Hause typ" v-slot="{ errors }" )
-                                        b-form-group#houseHolderType( v-if="editable.address" :disabled="!editable.address" )
-                                            b-form-radio-group( v-model="info.householdType" :options="holdTypeOptions")
+                                        label.d-block.text-violet.my-2( v-if="editable.address" ) Du wohnst in?
+                                        b-form-group#houseHolderType.mt-2.mb-4( v-if="editable.address" :disabled="!editable.address" )
+                                            div.radio-container
+                                                b-form-radio.p-0.house( v-model="info.householdType" name="choose" value="House")
+                                            div.radio-container
+                                                b-form-radio.p-0.apartment( v-model="info.householdType" name="choose" value="Apartment")
                                         b-form-group#houseHolderType( v-else )
                                             p.font-weight-light.mb-0 {{ info.householdType | house }}
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" )
-                                    div.my-2.pl-4.font-weight-bold.w-100( v-if="editable.address && info.invoicing_separate_address" )
+                                    div.my-4.pl-4.font-weight-bold.w-100( v-if="editable.address && info.invoicing_separate_address" )
                                         p.my-2 Alternate address
                                         validation-provider( rules="required" name="Alternate Postleitzeil" v-slot="{ errors }" )
                                             label.d-block.text-violet( for="alternateZip" v-if="editable.address") Alternate Postleitzeil
@@ -215,7 +220,7 @@
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" @click="editable.switch = !editable.switch" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
-                                div.my-2.pl-4.font-weight-bold.w-100( v-if="!editable.switch" )
+                                div.my-4.pl-4.font-weight-bold.w-100( v-if="!editable.switch" )
                                     template( v-if="info.reason === 'switch'" )
                                         div
                                             span.font-weight-light Wechsel zu CLARIDOO
@@ -226,23 +231,27 @@
                                         div
                                             span.font-weight-light Neubau
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" )
-                                    div.my-2.pl-4.font-weight-bold.w-100( v-if="editable.switch" )
-                                        b-form-group#finishingReasons
-                                            b-form-radio-group( @change="setReason" v-model="info.reason" :options="reasonOptions")
-                                            b-form-datepicker(
-                                                button-only
-                                                @context="onContext"
-                                                v-if="info.reason !== 'switch'" :min="min" locale="de" :max="max")
-                                            input.d-inline-block( v-if="info.reason !== 'switch'"
-                                                type="text" :placeholder="placeholder"
-                                                disabled v-model="info.date" )
+                                    div.my-4.pl-4.font-weight-bold.w-100( v-if="editable.switch" )
+                                        div#finishingReasons
+                                            div.reason-card-container( v-for="item in $store.getters.reasons"
+                                                :key="item.icon" )
+                                                div.reason-card( @click="choose($event, item.reason)" :class="info.reason === 'switch' ? 'chosen' : ''")
+                                                    img.img-fluid( @click="choose($event, item.reason)" :src="`${item.icon}`" )
+                                                    p.h2.text-center.text-violet( @click="choose($event, item.reason)" ) {{ item.title }}
+                                                    p.pr-3.pl-3.text-center( style="line-height: 1" @click="choose($event, item.reason)" )
+                                                        small {{ item.description }}
+                                            b-form-group.my-3( v-if="info.reason !== 'switch'")
+                                                b-form-datepicker.claridoo_form-input( :min="min" locale="de" :max="max"
+                                                    v-model="info.date"
+                                                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                                                    :placeholder="placeholder" )
                             b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
                                 div.w-100
                                     span.claridoo_finishing-title 4. Bisherige Stromlieferdaten
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" @click="editable.provided = !editable.provided" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
-                                div.my-2.pl-4.font-weight-bold.w-100
+                                div.my-4.pl-4.font-weight-bold.w-100
                                     template( v-if="info.provideMeterData === 'direct'" )
                                         validation-provider( rules="required" name="Bisherige Zählernummer" v-slot="{ errors }" )
                                             label.d-block.text-violet( for="previousNumber" v-if="editable.provided") Bisherige Zählernummer
@@ -286,7 +295,7 @@
                                         p.font-weight-light.mb-0 Nein, reiche ich später per E-Mail nach
                                     template( v-if="info.provideMeterData === 'whatsapp'" )
                                         p.font-weight-light.mb-0 Nein, reiche ich später per WhatsApp nach
-                                    button.claridoo_finishing-editing.float-right(
+                                    button.claridoo_finishing-editing.float-right.my-4(
                                         type="button" v-if="editable.provided" @click="$root.$emit('from-where', true)" ) Änderungsart
 
                             b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
@@ -295,8 +304,8 @@
                                     button.claridoo_finishing-editing.float-right(
                                         type="button" @click="editable.payment = !editable.payment; payment = false" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
-                                div.my-2.pl-4.font-weight-bold.w-100
-                                    template( v-if="info.paymentMethod === 'sepa'")
+                                div.my-4.pl-4.font-weight-bold.w-100
+                                    template( v-if="info.paymentMethod === 'sepa' && !payment")
                                         validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
                                             label.d-block.text-violet( for="sepaUser" v-if="editable.payment") Kontoinhaber/in
                                             input#sepaUser.d-block(
@@ -309,7 +318,7 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required|iban" name="IBAN" v-slot="{ errors }" )
-                                        label.d-block.text-violet( for="sepaIBAN" v-if="editable.payment") IBAN
+                                            label.d-block.text-violet( for="sepaIBAN" v-if="editable.payment") IBAN
                                             input#sepaIBAN.d-block(
                                                 :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.sepaIBAN"
@@ -319,13 +328,13 @@
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                    template( v-if="info.paymentMethod === 'transfer'" )
-                                        p.font-weight-light Wenn Du lieber jeden Monat selbst eine Überweisung tätigen möchtest
+                                    template( v-if="info.paymentMethod === 'transfer' && !payment" )
+                                        p.font-weight-light per Überweisung
                                     template( v-if="payment" )
                                         b-tabs#payments.claridoo_tabs-container
                                             b-tab( title="SEPA - LSV" title-item-class="font-weight-bold" @click="info.paymentMethod = 'sepa'")
                                                 validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
-                                                    input#sepaTabsUser.d-block(
+                                                    input#sepaTabsUser.d-block.my-3(
                                                         :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                         v-model="info.sepaFullname"
                                                         type="text"
@@ -335,7 +344,7 @@
                                                         .text-danger.pl-3
                                                             small.font-weight-bold {{ errors[0] }}
                                                 validation-provider( rules="required|iban" name="IBAN" v-slot="{ errors }" )
-                                                    input#sepaTabsIBAN.d-block(
+                                                    input#sepaTabsIBAN.d-block.my-3(
                                                         :class="editable.payment ? 'claridoo_form-input' : 'border-0'"
                                                         v-model="info.sepaIBAN"
                                                         type="text"
@@ -352,7 +361,7 @@
                                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                             .text-danger.pl-3
                                                                 small.font-weight-bold {{ errors[0] }}
-                                    button.claridoo_finishing-editing.float-right(
+                                    button.claridoo_finishing-editing.float-right.my-4(
                                         type="button" v-if="editable.payment" @click="payment = true" ) Änderungsart
                         b-row.m-0.p-0
                             b-col.m-0.my-2.p-0( cols="12" )
@@ -640,7 +649,41 @@
                         delete this.info[key]
                     }
                 }
-            }
+            },
+            choose(event, reason) {
+                this.info.reason = reason;
+                document.querySelectorAll('.reason-card-container').forEach(item => {
+                    item.classList.contains('chosen') ?
+                        item.classList.remove('chosen') : null;
+                });
+                if (event.target.classList.contains('reason-card-container')) {
+                    event.target.classList.add('chosen');
+                } else {
+                    event.target.closest('.reason-card-container').classList.add('chosen')
+                }
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const minDate = new Date(today);
+                const maxDate = new Date(today);
+                switch (reason) {
+                    case 'switch':
+                        this.info.reason = reason;
+                        return;
+                    case 'moving':
+                        minDate.setMonth(minDate.getMonth() - 6);
+                        maxDate.setMonth(maxDate.getMonth() + 6);
+                        this.max = maxDate;
+                        this.min = minDate;
+                        this.info.reason = reason;
+                        return;
+                    case 'new':
+                        this.info.reason = reason;
+                        maxDate.setMonth(maxDate.getMonth() + 6);
+                        this.max = maxDate;
+                        this.min = minDate;
+                        return;
+                }
+            },
         },
         computed: {
             checkAcceptance() {
@@ -669,6 +712,9 @@
         font-weight: 500;
         padding-left: 1.5rem;
         padding-right: 1.5rem;
+        &:disabled {
+            padding-left: 0;
+        }
         &:focus {
             border-color: #a1a1a1;
             box-shadow: none;
