@@ -143,15 +143,15 @@
                                         type="button" @click="editable.address = !editable.address" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-4.pl-4.font-weight-bold.w-100
-                                    validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }" )
-                                        label.d-block.text-violet( for="zip" v-if="editable.address") Postleitzeil
+                                    validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }" )
+                                        label.d-block.text-violet( for="zip" v-if="editable.address") Postleitzahl
                                         input#zip.d-inline-block( :disabled="!editable.address" type="text"
                                             :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                             v-model="info.zip" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
-                                    validation-provider( rules="required" name="Postleitzeil" v-slot="{ errors }" )
+                                    validation-provider( rules="required" name="Stadt" v-slot="{ errors }" )
                                         label.d-block.text-violet( for="city" v-if="editable.address") Stadt
                                         input#city.d-inline-block( :disabled="!editable.address" type="text"
                                             :class="editable.address ? 'claridoo_form-input' : 'border-0'"
@@ -188,18 +188,26 @@
                                             .text-danger.pl-3
                                                 small.font-weight-bold {{ errors[0] }}
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" )
-                                    div.my-4.pl-4.font-weight-bold.w-100( v-if="editable.address && info.invoicing_separate_address" )
-                                        p.my-2 Alternate address
-                                        validation-provider( rules="required" name="Alternate Postleitzeil" v-slot="{ errors }" )
-                                            label.d-block.text-violet( for="alternateZip" v-if="editable.address") Alternate Postleitzeil
+                                    div.my-4.pl-4.font-weight-bold.w-100( v-if="info.invoicing_separate_address" )
+                                        p.my-2 Rechnungsadresse
+                                        validation-provider( rules="required" name="Alternate Postleitzahl" v-slot="{ errors }" )
+                                            label.d-block.text-violet( for="alternateZip" v-if="editable.address") Postleitzahl
                                             input#alternateZip.d-block( :disabled="!editable.address" type="text"
                                                 :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.invoicing_zip" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
+                                        validation-provider( rules="required" name="Alternate Stadt" v-slot="{ errors }" )
+                                            label.d-block.text-violet( for="alternateStadt" v-if="editable.address") Stadt
+                                            input#alternateStadt.d-block( :disabled="!editable.address" type="text"
+                                                :class="editable.address ? 'claridoo_form-input' : 'border-0'"
+                                                v-model="info.invoicing_city" )
+                                            transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                                .text-danger.pl-3
+                                                    small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Alternate Strasse" v-slot="{ errors }" )
-                                            label.d-block.text-violet( for="alternateStreet" v-if="editable.address") Alternate Strasse
+                                            label.d-block.text-violet( for="alternateStreet" v-if="editable.address") Strasse
                                             input#alternateStreet.d-block( :disabled="!editable.address" type="text"
                                                 :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.invoicing_street" )
@@ -207,7 +215,7 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                         validation-provider( rules="required" name="Alternate Hausnummer" v-slot="{ errors }" )
-                                            label.d-block.text-violet( for="alternateHouse" v-if="editable.address") Alternate Hausnummer
+                                            label.d-block.text-violet( for="alternateHouse" v-if="editable.address") Hausnummer
                                             input#alternateHouse.d-block( :disabled="!editable.address" type="text"
                                                 :class="editable.address ? 'claridoo_form-input' : 'border-0'"
                                                 v-model="info.invoicing_house" )
@@ -305,7 +313,7 @@
                                         type="button" @click="editable.payment = !editable.payment; payment = false" )
                                         font-awesome-icon.when-closed( :icon="['fas', 'pencil-alt']" )
                                 div.my-4.pl-4.font-weight-bold.w-100
-                                    template( v-if="info.paymentMethod === 'sepa'")
+                                    template( v-if="info.paymentMethod === 'sepa' && !payment")
                                         validation-provider( rules="required" name="Kontoinhaber/in" v-slot="{ errors }" )
                                             label.d-block.text-violet( for="sepaUser" v-if="editable.payment") Kontoinhaber/in
                                             input#sepaUser.d-block(
@@ -328,7 +336,7 @@
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
-                                    template( v-if="info.paymentMethod === 'transfer'" )
+                                    template( v-if="info.paymentMethod === 'transfer' && !payment" )
                                         p.font-weight-light per Überweisung
                                     template( v-if="payment" )
                                         b-tabs#payments.claridoo_tabs-container
@@ -470,6 +478,7 @@
                     householdType: this.$store.getters.user.householdType,
                     invoicing_separate_address: this.$store.getters.user.invoicing_separate_address,
                     invoicing_zip: this.$store.getters.user.invoicing_zip,
+                    invoicing_city: this.$store.getters.user.invoicing_city,
                     invoicing_street: this.$store.getters.user.invoicing_street,
                     invoicing_house: this.$store.getters.user.invoicing_house,
                     reason: this.$store.getters.user.reason,

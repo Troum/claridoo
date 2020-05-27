@@ -2,7 +2,7 @@
     b-col.claridoo_start( cols="12" xl="6" )
         img.img-fluid.d-block.mx-auto.my-5( src="../assets/congrats.svg" alt="Claridoo Congrats")
         p.h2.claridoo_title.my-4 Super!
-        div.font-weight-bold.text-navy.text-justify.mt-5
+        div.font-weight-bold.text-navy.text-left.mt-5
             p.text-violet.font-weight-bold.border-bottom.h2 So geht es weiter
             p Wir senden dir am nächsten Werktag einen Uploadlink, damit du uns noch folgende Infos geben kannst:
             ul.claridoo_end

@@ -176,7 +176,7 @@
                                                     span.text-lightgreen Förderung für Deinen Forschungsbeitrag!
                                                     | &nbsp;Ist bereits im Tarifpreis enthalten. Bei Nichtteilnahme wird dir nach Installation eine Kompensationszahlung in Höhe von € 60,00 in Rechnung gestellt.
                                                 p.mb-0.text-justify *** Lege heute deinen Preis für die nächsten 24 Monate fest. Aufgrund der stark schwankenden Strompreise ist dies empfehlenswert. Dadurch ist die Laufzeit für deinen claridoo Vertrag 24 Monate. Deine Kündigungsfrist beträgt 3 Monate zum Vertragsende.
-                            b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1.text-center( v-if="entries" )
+                            b-form-group.mt-2.mb-2.mt-xl-3.mb-xl-3.text-center( v-if="entries" )
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
                                     type="button" @click="toRegister") Jetzt Wechseln
