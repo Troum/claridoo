@@ -704,6 +704,12 @@
         }
     }
 
+    @media (max-width: 992px) {
+        p {
+            padding-left: .7rem;
+        }
+    }
+
     .claridoo_form-input {
         width: 100%;
         border-radius: 100px!important;
@@ -712,9 +718,6 @@
         font-weight: 500;
         padding-left: 1.5rem;
         padding-right: 1.5rem;
-        &:disabled {
-            padding-left: 0;
-        }
         &:focus {
             border-color: #a1a1a1;
             box-shadow: none;
@@ -726,6 +729,7 @@
         }
 
     }
+
     .open-link {
         text-decoration: #9E9E9E underline;
         &:hover {
@@ -790,4 +794,16 @@
             }
         }
     }
+    input[type="text"][disabled="disabled"] {
+        color: #000!important;
+        -webkit-text-fill-color: #000!important;
+        opacity: 1!important;
+    }
+
+    input[type="email"][disabled="disabled"] {
+        color: #000!important;
+        -webkit-text-fill-color: #000!important;
+        opacity: 1!important;
+    }
+
 </style>
