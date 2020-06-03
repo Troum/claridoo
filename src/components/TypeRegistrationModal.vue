@@ -1,5 +1,7 @@
 <template lang="pug">
-    b-modal#type( hide-footer hide-header no-close-on-backdrop size="lg" centered )
+    b-modal#type( hide-footer no-close-on-backdrop size="lg" centered )
+        template( v-slot:modal-header )
+            font-awesome-icon.d-block.mr-auto( @click="$bvModal.hide('type')" :icon="['fas', 'times']" )
         div.text-center
             p.type-title {{ $store.getters.user ? $store.getters.user.firstname : '@name' }}, kennst du deine zählernummer?
         #types( v-if="!fromWhere" )
@@ -7,14 +9,19 @@
                 div.types-card( @click="choose($store.getters.types[0].type)" v-b-toggle.personal-four)
                     img.img-fluid( :src="`${$store.getters.types[0].icon}`" )
                     p.h4.text-center {{ $store.getters.types[0].title }}
+                    small.d-block.p-2.text-center.lightgray {{ $store.getters.types[0].description }}
             div.types-card-container
                 div.types-card( @click="choose($store.getters.types[1].type)" v-b-toggle.personal-five)
                     img.img-fluid( :src="`${$store.getters.types[1].icon}`" )
-                    p.h4.text-center {{ $store.getters.types[1].title }}
+                    p.h4.text-center.mb-0 {{ $store.getters.types[1].title }}
+                    small.d-block.p-2.text-center.font-weight-bold( style="line-height: 1; color: gray" )
+                        small {{ $store.getters.types[1].description }} {{ $store.getters.user.phone }}
             div.types-card-container
                 div.types-card( @click="choose($store.getters.types[2].type)" v-b-toggle.personal-five)
                     img.img-fluid( :src="`${$store.getters.types[2].icon}`" )
-                    p.h4.text-center {{ $store.getters.types[2].title }}
+                    p.h4.text-center.mb-0 {{ $store.getters.types[2].title }}
+                    small.d-block.p-2.text-center.font-weight-bold( style="line-height: 1;color: gray" )
+                        small {{ $store.getters.types[2].description }} {{ $store.getters.user.email }}
         #fromWhere( v-else )
             div.types-card-container( v-for="item in $store.getters.types"
                 :key="item.icon" )

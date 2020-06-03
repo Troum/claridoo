@@ -2,7 +2,7 @@
     b-col.claridoo_header( cols="12" :class="isMobile && $store.getters.progress > 0 ? 'shadow' : ''")
         b-container( v-if="!isMobile" )
             b-navbar.claridoo_navbar( toggleable="lg" :class="isMobile && $store.getters.progress > 0 ? 'shadow' : ''")
-                b-navbar-brand( @click="$routerService.routeTo('home')" )
+                b-navbar-brand( @click="$routerService.routeTo('home')" style="margin-right: 1rem; max-width: 160px")
                     img.img-fluid( v-if="!isMobile" src="../assets/logo.svg" alt="Claridoo Logo")
                     img.img-fluid( v-else src="../assets/mobile-logo.svg" alt="Claridoo Mobile Logo")
                 b-collapse#navCollapse( is-nav )

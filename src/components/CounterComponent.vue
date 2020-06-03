@@ -41,7 +41,7 @@
                             autocomplete="off"
                             placeholder="Bisheriger Lieferant" )
                         b-list-group.mt-2( v-if="supplier" )
-                            b-list-group-item.autocomplete-result.pl-5( v-for="item in supplier" :key="item.bezeichnung" @click="handlePreviousSupplier(item.bezeichnung)" ) {{ item.bezeichnung }}
+                            b-list-group-item.autocomplete-result.pl-5( v-for="item in supplier" :key="item.bezeichnung" @click="handlePreviousSupplier(item.bezeichnung, item.codenummer)" ) {{ item.bezeichnung }}
                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                             .text-danger.pl-3( v-if="errors[0]" )
                                 small.font-weight-bold {{ errors[0] }}
@@ -66,13 +66,9 @@
                             .text-danger.pl-3( v-if="errors[0]" )
                                 small.font-weight-bold {{ errors[0] }}
                 b-form-group.my-5
-                    div.d-inline-flex.font-weight-light
-                        b-form-checkbox.claridoo_checkbox-input( @change="form.agree = !form.agree" )
-                        span.ml-3 Ich bevollmächtige claridoo by Alpiq Energie Deutschland GmbH zur Kündigung meines bestehenden Stromlieferungsvertrags für meine oben genannte Lieferstelle. Bei Nichtzustimmung werde ich selbtständig meinen voherigen Stromliefervertrag kündigen und den claridoo Kundenservice über die Kündigung informieren.
-                b-form-group.my-5
                     b-button.claridoo_button(
                         :class="!isMobile ? 'w-75' : 'w-100'"
-                        :disabled="!checkForm(form)"
+                        :disabled="!checkForm(form) || !valid"
                         v-b-toggle.personal-five
                         @click="stepThree"
                         type="button" ) Weiter
@@ -83,7 +79,8 @@
         name: "CounterComponent",
         props: {
           isMobile: null,
-          form: {}
+          form: {},
+          valid: null
         },
         data() {
             return {
@@ -106,7 +103,8 @@
                     meterNumber: this.form.counterNumber,
                     previousContractor: this.form.previousSupplier,
                     contractNumber: this.form.previousCustomerNumber,
-                    registerAuthorization: this.form.agree.toString()
+                    registerAuthorization: true,
+                    previousCodenummer: this.form.previousCodenummer
                 };
                 object = Object.assign(object, user);
                 this.$root.$emit('save-step', object);
@@ -114,12 +112,8 @@
                     .then(response => {
                         let user = this.$store.getters.user;
                         user.uuid = process.env.NODE_ENV === 'production' ? response.data.uuid : response.data.session.uuid;
-                        user.step = '4';
                         this.$root.$emit('save-step', object);
                         this.$store.commit('progress', 20);
-                    })
-                    .catch(error => {
-                        console.log(error)
                     })
             },
             findPreviousSupplier() {
@@ -127,12 +121,10 @@
                     .then(response => {
                         this.supplier = process.env.NODE_ENV === 'production' ? response.data : response.data.supplier;
                     })
-                    .catch(error => {
-                        console.log(error.response.data.error);
-                    })
             },
-            handlePreviousSupplier(supplier) {
+            handlePreviousSupplier(supplier, nummer) {
                 this.form.previousSupplier = supplier;
+                this.form.previousCodenummer = nummer;
                 this.supplier = [];
             }
         }

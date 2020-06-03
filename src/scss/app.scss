@@ -43,25 +43,25 @@ a, input {
 
 * {
   &.border-bottom {
-    border-bottom: 2px solid #4CF4CD!important;
+    border-bottom: 2px solid #85FFE8!important;
     &.border-darkgray {
       border-color: map_get($colors, darkgray)!important;
     }
   }
   &.border-top {
-    border-top: 2px solid #4CF4CD!important;
+    border-top: 2px solid #85FFE8!important;
     &.border-darkgray {
       border-color: map_get($colors, darkgray)!important;
     }
   }
   &.border-left {
-    border-left: 2px solid #4CF4CD!important;
+    border-left: 2px solid #85FFE8!important;
     &.border-darkgray {
       border-color: map_get($colors, darkgray)!important;
     }
   }
   &.border-right {
-    border-right: 2px solid #4CF4CD!important;
+    border-right: 2px solid #85FFE8!important;
     &.border-darkgray {
       border-color: map_get($colors, darkgray)!important;
     }
@@ -128,7 +128,7 @@ a, input {
 
 #{$prefix}_form-input {
   border-radius: $border-radius!important;
-  border: 2px solid #6E21E2;
+  border: 2px solid #7909E7;
   height: 52px;
   font-weight: 500;
   &:focus {
@@ -145,7 +145,7 @@ a, input {
 #{$prefix}_title {
   margin: 3rem auto 1.5rem auto;
   text-align: center;
-  background: -webkit-linear-gradient(180deg, #7907E7 0.17%, #375DE6 99.51%);
+  background: -webkit-linear-gradient(180deg, #7909E7 0.17%, #375DE6 99.51%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -178,7 +178,7 @@ a, input {
             &.active {
               border-left: none;
               background-color: #fff;
-              border-color: #6E21E2;
+              border-color: #7909E7;
               color: #7907E7;
               text-align: center;
             }
@@ -189,7 +189,7 @@ a, input {
             &.active {
               border-right: none;
               background-color: #fff;
-              border-color: #6E21E2;
+              border-color: #7909E7;
               color: #7907E7;
               text-align: center;
             }

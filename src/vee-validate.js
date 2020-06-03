@@ -4,8 +4,7 @@ import {extend, localize, setInteractionMode} from 'vee-validate';
 import {email, required,
     integer, between,
     regex, digits,
-    min,
-    min_value, max_value} from "vee-validate/dist/rules";
+    min} from "vee-validate/dist/rules";
 import de from 'vee-validate/dist/locale/de';
 import store from "./store";
 
@@ -22,8 +21,26 @@ extend('digits', digits);
 extend('between', between);
 extend('regex', regex);
 extend('min', min);
-extend('min_value', min_value);
-extend('max_value', max_value);
+extend('minimum',
+    (value, min_value) => {
+        if (Number(value) < min_value) {
+            return 'Vielen Dank!\n' +
+                'Leider ist dein Jahresverbrauch zu niedrig um claridoo nutzen zu können. \n' +
+                'Für weitere Informationen bzw. zur Erstellung eines individuellen Angebotes steht dir unser Kundenservice gerne per alpiq-energie@alpiq.com oder 030 4036 74010 zur Verfügung\n';
+        }
+        return true;
+    }
+);
+extend('maximum',
+    (value, max_value) => {
+        if (Number(value) > max_value) {
+            return 'Vielen Dank!\n' +
+                'Der von dir gewünschte Tarif ist für den von dir angegebenen Stromverbrauch nicht verfügbar. Für weitere Informationen bzw. zur Erstellung eines individuellen Angebotes steht dir unser Kundenservice gerne per alpiq-energie@alpiq.com oder 030 4036 74010 zur Verfügung.\n'
+
+        }
+        return true;
+    }
+);
 
 extend('previous', {
     params: ['target'],

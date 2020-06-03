@@ -25,8 +25,8 @@
                                         .text-danger.pl-3.city
                                             small.font-weight-bold {{ errors[0] }}
                             b-form-group.mt-3.my-xl-3
-                                .claridoo_persons-title Wieviele personen wohnen im haushalt?
-                            validation-provider( name="Personen" rules="required|previous:@Postleitzahl" v-slot="{ errors }")
+                                .claridoo_persons-title Wie viele Personen wohnen im Haushalt?
+                            validation-provider( name="Personen" rules="previous:@Postleitzahl" v-slot="{ errors }")
                                 b-form-radio-group#persons.claridoo_persons(
                                     @input="choose"
                                     v-model="selected"
@@ -35,9 +35,10 @@
                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                     .text-danger.pl-3
                                         small.font-weight-bold {{ errors[0] }}
-                            validation-provider( name="Jahresverbrauch" rules="required|min_value:500|max_value:10000" v-slot="{ errors }")
+                            validation-provider( name="Jahresverbrauch" rules="required|minimum:500|maximum:9999" v-slot="{ errors }")
                                 b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1
                                     b-form-input#kilowats.claridoo_form-input( placeholder="Jahresverbrauch kWh"
+                                        @focus="setCursor('kilowats')"
                                         autocomplete="off"
                                         v-model="kw")
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
@@ -61,7 +62,7 @@
                                             b-col.m-0.p-0( cols="12" )
                                                 b-row.m-0.p-0
                                                     b-col.m-0.text-left.pl-0( cols="4" xl="4" )
-                                                        p.text-violet.font-weight-bold Monatpreis
+                                                        p.text-violet.font-weight-bold Monatspreis
                                                     b-col.m-0.text-right.pr-0( cols="8" xl="8" )
                                                         p.text-violet.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
@@ -118,7 +119,7 @@
                                             b-col.m-0.p-0.border-bottom( cols="12" )
                                                 b-row.m-0.p-0
                                                     b-col.m-0.text-left.pl-0( cols="4" xl="4")
-                                                        p.text-violet.font-weight-bold Monatpreis
+                                                        p.text-violet.font-weight-bold Monatspreis
                                                     b-col.m-0.text-right.pr-0( cols="8" xl="8")
                                                         p.text-darkgray.font-weight-bold
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
@@ -151,7 +152,7 @@
                                                     b-col.m-0.text-left.pl-0( cols="6" )
                                                         p.text-navy.font-weight-bold Neukundenbonus*
                                                     b-col.m-0.text-right.pr-0( cols="6" )
-                                                        p.text-darkgray.font-weight-bold
+                                                        p.font-weight-bold.text-lightgreen
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;{{ $store.getters.info.neukundenbonus_brutto ? $filtersService.currencyFormat($filtersService.roundNumber($store.getters.info.neukundenbonus_brutto)) : '' }}
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
@@ -159,7 +160,7 @@
                                                     b-col.m-0.text-left.pl-0( cols="6" )
                                                         p.text-navy.font-weight-bold Einsparförderung**
                                                     b-col.m-0.text-right.pr-0( cols="6" )
-                                                        p.text-darkgray.font-weight-bold
+                                                        p.font-weight-bold.text-lightgreen
                                                             font-awesome-icon( :icon="['fas', 'euro-sign']" )
                                                             | &nbsp;60,00
                                             b-col.m-0.pt-2.pb-2.pr-0.pl-0( cols="12" )
@@ -175,7 +176,7 @@
                                                 p.mb-0.text-justify **&nbsp;
                                                     span.text-lightgreen Förderung für Deinen Forschungsbeitrag!
                                                     | &nbsp;Ist bereits im Tarifpreis enthalten. Bei Nichtteilnahme wird dir nach Installation eine Kompensationszahlung in Höhe von € 60,00 in Rechnung gestellt.
-                                                p.mb-0.text-justify *** Lege heute deinen Preis für die nächsten 24 Monate fest. Aufgrund der stark schwankenden Strompreise ist dies empfehlenswert. Dadurch ist die Laufzeit für deinen claridoo Vertrag 24 Monate. Deine Kündigungsfrist beträgt 3 Monate zum Vertragsende.
+                                                p.mb-0.text-justify *** Lege heute deinen Preis für die nächsten 24 Monate fest. Aufgrund der stark schwankenden Strompreise ist dies empfehlenswert. Dadurch ist die Laufzeit für deinen claridoo Vertrag 24 Monate. Deine Kündigungsfrist beträgt 3 Monate zum Vertragsende. Deine Kündigungsfrist beträgt 6 Wochen zum Vertragsende.
                             b-form-group.mt-2.mb-2.mt-xl-3.mb-xl-3.text-center( v-if="entries" )
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
@@ -202,7 +203,10 @@
                     title.classList.remove('claridoo_gradient-text');
                 }
             });
-            IMask(document.getElementById('kilowats'), {mask: '00000'})
+            IMask(document.getElementById('kilowats'), {mask: '00000'});
+            this.postcode = this.$store.getters.user.zip ? this.$store.getters.user.zip : '';
+            this.selectedCity = this.$store.getters.user.city ? this.$store.getters.user.city : '';
+            this.kw = this.$store.getters.user.kWh ? this.$store.getters.user.kWh : null;
         },
         data() {
 
@@ -244,6 +248,9 @@
 
             },
             search() {
+                if (this.postcode.length < 5) {
+                    return;
+                }
                 this.overlay.postcode = true;
                 this.selectedCity ? this.selectedCity = '' : null;
                 this.$httpService.get(process.env.NODE_ENV === 'production' ? `/plz/prod/?PLZ=${this.postcode}` : `api/city/${this.postcode}`)
@@ -251,10 +258,9 @@
                         this.city = process.env.NODE_ENV === 'production' ? response.data : response.data.city;
                         this.$store.commit('postcode', this.postcode);
                     })
-                    .catch(error => {
-                        this.messages.postcode = error.response.data.error;
+                    .finally(() => {
+                        this.overlay.postcode = false;
                     })
-                    .finally(() => this.overlay.postcode = false)
             },
             submit() {
                 this.overlay.main = true;
@@ -268,7 +274,7 @@
                             basePrice: this.$store.getters.basePrice.toString(10),
                             consumptionPrice: this.$store.getters.workPrice.toString(10),
                             bonus: this.$store.getters.info.neukundenbonus_brutto.toString(10),
-                            step: "1"
+                            step: "0"
                         };
                         if (this.number) {
                             this.form.nubmersOfPeople = this.number;
@@ -328,6 +334,29 @@
                     event.preventDefault();
                 } else {
                     return true;
+                }
+            },
+            setCursor(id) {
+                const input = document.getElementById(id);
+                    this.setCaretPosition(id, input.value.length);
+            },
+            setCaretPosition(elemId, caretPos) {
+                let elem = document.getElementById(elemId);
+
+                if(elem != null) {
+                    if(elem.createTextRange) {
+                        const range = elem.createTextRange();
+                        range.move('character', caretPos);
+                        range.select();
+                    }
+                    else {
+                        if(elem.selectionStart) {
+                            elem.focus();
+                            elem.setSelectionRange(caretPos, caretPos);
+                        }
+                        else
+                            elem.focus();
+                    }
                 }
             }
         },

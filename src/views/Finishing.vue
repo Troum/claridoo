@@ -7,12 +7,12 @@
                         b-col.m-0.p-0( lg="7" xl="7" )
                             b-row.m-0.pt-3.pb-3.pl-0.pr-0
                                 b-col.m-0.p-0( cols="12" )
-                                    p.mb-0.claridoo_tariff-title Dein Tarif
+                                    p.mb-0.claridoo_tariff-title Dein claridoo Smart Strom Tarif
                                     p.mb-5.claridoo_tariff-subtitle {{ $store.getters.info.tarif }}
                                 b-col.m-0.p-0.border-bottom( cols="12" )
                                     b-row.m-0
                                         b-col.m-0.text-left.p-0( cols="6" )
-                                            p.text-violet.font-weight-bold Monatpreis
+                                            p.text-violet.font-weight-bold Monatspreis
                                         b-col.m-0.text-right.p-0( cols="6" )
                                             p.text-darkgray.font-weight-bold
                                                 font-awesome-icon( :icon="['fas', 'euro-sign']" class="text-violet")
@@ -304,7 +304,7 @@
                                     template( v-if="info.provideMeterData === 'whatsapp'" )
                                         p.font-weight-light.mb-0 Nein, reiche ich später per WhatsApp nach
                                     button.claridoo_finishing-editing.float-right.my-4(
-                                        type="button" v-if="editable.provided" @click="$root.$emit('from-where', true)" ) Änderungsart
+                                        type="button" v-if="editable.provided" @click="$root.$emit('from-where', true)" ) ändern
 
                             b-col.m-0.my-3.border-bottom.border-darkgray( cols="12" )
                                 div.w-100
@@ -321,7 +321,7 @@
                                                 v-model="info.sepaFullname"
                                                 type="text"
                                                 autocomplete="off"
-                                                placeholder="Kontoinhaber/in" )
+                                                placeholder="Erika Mustermann" )
                                             transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
@@ -357,7 +357,7 @@
                                                         v-model="info.sepaIBAN"
                                                         type="text"
                                                         autocomplete="off"
-                                                        placeholder="IBAN" )
+                                                        placeholder="DE 91100000000123456789" )
                                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                         .text-danger.pl-3
                                                             small.font-weight-bold {{ errors[0] }}
@@ -370,25 +370,25 @@
                                                             .text-danger.pl-3
                                                                 small.font-weight-bold {{ errors[0] }}
                                     button.claridoo_finishing-editing.float-right.my-4(
-                                        type="button" v-if="editable.payment" @click="payment = true" ) Änderungsart
+                                        type="button" v-if="editable.payment" @click="payment = true" ) Zahlungsart ändern
                         b-row.m-0.p-0
                             b-col.m-0.my-2.p-0( cols="12" )
                                 div.d-inline-flex.font-weight-light
-                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.one = true" )
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.one = !acceptance.one" )
                                     span.ml-3 Ich akzeptiere die Allgemeinen Geschäftsbedingungen von claridoo by Alpiq Energie Deutschland GmbH.
                             b-col.m-0.my-2.p-0( cols="12" )
                                 div.d-inline-flex.font-weight-light
-                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.two = true" )
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.two = !acceptance.two" )
                                     span.ml-3 Ich erteile claridoo by Alpiq Energie Deutschland GmbH die Vollmacht für mich einen Endkunden Messstellenvertrag auf Basis der
                                         a.open-link.d-inline &nbsp;Allgemeinen Geschäftsbedingungen der Discovergy GmbH
                                         | &nbsp;zu schließen. Im Rahmen des Messstellenbetriebs mithilfe des einzubauenden Smart Meters erteile ich auch die Einwilligung zur Datenerhebung und -speicherung durch die Discovergy GmbH und durch claridoo by Alpiq Energie Deutschland GmbH. Der Einbau des Smart Meters ist Voraussetzung für die Funktionalität von claridoo. Ich bin mir bewusst, dass von mir beauftragte, über den Standardeinbau hinausgehende Zusatzleistungen  separat in Rechnung gestellt werden. Über die anfallenden Kosten werde ich vorab informiert.
                             b-col.m-0.my-2.p-0( cols="12" )
                                 div.d-inline-flex.font-weight-light
-                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.three = true" )
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.three = !acceptance.three" )
                                     span.ml-3 Ich erteile der Discovergy GmbH die anliegende Vollmacht zum Wechsel meines bisherigen Messstellenbetreibers und zur Kommunikation im Rahmen des Messstellenbetriebes.
                             b-col.m-0.my-2.p-0( cols="12" )
                                 div.d-inline-flex.font-weight-light
-                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.four = true" )
+                                    b-form-checkbox.claridoo_checkbox-input( @change="acceptance.four = !acceptance.four" )
                                     span.ml-3 Ja, um die Fördersumme von 60€ zu erhalten nehme ich zu Forschungszwecken am Förderprogramm Einsparzähler „Deutschland macht’s effizient” (Bundesministerium für Wirtschaft und Energie) teil und mache nachträglich Zusatzangaben. Die Fördersumme ist bereits im Tarifpreis enthalten.
                             b-col#finishing-tabs.m-0.my-2.p-0( cols="12" )
                                 b-card.border-bottom.border-top( no-body )
@@ -411,7 +411,7 @@
                             b-col.m-0.p-0.my-4( cols="12" )
                                 b-form-group.text-center
                                     b-button.claridoo_button(
-                                        :disabled="!checkAcceptance"
+                                        :disabled="!acceptance.one || !acceptance.two || !acceptance.three || !acceptance.four"
                                         :class="!isMobile ? 'w-25' : 'w-100'"
                                         @click="submit"
                                         type="submit" ) Jetzt Bestellen
@@ -500,10 +500,10 @@
                     step: this.$store.getters.user.step,
                 },
                 acceptance: {
-                    one: null,
-                    two: null,
-                    three: null,
-                    four: null,
+                    one: false,
+                    two: false,
+                    three: false,
+                    four: false,
                 },
                 editable: {
                     personal: false,
@@ -693,13 +693,6 @@
                         return;
                 }
             },
-        },
-        computed: {
-            checkAcceptance() {
-                for (let o in this.acceptance)
-                    if (!this.acceptance[o]) return false;
-                return true;
-            }
         }
     }
 </script>
@@ -808,6 +801,7 @@
         color: #000!important;
         -webkit-text-fill-color: #000!important;
         opacity: 1!important;
+        background: #fff!important;
     }
 
     input[type="email"][disabled="disabled"] {
@@ -815,6 +809,7 @@
         color: #000!important;
         -webkit-text-fill-color: #000!important;
         opacity: 1!important;
+        background: #fff!important;
     }
 
 </style>

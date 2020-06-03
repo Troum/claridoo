@@ -46,12 +46,13 @@
         p.text-navy.font-weight-bold Du kannst mit uns auch für alles Weitere auf WhatsApp schreiben und deine Fotos dort senden.
         p.text-navy.font-weight-bold Schreibe uns unter 0170 9339513
             span( v-if="isMobile" ) &nbsp;oder verbinde dich jetzt direkt:
-        b-button.claridoo_button.mx-auto.w-100(
-            v-if="isMobile"
-            @click="whatsApp"
-            type="button" )
-            font-awesome-icon( :icon="['fab', 'whatsapp']" size="2x")
-            span( style="font-size: 22px" ) &nbsp;&nbsp;Jetzt WhatsApp
+        b-form-group.my-3.text-center
+            b-button(
+                :class="isMobile ? 'claridoo_button mb-3 w-100' : 'claridoo_button mb-3 w-35'"
+                @click="whatsApp"
+                type="button" )
+                font-awesome-icon( v-if="isMobile" :icon="['fab', 'whatsapp']" size="2x")
+                span( style="font-size: 22px" ) &nbsp;&nbsp;{{isMobile ? 'Jetzt WhatsApp' : 'Ende'}}
 </template>
 
 <script>
@@ -76,7 +77,9 @@
         },
         methods: {
             whatsApp() {
-                window.location.replace('https://wa.me/4901709339513')
+                this.isMobile ?
+                window.location.replace('https://wa.me/491709339513?text=Hallo%20claridoo%20Team%21') :
+                    window.location.replace('https://claridoo.de')
             }
         }
     }

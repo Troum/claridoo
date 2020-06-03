@@ -9,15 +9,18 @@
                                     b-form-group.my-4( label="Kontoinhaber/in*" )
                                         b-form-input.claridoo_form-input( type="text"
                                             autocomplete="off"
-                                            v-model="formSepa.sepaFullname" placeholder="Kontoinhaber/in")
+                                            v-model="formSepa.sepaFullname" placeholder="Erika Mustermann")
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3( v-if="errors[0]" )
                                                 small.font-weight-bold {{ errors[0] }}
                                 validation-provider( name="IBAN" rules="required|min:5|iban" v-slot="{ errors }")
                                     b-form-group.my-4( label="IBAN*" )
                                         b-form-input.claridoo_form-input( type="text" v-model="formSepa.sepaIBAN"
+                                            :format-chars="formatChars"
+                                            maskChar="formatChars"
+                                            mask="aa 00000000000000000000"
                                             autocomplete="off"
-                                            placeholder="IBAN" )
+                                            placeholder="DE 91100000000123456789" )
                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                             .text-danger.pl-3( v-if="errors[0]" )
                                                 small.font-weight-bold {{ errors[0] }}
@@ -45,7 +48,7 @@
                                     b-button.claridoo_button(
                                         :class="!isMobile ? 'w-75' : 'w-100'"
                                         :disabled="!formTransfer.transferConsent"
-                                        @click="$root.$emit('register', paymentMethod)"
+                                        @click="$root.$emit('register', paymentMethod )"
                                         type="button" ) Weiter
 </template>
 
@@ -55,11 +58,16 @@
         props: {
           isMobile: null,
           formSepa: {},
-          formTransfer:{},
+          formTransfer: {},
           finishing: null
         },
         data() {
           return {
+              formatChars: {
+                  '0': '[0-9]',
+                  'a': '[A-Za-z]',
+                  '*': '[A-Za-z0-9]'
+              },
               paymentMethod: 'sepa'
           }
         },

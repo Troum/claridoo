@@ -196,7 +196,7 @@
     border-left: none;
     border-right: none;
     border-bottom: none;
-    border-top: 2px solid #4CF4CD;
+    border-top: 2px solid #85FFE8;
     & header {
       &.card-header {
         padding: 1rem 0 1rem 0;
@@ -221,3 +221,17 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.list-group-item {
+  padding: 0.75rem!important;
+  &.autocomplete-result {
+    background: #ffffff!important;
+    &:not(:first-of-type) {
+      margin-top: 0.5rem !important;
+    }
+  }
+  & + .list-group-item {
+    border-top-width: 1px;
+  }
+}
+
