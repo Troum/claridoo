@@ -169,7 +169,7 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                     .claridoo_personal-data-item
-                                        validation-provider( rules="required|germanyPhone|min:16" name="Telefonnummer" v-slot="{ errors }")
+                                        validation-provider( rules="required|germanyPhone" name="Telefonnummer" v-slot="{ errors }")
                                             b-form-group( label="Telefonnummer*" )
                                                 b-input-group
                                                     input-mask#phone.claridoo_form-input.pl-3.w-90(
