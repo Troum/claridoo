@@ -381,7 +381,8 @@
                                     b-form-checkbox.claridoo_checkbox-input( @change="acceptance.two = !acceptance.two" )
                                     span.ml-3 Ich erteile claridoo by Alpiq Energie Deutschland GmbH die Vollmacht für mich einen Endkunden Messstellenvertrag auf Basis der
                                         a.open-link.d-inline &nbsp;Allgemeinen Geschäftsbedingungen der Discovergy GmbH
-                                        | &nbsp;zu schließen. Im Rahmen des Messstellenbetriebs mithilfe des einzubauenden Smart Meters erteile ich auch die Einwilligung zur Datenerhebung und -speicherung durch die Discovergy GmbH und durch claridoo by Alpiq Energie Deutschland GmbH. Der Einbau des Smart Meters ist Voraussetzung für die Funktionalität von claridoo. Ich bin mir bewusst, dass von mir beauftragte, über den Standardeinbau hinausgehende Zusatzleistungen  separat in Rechnung gestellt werden. Über die anfallenden Kosten werde ich vorab informiert.
+                                        | &nbsp;zu schließen. Im Rahmen des Messstellenbetriebs mithilfe des einzubauenden Smart Meters erteile ich auch die Einwilligung zur Datenerhebung und -speicherung durch die Discovergy GmbH und durch claridoo by Alpiq Energie Deutschland GmbH. Der Einbau des Smart Meters ist Voraussetzung für die Funktionalität von claridoo.
+                                        strong &nbsp;Ich bin mir bewusst, dass von mir beauftragte, über den Standardeinbau hinausgehende Zusatzleistungen  separat in Rechnung gestellt werden. Über die anfallenden Kosten werde ich vorab informiert.
                             b-col.m-0.my-2.p-0( cols="12" )
                                 div.d-inline-flex.font-weight-light
                                     b-form-checkbox.claridoo_checkbox-input( @change="acceptance.three = !acceptance.three" )
