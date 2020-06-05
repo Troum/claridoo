@@ -253,6 +253,7 @@ div.text-danger {
     line-height: 1;
     font-size: 51%;
     @media (max-width: 576px) {
+      line-height: 0.8;
       font-size: 47%;
     }
   }
@@ -548,4 +549,8 @@ div.text-danger {
     margin-left: 5px;
     vertical-align: middle;
   }
+}
+
+html {
+  overflow-x: hidden!important;
 }
