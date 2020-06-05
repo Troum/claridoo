@@ -79,8 +79,8 @@
                         accordion="personal-accordion"
                         visible
                         role="tabpanel")
-                        validation-observer( ref="observer" v-slot="{ passes, valid }" )
-                            b-form.my-3
+                        validation-observer( ref="observer" v-slot="{ passes }" )
+                            b-form.my-3( @submit.prevent="passes(stepOne)" )
                                 .my-2.claridoo_personal-data
                                     .claridoo_personal-data-item
                                         validation-provider( rules="required" name="Vornamen" v-slot="{ errors }")
@@ -186,10 +186,7 @@
                                         span.ml-2 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
                                 b-form-group.my-5.text-left
                                     b-button.claridoo_button.mb-3.w-35(
-                                        :disabled="!checkForm(formCollapseOne) && !checkPhone() || !valid"
-                                        v-b-toggle.personal-one.personal-two
-                                        @click="stepOne"
-                                        type="button" ) Weiter
+                                        type="submit" ) Weiter
                 b-card( no-body :class="[(opened.two ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseTwo) && !opened.two  ? 'bg-white filled' : '')]" )
                     b-card-header.w-67.mx-auto(
                         header-tag="header"
@@ -203,8 +200,8 @@
                     b-collapse.w-67.mx-auto#personal-two(
                         accordion="personal-accordion"
                         role="tabpanel")
-                        validation-observer( ref="observer" v-slot="{ passes, valid }" )
-                            b-form.my-3
+                        validation-observer( ref="observer" v-slot="{ passes }" )
+                            b-form.my-3( @submit.prevent="passes(stepTwo)" )
                                 b-row.m-0.p-0
                                     b-col.pl-0( xl="5" )
                                         validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
@@ -269,7 +266,7 @@
                                         b-col( xl="5" )
                                             validation-provider( rules="required" name="Stadt" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altStreet" label="Stadt*" )
-                                                    b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"
+                                                    b-form-input.claridoo_form-input#altStreet( disabled type="text" autocomplete="off"
                                                         v-model="formCollapseTwoAlternate.altCity"
                                                         placeholder="Stadt" )
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
@@ -291,12 +288,12 @@
                                         div.radio-container
                                             b-form-radio.p-0.apartment( v-model="formCollapseTwo.choose" name="choose" value="Apartment")
                                             p.mt-2.text-center einer Wohnung
+                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                        .text-danger.pl-3
+                                            small.font-weight-bold {{ errors[0] }}
                                 b-form-group.my-3.text-left
                                     b-button.claridoo_button.mb-3.w-35(
-                                        :disabled="!checkForm(formCollapseTwo) || !valid"
-                                        v-b-toggle.personal-two.personal-three
-                                        @click="stepTwo"
-                                        type="button" ) Weiter
+                                        type="submit" ) Weiter
                 b-card( no-body :class="[(opened.three ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseThree) && !opened.three  ? 'bg-white filled' : '')]" )
                     b-card-header.w-67.mx-auto(
                         header-tag="header"
@@ -394,8 +391,8 @@
                         accordion="personal-accordion"
                         visible
                         role="tabpanel")
-                        validation-observer( ref="observer" v-slot="{ passes, valid }" )
-                            b-form.my-3
+                        validation-observer( ref="observer" v-slot="{ passes }" )
+                            b-form.my-3( @submit.prevent="passes(stepOne)" )
                                 validation-provider( rules="required" name="Vornamen" v-slot="{ errors }")
                                     b-form-group.my-2( label-for="name" label="Vornamen*" )
                                         b-form-input.claridoo_form-input#name( type="text" autocomplete="off"
@@ -494,10 +491,7 @@
                                         span.ml-2 Ich bin damit einverstanden, dass claridoo mich über Neuigkeiten und exklusive Angebote per E-Mail informiert. Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer Datenschutzerklärung.
                                 b-form-group.my-5.text-left
                                     b-button.claridoo_button.mb-3.w-100(
-                                        v-b-toggle.personal-one.personal-two
-                                        :disabled="!checkForm(formCollapseOne) && checkPhone() && !valid"
-                                        @click="stepOne"
-                                        type="button" ) Weiter
+                                        type="submit" ) Weiter
                 b-card.pt-3.pl-3.pr-3( no-body :class="[(opened.two ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseTwo) && !opened.two  ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
@@ -511,8 +505,8 @@
                     b-collapse#personal-two(
                         accordion="personal-accordion"
                         role="tabpanel")
-                        validation-observer( ref="observer" v-slot="{ passes, valid }" )
-                            b-form.my-3
+                        validation-observer( ref="observer" v-slot="{ passes }" )
+                            b-form.my-3( @submit.prevent="passes(stepTwo)" )
                                 validation-provider( rules="required" name="Postleitzahl" v-slot="{ errors }")
                                     b-form-group.my-2( label-for="postcode" label="Postleitzahl" )
                                         b-form-input.claridoo_form-input#postcode( type="text" autocomplete="off"
@@ -566,7 +560,7 @@
                                                         small.font-weight-bold {{ errors[0] }}
                                             validation-provider( rules="required" name="Stadt" v-slot="{ errors }")
                                                 b-form-group.my-2( label-for="altStreet" label="Stadt*" )
-                                                    b-form-input.claridoo_form-input#altStreet( type="text" autocomplete="off"
+                                                    b-form-input.claridoo_form-input#altStreet( type="text" disabled autocomplete="off"
                                                         v-model="formCollapseTwoAlternate.altCity"
                                                         placeholder="Stadt" )
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
@@ -597,12 +591,12 @@
                                         div.radio-container
                                             b-form-radio.p-0.apartment( v-model="formCollapseTwo.choose" name="choose" value="Apartment")
                                             p.mt-2.text-center einer Wohnung
+                                    transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
+                                        .text-danger.pl-3
+                                            small.font-weight-bold {{ errors[0] }}
                                 b-form-group.my-3.text-center
                                     b-button.claridoo_button.mb-3.w-100(
-                                        :disabled="!checkForm(formCollapseTwo) && !valid"
-                                        @click="stepTwo"
-                                        v-b-toggle.personal-two.personal-three
-                                        type="button" ) Weiter
+                                        type="submit" ) Weiter
                 b-card.pt-3.pl-3.pr-3.mb-xl-4( no-body :class="[(opened.three ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseThree) && !opened.three  ? 'bg-white filled' : '')]" )
                     b-card-header(
                         header-tag="header"
@@ -886,6 +880,10 @@
                 return !values.includes(null);
             },
             stepOne() {
+
+                this.$root.$emit('bv::toggle::collapse', 'personal-one');
+                this.$root.$emit('bv::toggle::collapse', 'personal-two');
+
                 if (this.isMobile) {
                     this.scrollTo('personal-two');
                 }
@@ -911,6 +909,8 @@
                 })
             },
             stepTwo() {
+                this.$root.$emit('bv::toggle::collapse', 'personal-two');
+                this.$root.$emit('bv::toggle::collapse', 'personal-three');
                 if (this.isMobile) {
                     this.scrollTo('personal-three');
                 }

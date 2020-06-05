@@ -183,7 +183,7 @@
                                 b-button.claridoo_button(
                                     :class="!isMobile ? 'w-75' : 'w-100'"
                                     type="button" @click="toRegister") Jetzt Wechseln
-                            b-form-group.my-2.my-xl-4( v-if="entries" )
+                            b-form-group.my-2.my-xl-5( v-if="entries" )
                                 a.document-link( href="#" ) Allgemeine Gaschäftsbedingungen (149 KB)
                                 a.document-link( href="#" ) Stromzusammensetzung (522 KB)
 </template>
