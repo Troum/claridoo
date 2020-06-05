@@ -601,7 +601,7 @@
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3
                                                         small.font-weight-bold {{ errors[0] }}
-                                validation-provider( rules="required" name="Anrede" v-slot="{ errors }")
+                                validation-provider( rules="required" name="Haus typ" v-slot="{ errors }")
                                     b-form-group.my-2#choose( label="Du wohnst in*" )
                                         div.radio-container
                                             b-form-radio.p-0.house( v-model="formCollapseTwo.choose" name="choose" value="House")
@@ -635,7 +635,7 @@
                                     div.reason-card.mobile_reason( @click="choose($event); setDate(item.reason)" )
                                         img.img-fluid( @click="choose($event); setDate(item.reason)" :src="`${item.icon}`" )
                                         p.text-xl-center.text-violet( @click="choose($event); setDate(item.reason)" ) {{ item.title }}
-                                        p.pr-xl-3.pl-xl-3.text-xl-center( v-if="item.description"  :style="!item.description ? 'grid-row: 1 / -1; align-self: center' : 'line-height: 1'"  @click="choose($event); setDate(item.reason)" )
+                                        p.pr-xl-3.pl-xl-3.text-xl-center(  @click="choose($event); setDate(item.reason)" )
                                             small( @click="choose($event); setDate(item.reason)" ) {{ item.description }}
                             validation-provider( rules="required" name="Gewünschter Belieferungsstart" v-slot="{ errors }")
                                 b-form-group.my-3( label="Gewünschter Belieferungsstart" v-if="reason !== 'switch'")
@@ -1094,7 +1094,7 @@
                     width: 100%;
                     height: auto;
                     grid-template-columns: 20% 80%;
-                    grid-template-rows: 1fr 1fr;
+                    grid-template-rows: 50% 50%;
                     &:nth-of-type(2) {
                         margin-top: .5rem;
                         margin-bottom: .5rem;
@@ -1116,6 +1116,11 @@
                         grid-column: 2 / -1;
                         align-self: start;
                         justify-self: start;
+                        padding-right: .5rem;
+                        line-height: 1;
+                        & small {
+                            font-size: 65%;
+                        }
                     }
                 }
             }

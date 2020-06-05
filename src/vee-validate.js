@@ -21,6 +21,13 @@ extend('digits', digits);
 extend('between', between);
 extend('regex', regex);
 extend('min', min);
+extend('postcode', value => {
+    console.log(value)
+    if (value) {
+        return true;
+    }
+    return 'Bitte gib zuerst eine 5-stellige Postleitzahl ein.';
+});
 extend('minimum',
     (value, min_value) => {
         if (Number(value) < min_value) {
