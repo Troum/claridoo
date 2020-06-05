@@ -385,6 +385,18 @@
                                 :finishing="finishing"
                                 :formSepa="formCollapseSeven"
                                 :formTransfer="formCollapseEight")
+                b-card.bg-tariff( no-body)
+                    b-card-header.w-67.mx-auto(
+                        header-tag="header"
+                        role="tab" )
+                        div
+                            span.claridoo_collapse-title 6. Bestellung
+                            button.claridoo_collapse-open-close.float-right(
+                                v-b-toggle.personal-six
+                                type="button" )
+                    b-collapse.w-67.mx-auto#personal-six(
+                        accordion="personal-accordion"
+                        role="tabpanel")
             b-col#register.mx-auto.p-0( cols="12" v-else)
                 b-card.pt-3.pl-3.pr-3( no-body :class="[(opened.one ? 'bg-white' : 'bg-tariff'),(checkForm(formCollapseOne) && !opened.one  ? 'bg-white filled' : '')]" )
                     b-card-header(
@@ -696,7 +708,18 @@
                                 :finishing="finishing"
                                 :formSepa="formCollapseSeven"
                                 :formTransfer="formCollapseEight")
-
+                b-card.pt-3.pl-3.pr-3.mb-xl-4.bg-tariff( no-body )
+                    b-card-header(
+                        header-tag="header"
+                        role="tab" )
+                        div
+                            span.claridoo_collapse-title 6. Bestellung
+                            button.claridoo_collapse-open-close.float-right(
+                                v-b-toggle.personal-six
+                                type="button" )
+                    b-collapse#personal-six(
+                        accordion="personal-accordion"
+                        role="tabpanel")
 </template>
 
 <script>

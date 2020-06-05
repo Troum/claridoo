@@ -52,7 +52,7 @@
                 @click="whatsApp"
                 type="button" )
                 font-awesome-icon( v-if="isMobile" :icon="['fab', 'whatsapp']" size="2x")
-                span( style="font-size: 22px" ) &nbsp;&nbsp;{{isMobile ? 'Jetzt WhatsApp' : 'Ende'}}
+                span( style="font-size: 22px" ) &nbsp;&nbsp;{{isMobile ? 'Jetzt WhatsApp' : 'Zurück zu claridoo'}}
 </template>
 
 <script>
