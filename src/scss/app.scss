@@ -252,6 +252,9 @@ div.text-danger {
   & small {
     line-height: 1;
     font-size: 51%;
+    @media (max-width: 576px) {
+      font-size: 47%;
+    }
   }
 }
 
