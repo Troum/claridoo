@@ -119,24 +119,33 @@
                                         b-form-group( label="Geburtsdatum*" )
                                             b-row.m-0.p-0.w-100.d-flex.justify-content-between
                                                 b-col.pl-1.pr-1( cols="4" )
-                                                    validation-provider( rules="required|integer|between:1,31" name="DD" v-slot="{ errors }")
-                                                        b-form-input.claridoo_form-input.w-100.text-center#day( type="text" autocomplete="off"
+                                                    validation-provider( rules="required|between:1,31" name="DD" v-slot="{ errors }")
+                                                        input-mask.claridoo_form-input.w-100.text-center#day( type="text" autocomplete="off"
                                                             v-model="formCollapseOne.day"
+                                                            :format-chars="formatChars"
+                                                            maskChar=""
+                                                            mask="00"
                                                             placeholder="DD")
                                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                             .text-danger.pl-3
                                                                 small.font-weight-bold {{ errors[0] }}
                                                 b-col.pl-1.pr-1( cols="4" )
-                                                    validation-provider( rules="required|integer|between:1,12" name="MM" v-slot="{ errors }")
-                                                        b-form-input.claridoo_form-input.w-100.text-center#month( type="text" autocomplete="off"
+                                                    validation-provider( rules="required|between:1,12" name="MM" v-slot="{ errors }")
+                                                        input-mask.claridoo_form-input.w-100.text-center#month( type="text" autocomplete="off"
                                                             v-model="formCollapseOne.month"
+                                                            :format-chars="formatChars"
+                                                            maskChar=""
+                                                            mask="00"
                                                             placeholder="MM")
                                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                             .text-danger.pl-3
                                                                 small.font-weight-bold {{ errors[0] }}
                                                 b-col.pl-1.pr-1( cols="4" )
-                                                    validation-provider( rules="required|integer|between:1900,2020" name="YYYY" v-slot="{ errors }")
-                                                        b-form-input.claridoo_form-input.w-100.text-center#year( type="text" autocomplete="off"
+                                                    validation-provider( rules="required|between:1900,2020" name="YYYY" v-slot="{ errors }")
+                                                        input-mask.claridoo_form-input.w-100.text-center#year( type="text" autocomplete="off"
+                                                            :format-chars="formatChars"
+                                                            maskChar=""
+                                                            mask="0000"
                                                             v-model="formCollapseOne.year"
                                                             placeholder="YYYY")
                                                         transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
@@ -160,7 +169,7 @@
                                                 .text-danger.pl-3
                                                     small.font-weight-bold {{ errors[0] }}
                                     .claridoo_personal-data-item
-                                        validation-provider( rules="required|germanyPhone" name="Telefonnummer" v-slot="{ errors }")
+                                        validation-provider( rules="required|germanyPhone|min:16" name="Telefonnummer" v-slot="{ errors }")
                                             b-form-group( label="Telefonnummer*" )
                                                 b-input-group
                                                     input-mask#phone.claridoo_form-input.pl-3.w-90(
@@ -425,25 +434,34 @@
                                 b-form-group.my-2( label="Geburtsdatum*" )
                                     b-row.m-0.p-0.w-100.d-flex.justify-content-between
                                         b-col.m-0.p-0( cols="3" )
-                                            validation-provider( rules="required|integer|between:1,31" name="DD" v-slot="{ errors }")
-                                                b-form-input.claridoo_form-input.w-100.text-center#day( type="text" autocomplete="off"
+                                            validation-provider( rules="required|between:1,31" name="DD" v-slot="{ errors }")
+                                                input-mask.claridoo_form-input.w-100.text-center#day( type="text" autocomplete="off"
+                                                    :format-chars="formatChars"
+                                                    maskChar=""
+                                                    mask="00"
                                                     v-model="formCollapseOne.day"
                                                     placeholder="DD")
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3.day
                                                         small.font-weight-bold {{ errors[0] }}
                                         b-col.m-0.p-0( cols="3" )
-                                            validation-provider( rules="required|integer|between:1,12" name="MM" v-slot="{ errors }")
-                                                b-form-input.claridoo_form-input.w-100.text-center#month( type="text" autocomplete="off"
+                                            validation-provider( rules="required|between:1,12" name="MM" v-slot="{ errors }")
+                                                input-mask.claridoo_form-input.w-100.text-center#month( type="text" autocomplete="off"
                                                     v-model="formCollapseOne.month"
+                                                    :format-chars="formatChars"
+                                                    maskChar=""
+                                                    mask="00"
                                                     placeholder="MM")
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3.month
                                                         small.font-weight-bold {{ errors[0] }}
                                         b-col.m-0.p-0( cols="3" )
-                                            validation-provider( rules="required|integer|between:1900,2020" name="YYYY" v-slot="{ errors }")
-                                                b-form-input.claridoo_form-input.w-100.text-center#year( type="text" autocomplete="off"
+                                            validation-provider( rules="required|between:1900,2020" name="YYYY" v-slot="{ errors }")
+                                                input-mask.claridoo_form-input.w-100.text-center#year( type="text" autocomplete="off"
                                                     v-model="formCollapseOne.year"
+                                                    :format-chars="formatChars"
+                                                    maskChar=""
+                                                    mask="0000"
                                                     placeholder="YYYY")
                                                 transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
                                                     .text-danger.pl-3.year

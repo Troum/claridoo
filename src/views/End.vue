@@ -75,6 +75,9 @@
                 }
             }
         },
+        mounted() {
+            Object.keys(this.$store.getters.user).length > 0 ? null : this.$router.push({name: 'home'});
+        },
         methods: {
             whatsApp() {
                 this.isMobile ?
