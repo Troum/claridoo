@@ -40,34 +40,8 @@
     color: #495057;
     font-weight: 500;
     font-size: 1rem;
-    @media only screen
-    and (min-device-width: 320px)
-    and (max-device-width: 480px)
-    and (-webkit-min-device-pixel-ratio: 2) {
-      left: 22.5%;
-    }
-    @media only screen
-    and (min-device-width: 320px)
-    and (max-device-width: 568px)
-    and (-webkit-min-device-pixel-ratio: 2){
-      left: 22.5%;
-    }
-    @media only screen
-    and (min-device-width: 375px)
-    and (max-device-width: 667px)
-    and (-webkit-min-device-pixel-ratio: 2) {
-      left: 20.5%;
-    }
-    @media only screen
-    and (min-device-width: 414px)
-    and (max-device-width: 736px)
-    and (-webkit-min-device-pixel-ratio: 3) {
-      left: 20.5%;
-    }
-    @media only screen
-    and (min-device-width: 375px)
-    and (max-device-width: 812px)
-    and (-webkit-min-device-pixel-ratio: 3) {
+
+    @media (max-width: 576px){
       left: 22%;
     }
     @media (min-width: 1200px) {

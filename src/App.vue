@@ -13,7 +13,7 @@
     b-row.claridoo_footer( v-if="$route.name !== 'home'" )
         b-col.m-0.claridoo_footer-info
             p.mb-0 &copy;&nbsp;2010 &mdash;&nbsp;{{new Date().getFullYear()}} Privacy &mdash; Terms
-    type-modal
+    type-modal( :isMobile="isMobile" )
     edit-modal( :isMobile="isMobile" )
 </template>
 <script>

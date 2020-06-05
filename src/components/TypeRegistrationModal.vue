@@ -8,18 +8,18 @@
             div.types-card-container
                 div.types-card( @click="choose($store.getters.types[0].type)" v-b-toggle.personal-four)
                     img.img-fluid( :src="`${$store.getters.types[0].icon}`" )
-                    p.h4.text-center {{ $store.getters.types[0].title }}
+                    p.text-center(  :class="isMobile ? 'h6' : 'h4'" ) {{ $store.getters.types[0].title }}
                     small.d-block.p-2.text-center.lightgray {{ $store.getters.types[0].description }}
             div.types-card-container
                 div.types-card( @click="choose($store.getters.types[1].type)" v-b-toggle.personal-five)
                     img.img-fluid( :src="`${$store.getters.types[1].icon}`" )
-                    p.h4.text-center.mb-0 {{ $store.getters.types[1].title }}
+                    p.text-center.mb-0(  :class="isMobile ? 'h6' : 'h4'" ) {{ $store.getters.types[1].title }}
                     small.d-block.p-2.text-center.font-weight-bold( style="line-height: 1; color: gray" )
                         small {{ $store.getters.types[1].description }} {{ $store.getters.user.phone }}
             div.types-card-container
                 div.types-card( @click="choose($store.getters.types[2].type)" v-b-toggle.personal-five)
                     img.img-fluid( :src="`${$store.getters.types[2].icon}`" )
-                    p.h4.text-center.mb-0 {{ $store.getters.types[2].title }}
+                    p.text-center.mb-0(  :class="isMobile ? 'h6' : 'h4'" ) {{ $store.getters.types[2].title }}
                     small.d-block.p-2.text-center.font-weight-bold( style="line-height: 1;color: gray" )
                         small {{ $store.getters.types[2].description }} {{ $store.getters.user.email }}
         #fromWhere( v-else )
@@ -34,6 +34,9 @@
 <script>
     export default {
         name: "TypeRegistrationModal",
+        props: {
+          isMobile: null  
+        },
         data() {
             return {
                 publicPath: process.env.BASE_URL,
@@ -81,6 +84,9 @@
             grid-template-columns: 1fr;
             grid-template-rows: repeat(3, auto);
             grid-row-gap: 5px;
+            & img {
+                max-width: 20%;
+            }
         }
         & .types-card-container {
             display: block;
@@ -106,7 +112,7 @@
                 @media (max-width: 992px) {
                     width: 100%;
                     height: auto;
-                    grid-template-rows: repeat(2, calc(100% / 2));
+                    grid-template-rows: repeat(3, calc(100% / 3));
                 }
             }
         }

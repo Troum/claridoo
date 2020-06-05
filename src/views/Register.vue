@@ -632,10 +632,10 @@
                             b-form.my-3#reasons
                                 div.reason-card-container( v-for="item in reasons" @click="choose($event); setDate(item.reason)"
                                     :key="item.icon" )
-                                    div.reason-card( @click="choose($event); setDate(item.reason)" )
+                                    div.reason-card.mobile_reason( @click="choose($event); setDate(item.reason)" )
                                         img.img-fluid( @click="choose($event); setDate(item.reason)" :src="`${item.icon}`" )
                                         p.text-xl-center.text-violet( @click="choose($event); setDate(item.reason)" ) {{ item.title }}
-                                        p.pr-xl-3.pl-xl-3.text-xl-center( style="line-height: 1"  @click="choose($event); setDate(item.reason)" )
+                                        p.pr-xl-3.pl-xl-3.text-xl-center( v-if="item.description"  :style="!item.description ? 'grid-row: 1 / -1; align-self: center' : 'line-height: 1'"  @click="choose($event); setDate(item.reason)" )
                                             small( @click="choose($event); setDate(item.reason)" ) {{ item.description }}
                             validation-provider( rules="required" name="Gewünschter Belieferungsstart" v-slot="{ errors }")
                                 b-form-group.my-3( label="Gewünschter Belieferungsstart" v-if="reason !== 'switch'")
