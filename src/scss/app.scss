@@ -250,7 +250,8 @@ div.text-danger {
   margin-bottom: 1.2rem;
   margin-top: .5rem;
   & small {
-    font-size: 60%;
+    line-height: 1;
+    font-size: 51%;
   }
 }
 
@@ -533,3 +534,15 @@ div.text-danger {
   }
 }
 
+.small_logo {
+  &:after {
+    content: '';
+    display: inline-block;
+    background: url("~@/assets/flag.svg") center center no-repeat;
+    background-size: contain;
+    width: 29px;
+    height: 25px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+}

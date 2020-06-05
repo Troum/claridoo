@@ -2,23 +2,23 @@
   "persons": [
     {
       "text": "1",
-      "value": 1500
+      "value": "1500"
     },
     {
       "text": "2",
-      "value": 2500
+      "value": "2500"
     },
     {
       "text": "3",
-      "value": 3500
+      "value": "3500"
     },
     {
       "text": "4",
-      "value": 4300
+      "value": "4300"
     },
     {
       "text": "5+",
-      "value": 5000
+      "value": "5000"
     }
   ]
 }

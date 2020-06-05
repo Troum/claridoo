@@ -22,7 +22,7 @@
                                             b-list-group-item.autocomplete-result.pl-5( v-for="item in city" :key="item" @click="handleCity(item)" ) {{ item }}
                                     span.claridoo_city( v-if="postcode.length >= 5" ) {{ selectedCity }}
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                        .text-danger.pl-3.city
+                                        .text-danger.pl-3.mb-5.city
                                             small.font-weight-bold {{ errors[0] }}
                             b-form-group.mt-3.my-xl-3
                                 .claridoo_persons-title Wie viele Personen wohnen im Haushalt?
@@ -37,12 +37,14 @@
                                         small.font-weight-bold {{ errors[0] }}
                             validation-provider( name="Jahresverbrauch" rules="required|minimum:500|maximum:9999" v-slot="{ errors }")
                                 b-form-group.mt-2.mb-2.mt-xl-1.mb-xl-1
-                                    b-form-input#kilowats.claridoo_form-input( placeholder="Jahresverbrauch kWh"
-                                        @focus="setCursor('kilowats')"
+                                    input-mask#kilowats.claridoo_form-input.w-100.pl-3( placeholder="Jahresverbrauch kWh"
+                                        :format-chars="formatChars"
+                                        maskChar=""
+                                        mask="00000"
                                         autocomplete="off"
                                         v-model="kw")
                                     transition( enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in" )
-                                        .text-danger.pl-3
+                                        .text-danger.pl-3.mb-4
                                             small.font-weight-bold {{ errors[0] }}
                             b-form-group.mt-4.mb-2.mt-xl-4.mb-xl-4.text-center
                                 b-button.claridoo_button(
@@ -103,7 +105,7 @@
                                                         header-tag="header"
                                                         role="tab" )
                                                         div
-                                                            span.claridoo_collapse-title Preis inkl. Förderung
+                                                            span.claridoo_collapse-title.small_logo Preis inkl. Förderung
                                                             button.claridoo_collapse-open-close(
                                                                 v-b-toggle.collapse-five
                                                                 type="button" )
@@ -186,7 +188,6 @@
                                 a.document-link( href="#" ) Stromzusammensetzung (522 KB)
 </template>
 <script>
-    import IMask from "imask"
     export default {
         props: {
             isMobile: null
@@ -203,7 +204,6 @@
                     title.classList.remove('claridoo_gradient-text');
                 }
             });
-            IMask(document.getElementById('kilowats'), {mask: '00000'});
             this.postcode = this.$store.getters.user.zip ? this.$store.getters.user.zip : '';
             this.selectedCity = this.$store.getters.user.city ? this.$store.getters.user.city : '';
             this.kw = this.$store.getters.user.kWh ? this.$store.getters.user.kWh : null;
@@ -211,6 +211,11 @@
         data() {
 
             return {
+                formatChars: {
+                    '0': '[0-9]',
+                    'a': '[A-Za-z]',
+                    '*': '[A-Za-z0-9]'
+                },
                 postcode: '',
                 city: [],
                 selectedCity: '',
@@ -263,6 +268,9 @@
                     })
             },
             submit() {
+                if(!this.postcode || !this.kw) {
+                    return;
+                }
                 this.overlay.main = true;
                 this.$httpService.get(process.env.NODE_ENV === 'production' ? `/pricing/prod/?PLZ=${this.postcode}&Quantity=${parseFloat(this.kw)}` : `api/pricing/${this.postcode}/${parseFloat(this.kw)}`)
                     .then(response => {
