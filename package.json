@@ -43,7 +43,7 @@
     "hammerjs": "^2.0.8",
     "iban": "0.0.14",
     "mobile-device-detect": "^0.3.3",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^8.0.2",
